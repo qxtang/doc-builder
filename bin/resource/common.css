@@ -21,6 +21,7 @@ body {
 .menu {
   width: max-content;
   padding-right: 10px;
+  overflow-y: auto;
 }
 
 .menu.show {
@@ -72,6 +73,25 @@ body {
   .menu {
     display: none;
     width: 100%;
+    max-height: 50vh;
+  }
+
+  .menu > .item {
+    text-decoration: none;
+    border-bottom: 1px solid #ccc;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu > .item:last-child {
+    border-bottom: unset;
+  }
+
+  .menu > .item:hover, .menu > .item:active {
+    text-decoration: none;
+    opacity: .7;
   }
 
   .mobile_menu {
