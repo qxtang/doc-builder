@@ -1,0 +1,27 @@
+{
+  "name": "doc-builder",
+  "version": "1.0.0",
+  "description": "build html doc from markdown files",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./bin/doc-builder.js"
+  },
+  "bin": {
+    "doc-builder": "./bin/doc-builder.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qxtang/doc-builder.git"
+  },
+  "files": [
+    "readme.md",
+    "bin",
+    "package.json"
+  ],
+  "author": "qxtang<qx.tang@foxmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qxtang/doc-builder/issues"
+  },
+  "homepage": "https://github.com/qxtang/doc-builder#readme"
+}
