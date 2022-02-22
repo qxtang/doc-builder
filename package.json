@@ -4,7 +4,7 @@
   "description": "build html doc from markdown files",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./bin/doc-builder.js"
+    "dev": "node ./bin/doc-builder.js -w"
   },
   "bin": {
     "doc-builder": "./bin/doc-builder.js"
@@ -32,8 +32,7 @@
   "homepage": "https://github.com/qxtang/doc-builder#readme",
   "devDependencies": {
     "arg": "^5.0.1",
-    "eslint": "^8.9.0",
-    "nodemon": "^2.0.15"
+    "eslint": "^8.9.0"
   },
   "dependencies": {
     "chokidar": "^3.5.3",

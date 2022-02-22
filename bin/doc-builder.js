@@ -5,11 +5,16 @@ const ejs = require('ejs');
 const path = require('path');
 const markdownIt = require('markdown-it')();
 const liveServer = require('live-server');
+const pkgName = process.env.npm_package_name.toUpperCase();
 
 const args = arg({
   '--config': String,
   '--watch': Boolean,
+
+  // Aliases
+  '-w': '--watch',
 });
+
 const cwd = process.cwd();
 const configPath = path.join(cwd, args['--config'] || 'builder.config.js');
 const config = require(configPath);
@@ -17,8 +22,8 @@ const config = require(configPath);
 const isDev = args['--watch'];
 const inputPath = path.join(cwd, config.input || '/notes');
 const outputPath = path.join(cwd, config.output || '/dist');
-
-console.log('args:', args);
+const PORT = config.port || 8080;
+const HOST = config.host || '0.0.0.0';
 
 const getAllFileName = async () => {
   let result = fs.readdirSync(inputPath);
@@ -54,7 +59,7 @@ const renderByFileName = (filename, menuConfig) => {
     },
     function (err, str) {
       if (err) {
-        console.log(`render ejs error:`, err);
+        console.log(`[${pkgName}]: render ejs error:`, err);
         return;
       }
 
@@ -71,7 +76,7 @@ const renderIndex = (menuConfig) => {
     },
     function (err, str) {
       if (err) {
-        console.log(`render index ejs error:`, err);
+        console.log(`[${pkgName}]: render index ejs error:`, err);
         return;
       }
 
@@ -86,7 +91,7 @@ const copyResource = async () => {
 
 // main
 (async function () {
-  console.log(`----- START ${isDev ? 'DEV' : 'BUILD'} -----`);
+  console.log(`[${pkgName}]: START ${isDev ? 'DEV' : 'BUILD'}`);
 
   // reset
   fs.removeSync(outputPath);
@@ -103,14 +108,14 @@ const copyResource = async () => {
   });
 
   renderIndex(menuConfig);
-  console.log(`----- BUILD FINISH -----`);
+  console.log(`[${pkgName}]: BUILD FINISH`);
 })();
 
 if (isDev) {
   chokidar.watch(inputPath, { depth: 10 }).on('change', async (filename) => {
     const basename = path.basename(filename);
     const extname = path.extname(filename);
-    console.log('change:', basename);
+    console.log(`[${pkgName}]: file change:`, basename);
 
     await copyResource();
 
@@ -124,10 +129,12 @@ if (isDev) {
   });
 
   liveServer.start({
-    port: config.port || 8080,
-    host: config.host || '0.0.0.0',
+    port: PORT,
+    host: HOST,
     root: outputPath,
     open: false,
     logLevel: 0,
   });
+
+  console.log(`[${pkgName}]: run at http://${HOST}:${PORT}`);
 }
