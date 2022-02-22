@@ -8,6 +8,7 @@ html,
 body {
   overflow-x: hidden;
   overflow-y: hidden;
+  color: #333333;
 }
 
 body {
@@ -48,6 +49,8 @@ body {
   font-size: 30px;
   text-align: center;
   font-weight: 900;
+  color: #333333;
+  border-bottom: 1px solid #cccccc;
 }
 
 .mobile_menu:active {
@@ -69,18 +72,20 @@ body {
   body {
     flex-direction: column;
     justify-content: flex-start;
+    padding: 0;
   }
 
   .menu {
     display: none;
     width: 100%;
     max-height: 50vh;
+    padding-right: 0;
   }
 
   .menu > .item {
     text-decoration: none;
     border-bottom: 1px solid #ccc;
-    height: 32px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
