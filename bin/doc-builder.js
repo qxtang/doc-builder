@@ -28,10 +28,10 @@ const configPath = (function () {
 const config = require(configPath);
 
 const isDev = args['--watch'];
-const inputPath = path.join(cwd, config.input || '/notes');
-const outputPath = path.join(cwd, config.output || '/dist');
-const PORT = config.port || 8080;
-const HOST = config.host || '0.0.0.0';
+const inputPath = path.join(cwd, config.input);
+const outputPath = path.join(cwd, config.output);
+const PORT = config.port;
+const HOST = config.host;
 
 const getAllFileName = async () => {
   let result = fs.readdirSync(inputPath);
@@ -94,7 +94,7 @@ const renderIndex = (menuConfig) => {
 };
 
 const copyResource = async () => {
-  fs.copySync(`${inputPath}/resource`, `${outputPath}/resource`);
+  fs.copySync(`${inputPath}${config.resource}`, `${outputPath}${config.resource}`);
 };
 
 // main

@@ -3,4 +3,5 @@ module.exports = {
   host: '127.0.0.1',
   output: '/dist',
   input: '/notes',
+  resource: '/resource',
 }
