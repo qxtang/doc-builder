@@ -30,6 +30,7 @@ const config = require(configPath);
 const isDev = args['--watch'];
 const inputPath = path.join(cwd, config.input);
 const outputPath = path.join(cwd, config.output);
+const resourcePath = path.join(inputPath, config.resource);
 const PORT = config.port;
 const HOST = config.host;
 
@@ -94,7 +95,7 @@ const renderIndex = (menuConfig) => {
 };
 
 const copyResource = async () => {
-  fs.copySync(`${inputPath}${config.resource}`, `${outputPath}${config.resource}`);
+  fs.copySync(resourcePath, path.join(outputPath, config.resource));
 };
 
 // main
