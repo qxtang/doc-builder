@@ -1,11 +1,11 @@
 # DOC-BUILDER
 
-将 markdown 生成 html 文档
+将任意文件夹中的 markdown 生成 html 文档站点
 
 ## 安装
 
 ```sh
-npm install doc-builder
+npm install @qxtang/doc-builder
 ```
 
 ## 使用
