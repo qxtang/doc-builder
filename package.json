@@ -13,6 +13,12 @@
     "type": "git",
     "url": "git+https://github.com/qxtang/doc-builder.git"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "dist/*"
+    ],
+    "delay": 1000
+  },
   "files": [
     "readme.md",
     "bin",
@@ -23,5 +29,17 @@
   "bugs": {
     "url": "https://github.com/qxtang/doc-builder/issues"
   },
-  "homepage": "https://github.com/qxtang/doc-builder#readme"
+  "homepage": "https://github.com/qxtang/doc-builder#readme",
+  "devDependencies": {
+    "arg": "^5.0.1",
+    "eslint": "^8.9.0",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.3",
+    "ejs": "^3.1.6",
+    "fs-extra": "^10.0.0",
+    "live-server": "^1.2.1",
+    "markdown-it": "^12.3.2"
+  }
 }

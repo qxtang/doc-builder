@@ -1,0 +1,9 @@
+<div class="menu" id="menu">
+  <a href="./" class="item">INDEX</a>
+
+  <% menu.forEach(function(item) { %>
+  <a class="item" href="<%= item %>.html"><%= item %></a>
+  <% }) %>
+</div>
+
+<div class="mobile_menu" id="mobile_menu">≡</div>
