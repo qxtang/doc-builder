@@ -2,12 +2,11 @@
   "name": "doc-builder",
   "version": "1.0.0",
   "description": "build html doc from markdown files",
-  "main": "index.js",
   "scripts": {
     "dev": "node ./bin/doc-builder.js -w"
   },
   "bin": {
-    "doc-builder": "./bin/doc-builder.js"
+    "doc-builder": "bin/doc-builder.js"
   },
   "repository": {
     "type": "git",

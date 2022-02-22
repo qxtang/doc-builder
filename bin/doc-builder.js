@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const arg = require('arg');
 const chokidar = require('chokidar');
 const fs = require('fs-extra');
@@ -5,7 +7,7 @@ const ejs = require('ejs');
 const path = require('path');
 const markdownIt = require('markdown-it')();
 const liveServer = require('live-server');
-const pkgName = process.env.npm_package_name.toUpperCase();
+const pkgName = require('../package.json').name.toUpperCase();
 
 const args = arg({
   '--config': String,
@@ -16,7 +18,13 @@ const args = arg({
 });
 
 const cwd = process.cwd();
-const configPath = path.join(cwd, args['--config'] || 'builder.config.js');
+const configPath = (function () {
+  if (args['--config']) {
+    return path.join(cwd, args['--config']);
+  } else {
+    return path.resolve(__dirname, './default.config.js');
+  }
+})();
 const config = require(configPath);
 
 const isDev = args['--watch'];
@@ -91,7 +99,7 @@ const copyResource = async () => {
 
 // main
 (async function () {
-  console.log(`[${pkgName}]: START ${isDev ? 'DEV' : 'BUILD'}`);
+  console.log(`[${pkgName}]: start ${isDev ? 'dev' : 'build'}`);
 
   // reset
   fs.removeSync(outputPath);
@@ -108,7 +116,7 @@ const copyResource = async () => {
   });
 
   renderIndex(menuConfig);
-  console.log(`[${pkgName}]: BUILD FINISH`);
+  console.log(`[${pkgName}]: build finish`);
 })();
 
 if (isDev) {
