@@ -12,12 +12,6 @@
     "type": "git",
     "url": "git+https://github.com/qxtang/doc-builder.git"
   },
-  "nodemonConfig": {
-    "ignore": [
-      "dist/*"
-    ],
-    "delay": 1000
-  },
   "files": [
     "readme.md",
     "bin",
