@@ -12,6 +12,9 @@ const pkgName = require('../package.json').name.toUpperCase();
 const args = arg({
   '--config': String,
   '--watch': Boolean,
+  '--input': String,
+  '--output': String,
+  '--resource': String,
 
   // Aliases
   '-w': '--watch',
@@ -28,9 +31,9 @@ const configPath = (function () {
 const config = require(configPath);
 
 const isDev = args['--watch'];
-const inputPath = path.join(cwd, config.input);
-const outputPath = path.join(cwd, config.output);
-const resourcePath = path.join(inputPath, config.resource);
+const inputPath = path.join(cwd, args['--input'] || config.input);
+const outputPath = path.join(cwd, args['--output'] || config.output);
+const resourcePath = path.join(inputPath, args['--resource'] || config.resource);
 const PORT = config.port;
 const HOST = config.host;
 
@@ -95,7 +98,7 @@ const renderIndex = (menuConfig) => {
 };
 
 const copyResource = async () => {
-  fs.copySync(resourcePath, path.join(outputPath, config.resource));
+  fs.copySync(resourcePath, path.join(outputPath, args['--resource'] || config.resource));
 };
 
 // main

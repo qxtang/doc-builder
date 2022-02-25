@@ -1,6 +1,6 @@
 {
   "name": "@qxtang/doc-builder",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "build html doc from markdown files",
   "scripts": {
     "dev": "node ./bin/doc-builder.js -w"

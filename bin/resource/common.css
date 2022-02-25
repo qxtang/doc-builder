@@ -23,7 +23,7 @@ body {
   width: max-content;
   padding-right: 10px;
   overflow-y: auto;
-  transition: all .5s;
+  transition: all 0.2s;
 }
 
 .menu.show {

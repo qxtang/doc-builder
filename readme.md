@@ -19,7 +19,7 @@ npm install @qxtang/doc-builder
 }
 ```
 
-- 创建文件夹 notes，在其中编写 markdown 文档
+- 创建文件夹 docs，在其中编写 markdown 文档
 
 ## 自定义配置
 
@@ -31,7 +31,7 @@ npm install @qxtang/doc-builder
     port: 8181, // 本地运行端口号，默认值 8181
     host: '127.0.0.1', // 本地运行 host，默认值 127.0.0.1
     output: '/dist', // 输出文件夹，默认值 '/dist'
-    input: '/notes', // 存放 markdown 文件的文件夹，默认值 '/notes'
+    input: '/docs', // 存放 markdown 文件的文件夹，默认值 '/docs'
     resource: '/resource', // 存放图片等资源的文件夹，相对于 input，默认值 '/resource'
   };
   ```
@@ -42,3 +42,6 @@ npm install @qxtang/doc-builder
 
 - `-w` 启动本地服务
 - `--config` 声明配置文件，非必传
+- `--input` 存放 markdown 文件的文件夹，非必传
+- `--output` 输出文件夹，非必传
+- `--resource` 存放图片等资源的文件夹，相对于 input，非必传
