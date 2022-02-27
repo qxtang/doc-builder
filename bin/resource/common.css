@@ -31,10 +31,21 @@ body {
 }
 
 .menu > .item {
-  display: block;
+  display: flex;
+  align-items: center;
   color: blue;
   margin-bottom: 5px;
   text-decoration: none;
+}
+
+.menu > .item.active::after {
+  content: '上次看到';
+  margin-left: 5px;
+  background-color: #dedede;
+  font-size: 14px;
+  padding: 3px 5px;
+  color: #333333;
+  border-radius: 5px;
 }
 
 .menu > .item:hover,

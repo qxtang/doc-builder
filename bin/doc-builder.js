@@ -75,7 +75,7 @@ const renderByFileName = (filename, menuConfig) => {
         return;
       }
 
-      fs.writeFileSync(`${outputPath}/${basename}.html`, str, { encoding: 'utf-8' });
+      fs.writeFileSync(path.join(outputPath, `${basename}.html`), str, { encoding: 'utf-8' });
     }
   );
 };
@@ -92,7 +92,7 @@ const renderIndex = (menuConfig) => {
         return;
       }
 
-      fs.writeFileSync(`${outputPath}/index.html`, str, { encoding: 'utf-8' });
+      fs.writeFileSync(path.join(outputPath, 'index.html'), str, { encoding: 'utf-8' });
     }
   );
 };
@@ -108,10 +108,10 @@ const copyResource = async () => {
   // reset
   fs.removeSync(outputPath);
   fs.mkdirSync(outputPath);
-  fs.copySync(path.resolve(__dirname, './resource'), `${outputPath}/resource`);
-  await copyResource();
-
+  
   // build
+  fs.copySync(path.resolve(__dirname, './resource'), path.join(outputPath, '/resource'));
+  await copyResource();
   const allFileName = await getAllFileName();
   const menuConfig = await getMenuConfig(allFileName);
 
