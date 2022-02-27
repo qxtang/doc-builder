@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const menuItems = document.querySelectorAll('.menu > .item');
 
     menuItems.forEach((item) => {
-      console.log(item.innerText);
       if (`/${item.innerText}.html` === decodeURIComponent(lastVisit)) {
         item.classList.add('active');
       }
@@ -21,6 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   (function () {
     const pathname = window.location.pathname;
-    localStorage.setItem('last-visit', pathname);
+    const lastIndex = pathname.lastIndexOf('/');
+    const result = pathname.substring(lastIndex);
+
+    localStorage.setItem('last-visit', result);
   })();
 });

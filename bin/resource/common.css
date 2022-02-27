@@ -23,11 +23,11 @@ body {
   width: max-content;
   padding-right: 10px;
   overflow-y: auto;
-  transition: all 0.2s;
+  transition: all .2s;
 }
 
 .menu.show {
-  height: 50vh;
+  max-height: 50vh;
 }
 
 .menu > .item {
@@ -41,9 +41,12 @@ body {
 .menu > .item.active::after {
   content: '上次看到';
   margin-left: 5px;
-  background-color: #dedede;
-  font-size: 14px;
-  padding: 3px 5px;
+  background-color: #ededed;
+  font-size: 10px;
+  padding: 3px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #333333;
   border-radius: 5px;
 }
@@ -88,7 +91,7 @@ body {
   }
 
   .menu {
-    height: 0;
+    max-height: 0;
     width: 100%;
     padding-right: 0;
   }
@@ -101,6 +104,7 @@ body {
     align-items: center;
     justify-content: center;
     margin-bottom: 0px;
+    color: #333333;
   }
 
   .menu > .item:last-child {
