@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     menuItems.forEach((item) => {
       console.log(item.innerText);
-      if (`/${item.innerText}.html` === lastVisit) {
+      if (`/${item.innerText}.html` === decodeURIComponent(lastVisit)) {
         item.classList.add('active');
       }
     });
