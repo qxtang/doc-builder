@@ -1,8 +1,8 @@
 <div class="menu" id="menu">
-  <a href="./" class="item">INDEX</a>
-
   <% menu.forEach(function(item) { %>
-  <a class="item" href="<%= item %>.html"><%= item %></a>
+  <a class="item" title="<%= item %>" href="<%= item %>.html">
+    <span><%= item %></span>
+  </a>
   <% }) %>
 </div>
 
