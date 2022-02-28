@@ -15,6 +15,8 @@ const args = arg({
   '--input': String,
   '--output': String,
   '--resource': String,
+  '--port': String,
+  '--host': String,
 
   // Aliases
   '-w': '--watch',
@@ -34,8 +36,8 @@ const isDev = args['--watch'];
 const inputPath = path.join(cwd, args['--input'] || config.input);
 const outputPath = path.join(cwd, args['--output'] || config.output);
 const resourcePath = path.join(inputPath, args['--resource'] || config.resource);
-const PORT = config.port;
-const HOST = config.host;
+const PORT = args['--port'] || config.port;
+const HOST = args['--host'] || config.host;
 
 const getAllFileName = async () => {
   let result = fs.readdirSync(inputPath);
@@ -57,13 +59,13 @@ const getMenuConfig = async (allFileName) => {
 };
 
 const renderByFileName = (filename, menuConfig) => {
-  const markdown = fs.readFileSync(`${inputPath}/${filename}`, { encoding: 'utf-8' });
+  const markdown = fs.readFileSync(path.join(inputPath, filename), { encoding: 'utf-8' });
   const html = markdownIt.render(markdown);
   const extname = path.extname(filename);
   const basename = filename.substring(0, filename.indexOf(extname));
 
   ejs.renderFile(
-    path.resolve(__dirname, './tpl.ejs'),
+    path.resolve(__dirname, 'tpl.ejs'),
     {
       data: html,
       menu: menuConfig,
@@ -82,7 +84,7 @@ const renderByFileName = (filename, menuConfig) => {
 
 const renderIndex = (menuConfig) => {
   ejs.renderFile(
-    path.resolve(__dirname, './index.ejs'),
+    path.resolve(__dirname, 'index.ejs'),
     {
       menu: menuConfig,
     },
@@ -108,9 +110,9 @@ const copyResource = async () => {
   // reset
   fs.removeSync(outputPath);
   fs.mkdirSync(outputPath);
-  
+
   // build
-  fs.copySync(path.resolve(__dirname, './resource'), path.join(outputPath, '/resource'));
+  fs.copySync(path.resolve(__dirname, 'resource'), path.join(outputPath, 'resource'));
   await copyResource();
   const allFileName = await getAllFileName();
   const menuConfig = await getMenuConfig(allFileName);
