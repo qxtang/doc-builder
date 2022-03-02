@@ -20,6 +20,12 @@ const args = arg({
 
   // Aliases
   '-w': '--watch',
+  '-p': '--port',
+  '-h': '--host',
+  '-c': '--config',
+  '-i': '--input',
+  '-o': '--output',
+  '-r': '--resource',
 });
 
 const cwd = process.cwd();
