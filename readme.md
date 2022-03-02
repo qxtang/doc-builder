@@ -43,7 +43,7 @@ npm install @qxtang/doc-builder
 - `-w` 启动本地服务
 - `--port` 本地运行端口号
 - `--host` 本地运行 host
-- `--config` 声明配置文
+- `--config` 声明自定义配置文件
 - `--input` 存放 markdown 文件的文件夹
 - `--output` 输出文件夹
 - `--resource` 存放图片等资源的文件夹，相对于 input
