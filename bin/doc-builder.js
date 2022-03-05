@@ -5,45 +5,65 @@ const chokidar = require('chokidar');
 const fs = require('fs-extra');
 const ejs = require('ejs');
 const path = require('path');
-const markdownIt = require('markdown-it')();
+const markdownIt = require('markdown-it')({
+  html: true,
+});
 const liveServer = require('live-server');
 const pkgName = require('../package.json').name.toUpperCase();
 
 const args = arg({
   '--config': String,
+
+  // 配置
   '--watch': Boolean,
   '--input': String,
   '--output': String,
   '--resource': String,
   '--port': String,
   '--host': String,
+  '--title': String,
 
   // Aliases
   '-w': '--watch',
-  '-p': '--port',
-  '-h': '--host',
-  '-c': '--config',
-  '-i': '--input',
-  '-o': '--output',
-  '-r': '--resource',
 });
 
 const cwd = process.cwd();
-const configPath = (function () {
-  if (args['--config']) {
-    return path.join(cwd, args['--config']);
-  } else {
-    return path.resolve(__dirname, './default.config.js');
-  }
-})();
-const config = require(configPath);
 
-const isDev = args['--watch'];
-const inputPath = path.join(cwd, args['--input'] || config.input);
-const outputPath = path.join(cwd, args['--output'] || config.output);
-const resourcePath = path.join(inputPath, args['--resource'] || config.resource);
-const PORT = args['--port'] || config.port;
-const HOST = args['--host'] || config.host;
+const DEFAULT_CONFIG = {
+  watch: false,
+  port: 8181,
+  host: '127.0.0.1',
+  output: 'dist',
+  input: 'docs',
+  resource: 'resource',
+  title: 'docs',
+};
+
+const config = (function () {
+  let cfgByFile = {};
+
+  if (args['--config']) {
+    const filepath = path.join(cwd, args['--config']);
+    cfgByFile = require(filepath);
+  }
+
+  const result = {
+    watch: args['--watch'] || cfgByFile.watch || DEFAULT_CONFIG.watch,
+    port: args['--port'] || cfgByFile.port || DEFAULT_CONFIG.port,
+    host: args['--host'] || cfgByFile.host || DEFAULT_CONFIG.host,
+    output: args['--output'] || cfgByFile.output || DEFAULT_CONFIG.output,
+    input: args['--input'] || cfgByFile.input || DEFAULT_CONFIG.input,
+    resource: args['--resource'] || cfgByFile.resource || DEFAULT_CONFIG.resource,
+    title: args['--title'] || cfgByFile.title || DEFAULT_CONFIG.title,
+  };
+
+  return result;
+})();
+
+const isDev = config.watch;
+const inputPath = path.join(cwd, config.input);
+const outputPath = path.join(cwd, config.output);
+const resourcePath = path.join(inputPath, config.resource);
 
 const getAllFileName = async () => {
   let result = fs.readdirSync(inputPath);
@@ -75,7 +95,8 @@ const renderByFileName = (filename, menuConfig) => {
     {
       data: html,
       menu: menuConfig,
-      title: basename,
+      title: config.title,
+      basename: basename,
     },
     function (err, str) {
       if (err) {
@@ -93,6 +114,7 @@ const renderIndex = (menuConfig) => {
     path.resolve(__dirname, 'index.ejs'),
     {
       menu: menuConfig,
+      title: config.title,
     },
     function (err, str) {
       if (err) {
@@ -105,8 +127,8 @@ const renderIndex = (menuConfig) => {
   );
 };
 
-const copyResource = async () => {
-  fs.copySync(resourcePath, path.join(outputPath, args['--resource'] || config.resource));
+const copyUserResource = async () => {
+  fs.copySync(resourcePath, path.join(outputPath, config.resource));
 };
 
 // main
@@ -118,16 +140,20 @@ const copyResource = async () => {
   fs.mkdirSync(outputPath);
 
   // build
+  // 拷贝模板资源
   fs.copySync(path.resolve(__dirname, 'resource'), path.join(outputPath, 'resource'));
-  await copyResource();
+
+  // 拷贝用户的资源
+  await copyUserResource();
+
   const allFileName = await getAllFileName();
   const menuConfig = await getMenuConfig(allFileName);
 
+  renderIndex(menuConfig);
   allFileName.forEach((filename) => {
     renderByFileName(filename, menuConfig);
   });
 
-  renderIndex(menuConfig);
   console.log(`[${pkgName}]: build finish`);
 })();
 
@@ -137,24 +163,24 @@ if (isDev) {
     const extname = path.extname(filename);
     console.log(`[${pkgName}]: file change:`, basename);
 
-    await copyResource();
+    await copyUserResource();
 
     if (extname === '.md') {
       const allFileName = await getAllFileName();
       const menuConfig = await getMenuConfig(allFileName);
 
-      renderByFileName(basename, menuConfig);
       renderIndex(menuConfig);
+      renderByFileName(basename, menuConfig);
     }
   });
 
   liveServer.start({
-    port: PORT,
-    host: HOST,
+    port: config.port,
+    host: config.host,
     root: outputPath,
     open: false,
     logLevel: 0,
   });
 
-  console.log(`[${pkgName}]: run at http://${HOST}:${PORT}`);
+  console.log(`[${pkgName}]: run at http://${config.host}:${config.port}`);
 }

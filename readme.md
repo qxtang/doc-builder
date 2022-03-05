@@ -28,22 +28,29 @@ npm install @qxtang/doc-builder
   ```javascript
   // builder.config.js
   module.exports = {
+    watch: false, // 是否启动本地服务，默认值 false
     port: 8181, // 本地运行端口号，默认值 8181
     host: '127.0.0.1', // 本地运行 host，默认值 127.0.0.1
     output: 'dist', // 输出文件夹，默认值 'dist'
     input: 'docs', // 存放 markdown 文件的文件夹，默认值 'docs'
     resource: 'resource', // 存放图片等资源的文件夹，路径相对于 input，打包时会一并复制，默认值 'resource'（即位置为 docs\resource）
+    title: 'docs', // 站点主标题，默认值 docs
   };
   ```
 
 - 执行时传入 `doc-builder --config=builder.config.js`
 
+## 自定义首页
+
+创建 index.md 即可
+
 ## 可选命令行参数
 
-- `-w` 启动本地服务
+- `-w`，`--watch` 启动本地服务
 - `--port` 本地运行端口号
 - `--host` 本地运行 host
 - `--config` 声明自定义配置文件
 - `--input` 存放 markdown 文件的文件夹
 - `--output` 输出文件夹
 - `--resource` 存放图片等资源的文件夹，相对于 input
+- `--title` 站点主标题
