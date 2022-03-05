@@ -2,6 +2,7 @@
 
 const arg = require('arg');
 const chokidar = require('chokidar');
+const { exec } = require('child_process');
 const fs = require('fs-extra');
 const ejs = require('ejs');
 const path = require('path');
@@ -13,6 +14,7 @@ const pkgName = require('../package.json').name.toUpperCase();
 
 const args = arg({
   '--config': String,
+  '--init': Boolean,
 
   // 配置
   '--watch': Boolean,
@@ -133,6 +135,31 @@ const copyUserResource = async () => {
 
 // main
 (async function () {
+  if (args['--init']) {
+    try {
+      console.log(`[${pkgName}]: 开始初始化:`, cwd);
+
+      exec('git clone https://gitee.com/qx9/doc-builder-tpl.git .', { cwd }, function (err) {
+        if (err) {
+          throw new Error(err);
+        }
+        fs.removeSync(path.join(cwd, '.git'));
+
+        exec('npm install', { cwd }, function (err) {
+          if (err) {
+            throw new Error(err);
+          }
+
+          console.log(`[${pkgName}]: \n初始化成功！\nnpm run dev --启动本地服务\nnpm run build --打包`);
+        });
+      });
+    } catch (e) {
+      console.log(`[${pkgName}]: 初始化失败：`, e);
+    }
+
+    return;
+  }
+
   console.log(`[${pkgName}]: start ${isDev ? 'dev' : 'build'}`);
 
   // reset
@@ -155,32 +182,32 @@ const copyUserResource = async () => {
   });
 
   console.log(`[${pkgName}]: build finish`);
+
+  if (isDev) {
+    chokidar.watch(inputPath, { depth: 10 }).on('change', async (filename) => {
+      const basename = path.basename(filename);
+      const extname = path.extname(filename);
+      console.log(`[${pkgName}]: file change:`, basename);
+
+      await copyUserResource();
+
+      if (extname === '.md') {
+        const allFileName = await getAllFileName();
+        const menuConfig = await getMenuConfig(allFileName);
+
+        renderIndex(menuConfig);
+        renderByFileName(basename, menuConfig);
+      }
+    });
+
+    liveServer.start({
+      port: config.port,
+      host: config.host,
+      root: outputPath,
+      open: false,
+      logLevel: 0,
+    });
+
+    console.log(`[${pkgName}]: run at http://${config.host}:${config.port}`);
+  }
 })();
-
-if (isDev) {
-  chokidar.watch(inputPath, { depth: 10 }).on('change', async (filename) => {
-    const basename = path.basename(filename);
-    const extname = path.extname(filename);
-    console.log(`[${pkgName}]: file change:`, basename);
-
-    await copyUserResource();
-
-    if (extname === '.md') {
-      const allFileName = await getAllFileName();
-      const menuConfig = await getMenuConfig(allFileName);
-
-      renderIndex(menuConfig);
-      renderByFileName(basename, menuConfig);
-    }
-  });
-
-  liveServer.start({
-    port: config.port,
-    host: config.host,
-    root: outputPath,
-    open: false,
-    logLevel: 0,
-  });
-
-  console.log(`[${pkgName}]: run at http://${config.host}:${config.port}`);
-}

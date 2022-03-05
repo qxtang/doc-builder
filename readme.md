@@ -2,24 +2,18 @@
 
 将任意文件夹中的 markdown 生成 html 文档站点，根据文件名生成菜单，[demo](https://qxtang.github.io/mj/)
 
-## 安装
+## 安装 & 初始化
 
 ```sh
-mkdir project && cd project && mkdir docs && npm init
-npm install @qxtang/doc-builder
+npm install -g @qxtang/doc-builder
+mkdir project && cd project && doc-builder --init
 ```
 
 ## 使用
 
-- 在 docs 文件夹中创建并编写你的 markdown 文档
-- 向 package.json 添加
-
-  ```jsonc
-  "scripts": {
-    "dev": "doc-builder -w", // 本地运行
-    "build": "doc-builder" // 打包
-  }
-  ```
+- 在 docs 文件夹中创建并编写你的 markdown 文件
+- `doc-builder -w` 启动本地服务
+- `doc-builder` 打包
 
 ## 自定义配置
 
@@ -40,13 +34,9 @@ npm install @qxtang/doc-builder
 
 - 执行时传入 `doc-builder --config=builder.config.js`
 
-## 自定义首页
+## 命令行参数
 
-创建 index.md 即可
-
-## 可选命令行参数
-
-- `-w`，`--watch` 启动本地服务
+- `--watch`，`-w` 启动本地服务
 - `--port` 本地运行端口号
 - `--host` 本地运行 host
 - `--config` 声明自定义配置文件
