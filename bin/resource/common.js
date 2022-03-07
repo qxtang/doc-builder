@@ -32,6 +32,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   (function () {
     const htmlName = getHtmlName();
+    if (['/', '/index.html'].includes(htmlName)) {
+      return;
+    }
     localStorage.setItem('last-visit', htmlName);
   })();
 });
