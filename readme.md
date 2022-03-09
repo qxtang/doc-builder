@@ -29,6 +29,7 @@ mkdir project && cd project && doc-builder --init
     input: 'docs', // 存放 markdown 文件的文件夹，默认值 'docs'
     resource: 'resource', // 存放图片等资源的文件夹，路径相对于 input，打包时会一并复制，默认值 'resource'（即位置为 docs\resource）
     title: 'docs', // 站点主标题，默认值 docs
+    favicon: './resource/favicon.ico', // favicon 资源路径，默认值 ./resource/favicon.ico
   };
   ```
 
@@ -44,6 +45,7 @@ mkdir project && cd project && doc-builder --init
 - `--output` 输出文件夹
 - `--resource` 存放图片等资源的文件夹，相对于 input
 - `--title` 站点主标题
+- `--favicon` favicon 资源路径
 
 ## PWA 支持
 

@@ -24,6 +24,7 @@ const args = arg({
   '--port': String,
   '--host': String,
   '--title': String,
+  '--favicon': String,
 
   // Aliases
   '-w': '--watch',
@@ -39,6 +40,7 @@ const DEFAULT_CONFIG = {
   input: 'docs',
   resource: 'resource',
   title: 'docs',
+  favicon: './resource/favicon.ico',
 };
 
 const config = (function () {
@@ -57,6 +59,7 @@ const config = (function () {
     input: args['--input'] || cfgByFile.input || DEFAULT_CONFIG.input,
     resource: args['--resource'] || cfgByFile.resource || DEFAULT_CONFIG.resource,
     title: args['--title'] || cfgByFile.title || DEFAULT_CONFIG.title,
+    favicon: args['--favicon'] || cfgByFile.favicon || DEFAULT_CONFIG.favicon,
   };
 
   return result;
@@ -99,6 +102,7 @@ const renderByFileName = (filename, menuConfig) => {
       menu: menuConfig,
       title: config.title,
       basename: basename,
+      favicon: config.favicon,
     },
     function (err, str) {
       if (err) {
@@ -117,6 +121,7 @@ const renderIndex = (menuConfig) => {
     {
       menu: menuConfig,
       title: config.title,
+      favicon: config.favicon,
     },
     function (err, str) {
       if (err) {
