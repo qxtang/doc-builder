@@ -1,3 +1,3 @@
 module.exports = {
-  title: '',
+  host: '0.0.0.0'
 }

@@ -1,0 +1,16 @@
+{
+  "name": "test name",
+  "short_name": "test short_name",
+  "display": "standalone",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "background_color": "#ff0000",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "https://www.baidu.com/img/flexible/logo/pc/result.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ]
+}

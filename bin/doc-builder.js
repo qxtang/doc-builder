@@ -129,8 +129,19 @@ const renderIndex = (menuConfig) => {
   );
 };
 
+// 拷贝模板资源
+const copyTplResource = async () => {
+  fs.copySync(path.resolve(__dirname, 'resource'), path.join(outputPath, 'resource'));
+};
+
+// 拷贝用户的资源
 const copyUserResource = async () => {
-  fs.copySync(resourcePath, path.join(outputPath, config.resource));
+  try {
+    fs.copySync(resourcePath, path.join(outputPath, config.resource));
+    fs.copySync(path.join(cwd, 'manifest.json'), path.join(outputPath, 'manifest.json'));
+  } catch (e) {
+    // console.log(e);
+  }
 };
 
 // main
@@ -167,10 +178,7 @@ const copyUserResource = async () => {
   fs.mkdirSync(outputPath);
 
   // build
-  // 拷贝模板资源
-  fs.copySync(path.resolve(__dirname, 'resource'), path.join(outputPath, 'resource'));
-
-  // 拷贝用户的资源
+  await copyTplResource();
   await copyUserResource();
 
   const allFileName = await getAllFileName();

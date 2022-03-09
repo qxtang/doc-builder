@@ -44,3 +44,7 @@ mkdir project && cd project && doc-builder --init
 - `--output` 输出文件夹
 - `--resource` 存放图片等资源的文件夹，相对于 input
 - `--title` 站点主标题
+
+## PWA 支持
+
+项目根目录下创建并编辑 manifest.json 即可
