@@ -80,12 +80,13 @@ const getAllFileName = async () => {
 };
 
 const getMenuConfig = async (allFileName) => {
-  const result = allFileName.map((filename) => {
+  let result = allFileName.map((filename) => {
     const extname = path.extname(filename);
     const basename = filename.substring(0, filename.indexOf(extname));
     return basename;
   });
 
+  result = result.filter((i) => i !== 'index');
   return result;
 };
 

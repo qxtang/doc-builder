@@ -26,7 +26,7 @@ mkdir project && cd project && doc-builder --init
     port: 8181, // 本地运行端口号，默认值 8181
     host: '127.0.0.1', // 本地运行 host，默认值 127.0.0.1
     output: 'dist', // 输出文件夹，默认值 'dist'
-    input: 'docs', // 存放 markdown 文件的文件夹，默认值 'docs'
+    input: 'docs', // 输入文件夹，即存放 markdown 文件的文件夹，默认值 'docs'
     resource: 'resource', // 存放图片等资源的文件夹，路径相对于 input，打包时会一并复制，默认值 'resource'（即位置为 docs\resource）
     title: 'docs', // 站点主标题，默认值 docs
     favicon: './resource/favicon.ico', // favicon 资源路径，默认值 ./resource/favicon.ico
@@ -41,7 +41,7 @@ mkdir project && cd project && doc-builder --init
 - `--port` 本地运行端口号
 - `--host` 本地运行 host
 - `--config` 声明自定义配置文件
-- `--input` 存放 markdown 文件的文件夹
+- `--input` 输入文件夹
 - `--output` 输出文件夹
 - `--resource` 存放图片等资源的文件夹，相对于 input
 - `--title` 站点主标题
@@ -50,3 +50,7 @@ mkdir project && cd project && doc-builder --init
 ## PWA 支持
 
 项目根目录下创建并编辑 manifest.json 即可
+
+## 自定义首页
+
+输入文件夹下创建并编辑 index.md 即可
