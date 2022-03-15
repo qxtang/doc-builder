@@ -4,20 +4,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= title %></title>
 
-  <!-- TODO -->
-  <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css@master/github-markdown.css" /> -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css@master/github-markdown.css" />
   <link rel="stylesheet" href="<%= root %>/resource/common.css" />
-  <!-- <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@latest/styles/default.min.css" /> -->
-  <!-- <script src="//unpkg.com/@highlightjs/cdn-assets@latest/highlight.min.js"></script> -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@latest/styles/default.min.css" />
+  <script src="//unpkg.com/@highlightjs/cdn-assets@latest/highlight.min.js"></script>
 
   <link rel="manifest" href="<%= root %>/manifest.json" />
   <link rel="shortcut icon" type="image/x-icon" href="<%= favicon %>" />
   <link rel="bookmark" type="image/x-icon" href="<%= favicon %>" />
   <link rel="apple-touch-icon" href="<%= favicon %>" />
 
-  <!-- <script>
+  <script>
     hljs.highlightAll();
-  </script> -->
+  </script>
 
   <script>
     document.addEventListener('DOMContentLoaded', async function () {
@@ -43,6 +42,7 @@
             if (isDir) {
               const parentTextEle = document.createElement('span');
               parentTextEle.innerText = info.dirname;
+              parentTextEle.title = info.dirname;
 
               const parentEle = document.createElement('div');
               parentEle.className = 'parent expand';
@@ -61,6 +61,7 @@
               const childrenEle = document.createElement('a');
               childrenEle.className = 'children';
               childrenEle.innerText = info.basename;
+              childrenEle.title = info.basename;
               childrenEle.id = info.id;
               childrenEle.href = href;
 
@@ -102,6 +103,15 @@
           return;
         }
         window.localStorage.setItem(LAST_VISIT_LOCALSTORAGE_KEY, path);
+      })();
+
+      // mobile_menu
+      (function () {
+        const mobile_menu = document.getElementById('mobile_menu');
+        const menu = document.getElementById('menu');
+        mobile_menu.addEventListener('click', function () {
+          menu.classList.toggle('show');
+        });
       })();
     });
   </script>

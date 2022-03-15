@@ -1,6 +1,6 @@
 # DOC-BUILDER
 
-将任意文件夹中的 markdown 生成 html 文档站点，根据文件名生成菜单，[demo](https://qxtang.github.io/mj/)
+将任意文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单，并支持无限级菜单，[demo](https://qxtang.github.io/mj/)
 
 ## 安装 & 初始化
 
@@ -52,3 +52,7 @@ mkdir project && cd project && doc-builder --init
 ## PWA 支持
 
 项目根目录下创建并编辑 manifest.json 即可
+
+## TODO
+
+- 菜单项文字超长问题
