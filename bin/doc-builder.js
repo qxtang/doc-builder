@@ -84,10 +84,7 @@ const getDirTree = (dir) => {
       const basename = filename.substring(0, filename.indexOf(extname));
       const relative_path = path.relative(inputPath, dir);
       const output_path = path.join(outputPath, relative_path);
-      const id = (function () {
-        const a = path.join(relative_path, filename);
-        return a;
-      })();
+      const id = path.join(relative_path, filename);
 
       if (extname === '.md') {
         res.push({
@@ -139,7 +136,7 @@ const renderDirTree = async (dirTree) => {
         ejs.renderFile(
           path.resolve(__dirname, 'tpl.ejs'),
           {
-            root: config.root,
+            root: config.root ? `/${config.root}` : config.root,
             html: html,
             title: config.title,
             basename: basename,

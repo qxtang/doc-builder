@@ -4,22 +4,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= title %></title>
 
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css@master/github-markdown.css" />
+  <!-- TODO -->
+  <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css@master/github-markdown.css" /> -->
   <link rel="stylesheet" href="<%= root %>/resource/common.css" />
-  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@latest/styles/default.min.css" />
-  <script src="//unpkg.com/@highlightjs/cdn-assets@latest/highlight.min.js"></script>
+  <!-- <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@latest/styles/default.min.css" /> -->
+  <!-- <script src="//unpkg.com/@highlightjs/cdn-assets@latest/highlight.min.js"></script> -->
 
   <link rel="manifest" href="<%= root %>/manifest.json" />
   <link rel="shortcut icon" type="image/x-icon" href="<%= favicon %>" />
   <link rel="bookmark" type="image/x-icon" href="<%= favicon %>" />
   <link rel="apple-touch-icon" href="<%= favicon %>" />
 
-  <script>
+  <!-- <script>
     hljs.highlightAll();
-  </script>
+  </script> -->
 
   <script>
     document.addEventListener('DOMContentLoaded', async function () {
+      const LAST_VISIT_LOCALSTORAGE_KEY = '20220315210423_LAST_VISIT_LOCALSTORAGE_KEY';
+
       // gen menu
       await (async function () {
         const menu = document.getElementById('menu');
@@ -30,8 +33,12 @@
             return;
           }
 
-          fileInfoArr.forEach((info) => {
+          for (let info of fileInfoArr) {
             const isDir = !!info.dirname;
+
+            if (info.basename === 'index') {
+              continue;
+            }
 
             if (isDir) {
               const parentTextEle = document.createElement('span');
@@ -41,7 +48,7 @@
               parentEle.className = 'parent expand';
               parentEle.id = info.id;
               parentTextEle.addEventListener('click', function () {
-                parentEle.classList.toggle('expand')
+                parentEle.classList.toggle('expand');
               });
 
               parentEle.appendChild(parentTextEle);
@@ -49,20 +56,52 @@
 
               insertMenuHtmlByFileInfoArr(info.children, parentEle);
             } else {
+              const href = `<%= root %>/${info.relative_path ? info.relative_path + '/' : ''}${info.basename}.html`;
+
               const childrenEle = document.createElement('a');
               childrenEle.className = 'children';
               childrenEle.innerText = info.basename;
               childrenEle.id = info.id;
-              childrenEle.href = `<%= root %>${info.relative_path ? '\\' + info.relative_path : ''}\\${
-                info.basename
-              }.html`;
+              childrenEle.href = href;
+
+              const host = window.location.protocol + '//' + window.location.host;
+              const url = decodeURIComponent(childrenEle.href);
+              const _path = url.replace(host, '');
+
+              const isActive = (function () {
+                const path = decodeURIComponent(window.location.pathname);
+                return path === _path;
+              })();
+
+              const isLastVisit = (function () {
+                const lastVisit = window.localStorage.getItem(LAST_VISIT_LOCALSTORAGE_KEY);
+                return lastVisit === _path;
+              })();
+
+              if (isActive) {
+                childrenEle.classList.add('active');
+              }
+
+              if (isLastVisit) {
+                childrenEle.classList.add('last_visit');
+              }
 
               ele.appendChild(childrenEle);
             }
-          });
+          }
         };
 
         insertMenuHtmlByFileInfoArr(data, menu);
+      })();
+
+      // set last visit
+      (function () {
+        const path = decodeURIComponent(window.location.pathname);
+
+        if (['/', '/index.html'].includes(path)) {
+          return;
+        }
+        window.localStorage.setItem(LAST_VISIT_LOCALSTORAGE_KEY, path);
       })();
     });
   </script>
