@@ -25,6 +25,7 @@ const args = arg({
   '--host': String,
   '--title': String,
   '--favicon': String,
+  '--root': String,
 
   // Aliases
   '-w': '--watch',
@@ -41,6 +42,7 @@ const DEFAULT_CONFIG = {
   resource: 'resource',
   title: 'docs',
   favicon: './resource/favicon.ico',
+  root: '',
 };
 
 const config = (function () {
@@ -60,6 +62,7 @@ const config = (function () {
     resource: args['--resource'] || cfgByFile.resource || DEFAULT_CONFIG.resource,
     title: args['--title'] || cfgByFile.title || DEFAULT_CONFIG.title,
     favicon: args['--favicon'] || cfgByFile.favicon || DEFAULT_CONFIG.favicon,
+    root: args['--root'] || cfgByFile.root || DEFAULT_CONFIG.root,
   };
 
   return result;
@@ -70,69 +73,100 @@ const inputPath = path.join(cwd, config.input);
 const outputPath = path.join(cwd, config.output);
 const resourcePath = path.join(inputPath, config.resource);
 
-const getAllFileName = async () => {
-  let result = fs.readdirSync(inputPath);
-  result = result.filter((filename) => {
-    const extname = path.extname(filename);
-    return extname === '.md';
-  });
-  return result;
-};
+// 获取文件树
+const getDirTree = (dir) => {
+  const fn = (dir) => {
+    let res = [];
+    const filenames = fs.readdirSync(dir);
 
-const getMenuConfig = async (allFileName) => {
-  let result = allFileName.map((filename) => {
-    const extname = path.extname(filename);
-    const basename = filename.substring(0, filename.indexOf(extname));
-    return basename;
-  });
+    filenames.forEach((filename) => {
+      const extname = path.extname(filename);
+      const basename = filename.substring(0, filename.indexOf(extname));
+      const relative_path = path.relative(inputPath, dir);
+      const output_path = path.join(outputPath, relative_path);
+      const id = (function () {
+        const a = path.join(relative_path, filename);
+        return a;
+      })();
 
-  result = result.filter((i) => i !== 'index');
-  return result;
-};
-
-const renderByFileName = (filename, menuConfig) => {
-  const markdown = fs.readFileSync(path.join(inputPath, filename), { encoding: 'utf-8' });
-  const html = markdownIt.render(markdown);
-  const extname = path.extname(filename);
-  const basename = filename.substring(0, filename.indexOf(extname));
-
-  ejs.renderFile(
-    path.resolve(__dirname, 'tpl.ejs'),
-    {
-      data: html,
-      menu: menuConfig,
-      title: config.title,
-      basename: basename,
-      favicon: config.favicon,
-    },
-    function (err, str) {
-      if (err) {
-        console.log(`[${pkgName}]: render ejs error:`, err);
-        return;
+      if (extname === '.md') {
+        res.push({
+          id,
+          filename,
+          basename,
+          path: dir,
+          relative_path,
+          output_path,
+        });
+      } else if (extname === '') {
+        res.push({
+          id,
+          dirname: filename,
+          basename,
+          path: dir,
+          relative_path,
+          output_path,
+          children: fn(path.join(dir, filename)),
+        });
       }
+    });
 
-      fs.writeFileSync(path.join(outputPath, `${basename}.html`), str, { encoding: 'utf-8' });
-    }
-  );
+    return res;
+  };
+
+  let res = fn(dir);
+  res = res.filter((i) => i.dirname !== 'resource');
+  return res;
 };
 
-const renderIndex = (menuConfig) => {
-  ejs.renderFile(
-    path.resolve(__dirname, 'index.ejs'),
-    {
-      menu: menuConfig,
-      title: config.title,
-      favicon: config.favicon,
-    },
-    function (err, str) {
-      if (err) {
-        console.log(`[${pkgName}]: render index ejs error:`, err);
-        return;
-      }
+// 生成文件树 json
+const genDirTreeJson = async (dirTree) => {
+  fs.writeFileSync(path.join(outputPath, 'dir_tree.json'), JSON.stringify(dirTree), { encoding: 'utf-8' });
+};
 
-      fs.writeFileSync(path.join(outputPath, 'index.html'), str, { encoding: 'utf-8' });
-    }
-  );
+// 根据文件树执行渲染
+const renderDirTree = async (dirTree) => {
+  const renderByFileInfoArr = (fileInfoArr = []) => {
+    fileInfoArr.forEach((info) => {
+      const isDir = !!info.dirname;
+
+      if (!isDir) {
+        const markdown = fs.readFileSync(path.join(info.path, info.filename), { encoding: 'utf-8' });
+        const html = markdownIt.render(markdown);
+        const extname = path.extname(info.filename);
+        const basename = info.filename.substring(0, info.filename.indexOf(extname));
+
+        ejs.renderFile(
+          path.resolve(__dirname, 'tpl.ejs'),
+          {
+            root: config.root,
+            html: html,
+            title: config.title,
+            basename: basename,
+            favicon: config.favicon,
+          },
+          function (err, str) {
+            if (err) {
+              console.log(`[${pkgName}]: render ejs error:`, err);
+              return;
+            }
+
+            const isPathExists = fs.pathExistsSync(info.output_path);
+
+            if (!isPathExists) {
+              fs.mkdirSync(info.output_path);
+            }
+
+            fs.writeFileSync(path.join(info.output_path, `${basename}.html`), str, { encoding: 'utf-8' });
+          }
+        );
+      } else {
+        renderByFileInfoArr(info.children);
+      }
+    });
+  };
+
+  renderByFileInfoArr(dirTree);
 };
 
 // 拷贝模板资源
@@ -150,8 +184,8 @@ const copyUserResource = async () => {
   }
 };
 
-// main
-(async function () {
+// Main
+(async function Main() {
   if (args['--init']) {
     try {
       console.log(`[${pkgName}]: 开始初始化:`, cwd);
@@ -179,39 +213,38 @@ const copyUserResource = async () => {
 
   console.log(`[${pkgName}]: start ${isDev ? 'dev' : 'build'}`);
 
-  // reset
+  // reset output
   fs.removeSync(outputPath);
   fs.mkdirSync(outputPath);
 
   // build
+  const dirTree = getDirTree(inputPath);
   await copyTplResource();
   await copyUserResource();
-
-  const allFileName = await getAllFileName();
-  const menuConfig = await getMenuConfig(allFileName);
-
-  renderIndex(menuConfig);
-  allFileName.forEach((filename) => {
-    renderByFileName(filename, menuConfig);
-  });
+  await renderDirTree(dirTree);
+  await genDirTreeJson(dirTree);
 
   console.log(`[${pkgName}]: build finish`);
 
   if (isDev) {
+    // watch input
     chokidar.watch(inputPath, { depth: 10 }).on('change', async (filename) => {
-      const basename = path.basename(filename);
-      const extname = path.extname(filename);
-      console.log(`[${pkgName}]: file change:`, basename);
+      console.log(`[${pkgName}]: input change:`, filename);
 
+      const dirTree = getDirTree(inputPath);
       await copyUserResource();
+      await renderDirTree(dirTree);
+      await genDirTreeJson(dirTree);
+    });
 
-      if (extname === '.md') {
-        const allFileName = await getAllFileName();
-        const menuConfig = await getMenuConfig(allFileName);
+    // watch tpl
+    chokidar.watch(__dirname, { depth: 10, ignored: '**/*.less' }).on('change', async (filename) => {
+      console.log(`[${pkgName}]: tpl change:`, filename);
 
-        renderIndex(menuConfig);
-        renderByFileName(basename, menuConfig);
-      }
+      const dirTree = getDirTree(inputPath);
+      await copyTplResource();
+      await renderDirTree(dirTree);
+      await genDirTreeJson(dirTree);
     });
 
     liveServer.start({

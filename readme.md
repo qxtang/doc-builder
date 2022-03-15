@@ -30,6 +30,7 @@ mkdir project && cd project && doc-builder --init
     resource: 'resource', // 存放图片等资源的文件夹，路径相对于 input，打包时会一并复制，默认值 'resource'（即位置为 docs\resource）
     title: 'docs', // 站点主标题，默认值 docs
     favicon: './resource/favicon.ico', // favicon 资源路径，默认值 ./resource/favicon.ico
+    root: '', // 站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 'path'，默认值 ''
   };
   ```
 
@@ -46,11 +47,8 @@ mkdir project && cd project && doc-builder --init
 - `--resource` 存放图片等资源的文件夹，相对于 input
 - `--title` 站点主标题
 - `--favicon` favicon 资源路径
+- `--root` 站点根目录
 
 ## PWA 支持
 
 项目根目录下创建并编辑 manifest.json 即可
-
-## 自定义首页
-
-输入文件夹下创建并编辑 index.md 即可

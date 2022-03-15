@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-  <%- include('./head', { title: basename==='index' ? title : title + ' - ' + basename, favicon: favicon }); %>
+  <%- include('./head', { title: title + ' - ' + basename, favicon: favicon, root: root }); %>
   <body>
-    <%- include('./menu', { menu: menu }); %>
-    <div class="content markdown-body"><%- data %></div>
-    <%- include('./footer'); %>
+    <div class="menu" id="menu"></div>
+    <div class="content markdown-body"><%- html %></div>
   </body>
 </html>
