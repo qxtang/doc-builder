@@ -239,15 +239,8 @@ const doBuild = async () => {
 
   if (isDev) {
     // watch input
-    chokidar.watch(inputPath, { depth: 10 }).on('change', async (filename) => {
-      console.log(`[${pkgName}]: input change:`, filename);
-
-      await doBuild();
-    });
-
-    // watch tpl
-    chokidar.watch(__dirname, { depth: 10, ignored: '**/*.less' }).on('change', async (filename) => {
-      console.log(`[${pkgName}]: tpl change:`, filename);
+    chokidar.watch([inputPath, __dirname], { depth: 10 }).on('change', async (filename) => {
+      console.log(`[${pkgName}]: file change:`, filename);
 
       await doBuild();
     });

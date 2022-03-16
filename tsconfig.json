@@ -17,5 +17,5 @@
     "paths": {}
   },
   "include": ["src/doc-builder.ts"],
-  "exclude": ["node_modules", "src/types.ts"]
+  "exclude": ["node_modules"]
 }
