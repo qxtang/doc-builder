@@ -51,6 +51,10 @@ body {
       padding: 0 8px;
       color: #333333;
 
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
       &.active {
         color: #06f;
       }
@@ -78,29 +82,20 @@ body {
       overflow: hidden;
       cursor: pointer;
 
-      &.expand {
-        height: auto;
-
-        > span {
-          &::after {
-            transform: rotate(180deg);
-          }
-        }
-      }
-
       > span {
         display: flex;
         align-items: center;
         justify-content: space-between;
         height: @item_height;
-        line-height: @item_height;
         padding: 0 8px;
         font-weight: 900;
-        font-size: 16px;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         &::after {
           content: '';
-          flex-shrink: 0;
           transition: all 0.2s;
           height: 0;
           width: 0;
@@ -112,14 +107,24 @@ body {
           border-bottom-color: transparent;
         }
       }
+
+      &.expand {
+        height: auto;
+
+        > span {
+          &::after {
+            transform: rotate(180deg);
+          }
+        }
+      }
     }
   }
 
   .mobile_menu {
     display: none;
     position: fixed;
-    bottom: 1vw;
-    right: 1vw;
+    bottom: calc(7px + 1vw);
+    right: calc(7px + 1vw);
     color: #ffffff;
     background-color: #333333;
     border-radius: 50%;
