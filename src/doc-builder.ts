@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import { IConfig, IDirTree } from './types';
+
 const arg = require('arg');
 const chokidar = require('chokidar');
 const { exec } = require('child_process');
@@ -33,7 +35,7 @@ const args = arg({
 
 const cwd = process.cwd();
 
-const DEFAULT_CONFIG = {
+const DEFAULT_CONFIG: IConfig = {
   watch: false,
   port: 8181,
   host: '127.0.0.1',
@@ -45,8 +47,8 @@ const DEFAULT_CONFIG = {
   root: '',
 };
 
-const config = (function () {
-  let cfgByFile = {};
+const config: IConfig = (function () {
+  let cfgByFile: IConfig = {};
 
   if (args['--config']) {
     const filepath = path.join(cwd, args['--config']);
@@ -73,10 +75,12 @@ const inputPath = path.join(cwd, config.input);
 const outputPath = path.join(cwd, config.output);
 const resourcePath = path.join(inputPath, config.resource);
 
+let buildTimer = null;
+
 // 获取文件树
-const getDirTree = (dir) => {
+const getDirTree = (dir): Array<IDirTree> => {
   const fn = (dir) => {
-    let res = [];
+    const res = [];
     const filenames = fs.readdirSync(dir);
 
     filenames.forEach((filename) => {
@@ -117,13 +121,13 @@ const getDirTree = (dir) => {
 };
 
 // 生成文件树 json
-const genDirTreeJson = async (dirTree) => {
+const genDirTreeJson = async (dirTree: Array<IDirTree>) => {
   fs.writeFileSync(path.join(outputPath, 'dir_tree.json'), JSON.stringify(dirTree), { encoding: 'utf-8' });
 };
 
 // 根据文件树执行渲染
-const renderDirTree = async (dirTree) => {
-  const renderByFileInfoArr = (fileInfoArr = []) => {
+const renderDirTree = async (dirTree: Array<IDirTree>) => {
+  const renderByFileInfoArr = (fileInfoArr: Array<IDirTree> = []) => {
     fileInfoArr.forEach((info) => {
       const isDir = !!info.dirname;
 
@@ -134,7 +138,7 @@ const renderDirTree = async (dirTree) => {
         const basename = info.filename.substring(0, info.filename.indexOf(extname));
 
         ejs.renderFile(
-          path.resolve(__dirname, 'tpl.ejs'),
+          path.resolve(__dirname, 'ejs/tpl.ejs'),
           {
             root: config.root ? `/${config.root}` : config.root,
             html: html,
@@ -181,6 +185,23 @@ const copyUserResource = async () => {
   }
 };
 
+const doBuild = async () => {
+  const fn = async () => {
+    const dirTree = getDirTree(inputPath);
+    await copyTplResource();
+    await copyUserResource();
+    await renderDirTree(dirTree);
+    await genDirTreeJson(dirTree);
+    console.log(`[${pkgName}]: build finish`);
+  };
+
+  if (buildTimer) {
+    clearTimeout(buildTimer);
+  }
+
+  buildTimer = setTimeout(fn, 2000);
+};
+
 // Main
 (async function Main() {
   if (args['--init']) {
@@ -214,34 +235,21 @@ const copyUserResource = async () => {
   fs.removeSync(outputPath);
   fs.mkdirSync(outputPath);
 
-  // build
-  const dirTree = getDirTree(inputPath);
-  await copyTplResource();
-  await copyUserResource();
-  await renderDirTree(dirTree);
-  await genDirTreeJson(dirTree);
-
-  console.log(`[${pkgName}]: build finish`);
+  await doBuild();
 
   if (isDev) {
     // watch input
     chokidar.watch(inputPath, { depth: 10 }).on('change', async (filename) => {
       console.log(`[${pkgName}]: input change:`, filename);
 
-      const dirTree = getDirTree(inputPath);
-      await copyUserResource();
-      await renderDirTree(dirTree);
-      await genDirTreeJson(dirTree);
+      await doBuild();
     });
 
     // watch tpl
     chokidar.watch(__dirname, { depth: 10, ignored: '**/*.less' }).on('change', async (filename) => {
       console.log(`[${pkgName}]: tpl change:`, filename);
 
-      const dirTree = getDirTree(inputPath);
-      await copyTplResource();
-      await renderDirTree(dirTree);
-      await genDirTreeJson(dirTree);
+      await doBuild();
     });
 
     liveServer.start({
