@@ -46,7 +46,7 @@ const main = () => {
     }
 
     lock = true;
-    console.log('START COMPILE：', { isWatch });
+    console.log('START COMPILE:', { isWatch });
 
     if (!fs.existsSync(outputPath)) {
       fs.mkdirSync(outputPath);

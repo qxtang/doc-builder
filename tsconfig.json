@@ -13,8 +13,7 @@
     "target": "es2017",
     "sourceMap": false,
     "declaration": false,
-    "lib": ["es2015"],
-    "paths": {}
+    "lib": ["es2015"]
   },
   "include": ["src/doc-builder.ts"],
   "exclude": ["node_modules"]

@@ -187,6 +187,11 @@ const copyUserResource = async () => {
 
 const doBuild = async () => {
   const fn = async () => {
+    if (!fs.existsSync(inputPath)) {
+      console.log(`[${pkgName}]: 输入文件夹不存在`);
+      return;
+    }
+
     const dirTree = getDirTree(inputPath);
     await copyTplResource();
     await copyUserResource();
