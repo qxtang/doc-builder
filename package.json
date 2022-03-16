@@ -1,11 +1,11 @@
 {
   "name": "@qxtang/doc-builder",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "build html doc from markdown files",
   "scripts": {
     "prepublishOnly": "npm run compile && npm run build:demo",
     "dev": "node ./bin/doc-builder.js --input=markdown --output=docs -w",
-    "build:demo": "node ./bin/doc-builder.js --input=markdown --output=docs",
+    "build:demo": "node ./bin/doc-builder.js --input=markdown --output=docs --root=doc-builder",
     "compile": "node ./scripts/compile.js",
     "compile:watch": "node ./scripts/compile.js -w"
   },

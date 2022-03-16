@@ -187,11 +187,6 @@ const copyUserResource = async () => {
 
 const doBuild = async () => {
   const fn = async () => {
-    if (!fs.existsSync(inputPath)) {
-      console.log(`[${pkgName}]: 输入文件夹不存在`);
-      return;
-    }
-
     const dirTree = getDirTree(inputPath);
     await copyTplResource();
     await copyUserResource();
@@ -235,6 +230,11 @@ const doBuild = async () => {
   }
 
   console.log(`[${pkgName}]: start ${isDev ? 'dev' : 'build'}`);
+
+  if (!fs.existsSync(inputPath)) {
+    console.log(`[${pkgName}]: 输入文件夹不存在:`, inputPath);
+    return;
+  }
 
   // reset output
   fs.removeSync(outputPath);

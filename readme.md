@@ -1,8 +1,9 @@
 # DOC-BUILDER
 
-- 将任意文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单，[demo](https://qxtang.github.io/doc-builder/)
+- 将任意文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单，零配置
 - 支持无限级菜单
 - 响应式设计支持移动端访问
+- [Preview 示例预览](https://qxtang.github.io/doc-builder/)
 
 ## 安装 & 初始化
 
