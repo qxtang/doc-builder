@@ -2,17 +2,19 @@
 
 import { IConfig, IDirTree } from './types';
 
-const arg = require('arg');
-const chokidar = require('chokidar');
-const { exec } = require('child_process');
-const fs = require('fs-extra');
-const ejs = require('ejs');
-const path = require('path');
-const markdownIt = require('markdown-it')({
+import arg from 'arg';
+import chokidar from 'chokidar';
+import { exec, ExecException } from 'child_process';
+import fs from 'fs-extra';
+import ejs from 'ejs';
+import path from 'path';
+import liveServer from 'live-server';
+import markdownIt from 'markdown-it';
+
+const markdownItInstance = markdownIt({
   html: true,
 });
-const liveServer = require('live-server');
-const pkgName = require('../package.json').name.toUpperCase();
+const pkgName = 'DOC-BUILDER';
 
 const args = arg({
   '--config': String,
@@ -48,16 +50,26 @@ const DEFAULT_CONFIG: IConfig = {
 };
 
 const config: IConfig = (function () {
-  let cfgByFile: IConfig = {};
+  let cfgByFile: Partial<IConfig> = {};
 
   if (args['--config']) {
     const filepath = path.join(cwd, args['--config']);
     cfgByFile = require(filepath);
   }
 
+  const port: number = (function () {
+    if (!isNaN(Number(args['--port']))) {
+      return Number(args['--port']);
+    }
+    if (!isNaN(Number(cfgByFile.port))) {
+      return Number(cfgByFile.port);
+    }
+    return DEFAULT_CONFIG.port;
+  })();
+
   const result = {
     watch: args['--watch'] || cfgByFile.watch || DEFAULT_CONFIG.watch,
-    port: args['--port'] || cfgByFile.port || DEFAULT_CONFIG.port,
+    port,
     host: args['--host'] || cfgByFile.host || DEFAULT_CONFIG.host,
     output: args['--output'] || cfgByFile.output || DEFAULT_CONFIG.output,
     input: args['--input'] || cfgByFile.input || DEFAULT_CONFIG.input,
@@ -75,15 +87,15 @@ const inputPath = path.join(cwd, config.input);
 const outputPath = path.join(cwd, config.output);
 const resourcePath = path.join(inputPath, config.resource);
 
-let buildTimer = null;
+let buildTimer: NodeJS.Timeout;
 
 // 获取文件树
-const getDirTree = (dir): Array<IDirTree> => {
-  const fn = (dir) => {
-    const res = [];
+const getDirTree = (dir: string): Array<IDirTree> => {
+  const fn = (dir: string) => {
+    const res: Array<IDirTree> = [];
     const filenames = fs.readdirSync(dir);
 
-    filenames.forEach((filename) => {
+    filenames.forEach((filename: string) => {
       const extname = path.extname(filename);
       const basename = filename.substring(0, filename.indexOf(extname));
       const relative_path = path.relative(inputPath, dir);
@@ -103,6 +115,7 @@ const getDirTree = (dir): Array<IDirTree> => {
         res.push({
           id,
           dirname: filename,
+          filename: '',
           basename,
           path: dir,
           relative_path,
@@ -128,14 +141,14 @@ const genDirTreeJson = async (dirTree: Array<IDirTree>) => {
 // 根据文件树执行渲染
 const renderDirTree = async (dirTree: Array<IDirTree>) => {
   const renderByFileInfoArr = (fileInfoArr: Array<IDirTree> = []) => {
-    fileInfoArr.forEach((info) => {
+    fileInfoArr.forEach((info: IDirTree) => {
       const isDir = !!info.dirname;
 
       if (!isDir) {
         const markdown = fs.readFileSync(path.join(info.path, info.filename), { encoding: 'utf-8' });
-        const html = markdownIt.render(markdown);
+        const html = markdownItInstance.render(markdown);
         const extname = path.extname(info.filename);
-        const basename = info.filename.substring(0, info.filename.indexOf(extname));
+        const basename = info?.filename?.substring(0, info?.filename?.indexOf(extname));
 
         ejs.renderFile(
           path.resolve(__dirname, 'ejs/tpl.ejs'),
@@ -146,10 +159,9 @@ const renderDirTree = async (dirTree: Array<IDirTree>) => {
             basename: basename,
             favicon: config.favicon,
           },
-          function (err, str) {
+          function (err: Error | null, str: string) {
             if (err) {
-              console.log(`[${pkgName}]: render ejs error:`, err);
-              return;
+              throw err;
             }
 
             const isPathExists = fs.pathExistsSync(info.output_path);
@@ -177,12 +189,8 @@ const copyTplResource = async () => {
 
 // 拷贝用户的资源
 const copyUserResource = async () => {
-  try {
-    fs.copySync(resourcePath, path.join(outputPath, config.resource));
-    fs.copySync(path.join(cwd, 'manifest.json'), path.join(outputPath, 'manifest.json'));
-  } catch (e) {
-    // console.log(e);
-  }
+  fs.copySync(resourcePath, path.join(outputPath, config.resource));
+  fs.copySync(path.join(cwd, 'manifest.json'), path.join(outputPath, 'manifest.json'));
 };
 
 const doBuild = async () => {
@@ -208,15 +216,15 @@ const doBuild = async () => {
     try {
       console.log(`[${pkgName}]: 开始初始化:`, cwd);
 
-      exec('git clone https://gitee.com/qx9/doc-builder-tpl.git .', { cwd }, function (err) {
+      exec('git clone https://gitee.com/qx9/doc-builder-tpl.git .', { cwd }, function (err: ExecException | null) {
         if (err) {
-          throw new Error(err);
+          throw err;
         }
         fs.removeSync(path.join(cwd, '.git'));
 
-        exec('npm install', { cwd }, function (err) {
+        exec('npm install', { cwd }, function (err: ExecException | null) {
           if (err) {
-            throw new Error(err);
+            throw err;
           }
 
           console.log(`[${pkgName}]: \n初始化成功！\nnpm run dev --启动本地服务\nnpm run build --打包`);
@@ -244,7 +252,7 @@ const doBuild = async () => {
 
   if (isDev) {
     // watch input
-    chokidar.watch([inputPath, __dirname], { depth: 10 }).on('change', async (filename) => {
+    chokidar.watch([inputPath, __dirname], { depth: 10 }).on('change', async (filename: string) => {
       console.log(`[${pkgName}]: file change:`, filename);
 
       await doBuild();

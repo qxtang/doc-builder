@@ -39,6 +39,11 @@ const compileScript = () => {
   );
 };
 
+const reset = () => {
+  fs.removeSync(outputPath);
+  fs.mkdirSync(outputPath);
+};
+
 const main = () => {
   const fn = () => {
     if (lock) {
@@ -47,6 +52,10 @@ const main = () => {
 
     lock = true;
     console.log('START COMPILE:', { isWatch });
+
+    if (!isWatch) {
+      reset();
+    }
 
     if (!fs.existsSync(outputPath)) {
       fs.mkdirSync(outputPath);

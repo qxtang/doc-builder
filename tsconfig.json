@@ -2,19 +2,20 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "./bin/",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "noEmitOnError": true,
     "noUnusedLocals": true,
+    "esModuleInterop": true,
     "noUnusedParameters": false,
     "moduleResolution": "node",
     "strictPropertyInitialization": false,
     "module": "commonjs",
-    "target": "es2017",
+    "strict": true,
+    "target": "ES5",
     "sourceMap": false,
     "declaration": false,
-    "lib": ["es2015"]
+    "lib": ["es2017"],
+    "resolveJsonModule": true
   },
   "include": ["src/doc-builder.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "./bin/"]
 }

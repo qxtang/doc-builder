@@ -1,10 +1,10 @@
 {
   "name": "@qxtang/doc-builder",
-  "version": "1.0.23",
-  "description": "build html doc from markdown files",
+  "version": "1.0.24",
+  "description": "将任意文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单，零配置",
   "scripts": {
     "prepublishOnly": "npm run compile && npm run build:demo",
-    "dev": "node ./bin/doc-builder.js --input=markdown --output=docs -w",
+    "dev": "node ./bin/doc-builder.js --input=markdown --output=docs --config=doc-builder.test.config.js -w",
     "build:demo": "node ./bin/doc-builder.js --input=markdown --output=docs --root=doc-builder",
     "compile": "node ./scripts/compile.js",
     "compile:watch": "node ./scripts/compile.js -w"
@@ -32,6 +32,10 @@
     "@babel/core": "^7.17.7",
     "@babel/preset-env": "^7.16.11",
     "@babel/runtime": "^7.17.7",
+    "@types/ejs": "^3.1.0",
+    "@types/fs-extra": "^9.0.13",
+    "@types/live-server": "^1.2.1",
+    "@types/markdown-it": "^12.2.3",
     "@types/node": "^17.0.21",
     "@typescript-eslint/eslint-plugin": "^5.15.0",
     "@typescript-eslint/parser": "^5.15.0",
