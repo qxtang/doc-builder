@@ -1,11 +1,11 @@
 {
   "name": "@qxtang/doc-builder",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "description": "将任意文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单，零配置",
   "scripts": {
     "prepublishOnly": "npm run compile && npm run build:demo",
-    "dev": "node ./bin/doc-builder.js --input=markdown --output=docs --config=doc-builder.test.config.js -w",
-    "build:demo": "node ./bin/doc-builder.js --input=markdown --output=docs --root=doc-builder",
+    "dev": "node ./bin/doc-builder.js --config=doc-builder.dev.config.js -w",
+    "build:demo": "node ./bin/doc-builder.js --config=doc-builder.demo.config.js",
     "compile": "node ./scripts/compile.js",
     "compile:watch": "node ./scripts/compile.js -w"
   },

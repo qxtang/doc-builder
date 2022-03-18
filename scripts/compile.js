@@ -22,10 +22,6 @@ const compileTs = () => {
   execSync(`npx tsc -p ${cwd}`);
 };
 
-const moveEjs = () => {
-  fs.copySync(path.join(srcPath, 'ejs'), path.join(outputPath, 'ejs'));
-};
-
 const compileLess = () => {
   execSync(`npx less ${path.join(srcPath, 'resource/style.less')} ${path.join(outputPath, 'resource/style.css')} -x`);
 };
@@ -37,6 +33,11 @@ const compileScript = () => {
       'resource/script.js'
     )} --out-file ${path.join(outputPath, 'resource/script.js')}`
   );
+};
+
+const moveTpl = () => {
+  fs.copySync(path.join(srcPath, 'ejs'), path.join(outputPath, 'ejs'));
+  fs.copySync(path.join(srcPath, 'resource/lib'), path.join(outputPath, 'resource/lib'));
 };
 
 const reset = () => {
@@ -62,7 +63,7 @@ const main = () => {
     }
 
     compileTs();
-    moveEjs();
+    moveTpl();
     compileLess();
     compileScript();
     console.log('COMPILE FINISH');
