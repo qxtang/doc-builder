@@ -37,7 +37,7 @@ const compileScript = () => {
 
 const moveTpl = () => {
   fs.copySync(path.join(srcPath, 'ejs'), path.join(outputPath, 'ejs'));
-  fs.copySync(path.join(srcPath, 'resource/lib'), path.join(outputPath, 'resource/lib'));
+  fs.copySync(path.join(srcPath, 'resource'), path.join(outputPath, 'resource'));
 };
 
 const reset = () => {
