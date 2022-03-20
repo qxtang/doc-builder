@@ -4,12 +4,15 @@ import { IConfig, IDirTree } from './types';
 
 import arg from 'arg';
 import chokidar from 'chokidar';
-import { exec, ExecException } from 'child_process';
+import { exec } from 'child_process';
 import fs from 'fs-extra';
 import ejs from 'ejs';
 import path from 'path';
+import { promisify } from 'util';
 import liveServer from 'live-server';
 import markdownIt from 'markdown-it';
+
+const execAsync = promisify(exec);
 
 const markdownItInstance = markdownIt({
   html: true,
@@ -219,20 +222,10 @@ const doBuild = async () => {
     try {
       console.log(`[${pkgName}]: 开始初始化:`, cwd);
 
-      exec('git clone https://gitee.com/qx9/doc-builder-tpl.git .', { cwd }, function (err: ExecException | null) {
-        if (err) {
-          throw err;
-        }
-        fs.removeSync(path.join(cwd, '.git'));
-
-        exec('npm install', { cwd }, function (err: ExecException | null) {
-          if (err) {
-            throw err;
-          }
-
-          console.log(`[${pkgName}]: \n初始化成功！\nnpm run dev --启动本地服务\nnpm run build --打包`);
-        });
-      });
+      await execAsync('git clone https://gitee.com/qx9/doc-builder-tpl.git .', { cwd });
+      fs.removeSync(path.join(cwd, '.git'));
+      await execAsync('npm install', { cwd });
+      console.log(`[${pkgName}]: \n初始化成功！\nnpm run dev --启动本地服务\nnpm run build --打包`);
     } catch (e) {
       console.log(`[${pkgName}]: 初始化失败：`, e);
     }
