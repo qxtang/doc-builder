@@ -32,7 +32,7 @@ mkdir project && cd project && doc-builder --init
     input: 'docs', // 输入文件夹，即存放 markdown 文件的文件夹，默认值 'docs'
     resource: 'resource', // 存放图片等资源的文件夹，路径相对于输入文件夹，打包时会一并复制，默认值 'resource'（即位置为 docs\resource），当然也可以使用自己的图床
     title: 'docs', // 站点主标题，默认值 docs
-    favicon: './resource/favicon.ico', // favicon 资源路径，默认值 ./resource/favicon.ico
+    favicon: '', // 自定义 favicon 资源路径
     root: '', // 站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 'path'，默认值 ''
   };
   ```

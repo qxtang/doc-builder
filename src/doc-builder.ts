@@ -45,7 +45,7 @@ const DEFAULT_CONFIG: IConfig = {
   input: 'docs',
   resource: 'resource',
   title: 'docs',
-  favicon: './resource/favicon.ico',
+  favicon: '/resource/favicon.ico',
   root: '',
 };
 
@@ -67,6 +67,9 @@ const config: IConfig = (function () {
     return DEFAULT_CONFIG.port;
   })();
 
+  const _root = args['--root'] || cfgByFile.root || DEFAULT_CONFIG.root;
+  const root = _root ? `/${_root}` : _root;
+
   const result = {
     watch: args['--watch'] || cfgByFile.watch || DEFAULT_CONFIG.watch,
     port,
@@ -75,8 +78,8 @@ const config: IConfig = (function () {
     input: args['--input'] || cfgByFile.input || DEFAULT_CONFIG.input,
     resource: args['--resource'] || cfgByFile.resource || DEFAULT_CONFIG.resource,
     title: args['--title'] || cfgByFile.title || DEFAULT_CONFIG.title,
-    favicon: args['--favicon'] || cfgByFile.favicon || DEFAULT_CONFIG.favicon,
-    root: args['--root'] || cfgByFile.root || DEFAULT_CONFIG.root,
+    favicon: args['--favicon'] || cfgByFile.favicon || root + DEFAULT_CONFIG.favicon,
+    root,
   };
 
   return result;
@@ -153,7 +156,7 @@ const renderDirTree = async (dirTree: Array<IDirTree>) => {
         ejs.renderFile(
           path.resolve(__dirname, 'ejs/tpl.ejs'),
           {
-            root: config.root ? `/${config.root}` : config.root,
+            root: config.root,
             html: html,
             title: config.title,
             basename: basename,
