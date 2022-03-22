@@ -87,13 +87,33 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   };
 
+  var insertAbout = function insertAbout(ele) {
+    var about = document.createElement('a');
+    about.className = 'children about';
+    about.title = '关于';
+    about.href = "/".concat(window.root);
+    about.innerText = '关于';
+
+    var isActive = function () {
+      var path = decodeURIComponent(window.location.pathname);
+      return ["/".concat(window.root, "/"), "/".concat(window.root, "/index.html"), '/', '/index.html'].includes(path);
+    }();
+
+    if (isActive) {
+      about.classList.add('active');
+    }
+
+    ele.appendChild(about);
+  };
+
   (function () {
     var menu = document.getElementById('menu');
     fetch("".concat(window.root, "/dir_tree.json")).then(function (res) {
       return res.json();
     }).then(function (data) {
       // gen menu
-      insertMenuHtmlByFileInfoArr(data, menu); // set last visit
+      insertMenuHtmlByFileInfoArr(data, menu);
+      insertAbout(menu); // set last visit
 
       var path = decodeURIComponent(window.location.pathname);
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>docs - index</title>
+  <title>docs - doc1</title>
 
   <link rel="stylesheet" href="/doc-builder/resource/lib/github-markdown.min.css" />
   <link rel="stylesheet" href="/doc-builder/resource/style.css" />
@@ -27,39 +27,12 @@
 </head>
 
   <body>
-    <div class="menu" id="menu"></div>
-    <div class="mobile_menu" id="mobile_menu">≡</div>
-    <div class="content markdown-body"><h1>index</h1>
-<p>日照香炉生紫烟，遥看瀑布挂前川。<br>
-飞流直下三千尺，疑是银河落九天。</p>
-<pre><code class="language-javascript">const tools = {
-  debounce: (fn, wait = 500) =&gt; {
-    let timer = null;
-    return function () {
-      if (timer) {
-        clearTimeout(timer);
-      }
-      timer = setTimeout(() =&gt; {
-        fn.apply(this, arguments);
-      }, wait);
-    };
-  },
-  throttle: (fn, wait = 500) =&gt; {
-    let canrun = true;
-    return function () {
-      if (!canrun) {
-        return;
-      }
-      canrun = false;
-      setTimeout(() =&gt; {
-        fn.apply(this, arguments);
-        canrun = true;
-      }, wait);
-    };
-  },
-};
+    <div class="content markdown-body"><h1>doc1</h1>
+<p>寻寻觅觅，冷冷清清，凄凄惨惨戚戚。乍暖还寒时候，最难将息。三杯两盏淡酒，怎敌他、晚来风急！雁过也，正伤心，却是旧时相识。<br>
+满地黄花堆积，憔悴损，如今有谁堪摘？守着窗儿，独自怎生得黑！梧桐更兼细雨，到黄昏、点点滴滴。这次第，怎一个愁字了得！</p>
+<pre><code class="language-javascript">console.log('hello world');
 </code></pre>
-<p><img src="https://picsum.photos/id/10/300/300" alt=""></p>
+<p><img src="https://picsum.photos/id/237/200/300" alt=""></p>
 </div>
   </body>
 </html>

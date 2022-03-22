@@ -155,28 +155,37 @@ const renderDirTree = async (dirTree: Array<IDirTree>) => {
         const html = markdownItInstance.render(markdown);
         const extname = path.extname(info.filename);
         const basename = info?.filename?.substring(0, info?.filename?.indexOf(extname));
+        const ejsData = {
+          root: config.root,
+          html: html,
+          title: config.title,
+          basename: basename,
+          favicon: config.favicon,
+        };
+
+        ejs.renderFile(path.resolve(__dirname, 'ejs/tpl.ejs'), ejsData, function (err: Error | null, str: string) {
+          if (err) {
+            throw err;
+          }
+          const isPathExists = fs.pathExistsSync(info.output_path);
+          if (!isPathExists) {
+            fs.mkdirSync(info.output_path);
+          }
+          fs.writeFileSync(path.join(info.output_path, `${basename}.html`), str, { encoding: 'utf-8' });
+        });
 
         ejs.renderFile(
-          path.resolve(__dirname, 'ejs/tpl.ejs'),
-          {
-            root: config.root,
-            html: html,
-            title: config.title,
-            basename: basename,
-            favicon: config.favicon,
-          },
+          path.resolve(__dirname, 'ejs/tpl-share.ejs'),
+          ejsData,
           function (err: Error | null, str: string) {
             if (err) {
               throw err;
             }
-
             const isPathExists = fs.pathExistsSync(info.output_path);
-
             if (!isPathExists) {
               fs.mkdirSync(info.output_path);
             }
-
-            fs.writeFileSync(path.join(info.output_path, `${basename}.html`), str, { encoding: 'utf-8' });
+            fs.writeFileSync(path.join(info.output_path, `${basename}-share.html`), str, { encoding: 'utf-8' });
           }
         );
       } else {

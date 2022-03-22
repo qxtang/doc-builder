@@ -3,7 +3,6 @@
   "version": "1.0.28",
   "description": "将任意文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单，零配置",
   "scripts": {
-    "prepare": "npx husky install && npx husky add .husky/pre-commit \"yarn build:demo\"",
     "prepublishOnly": "npm run compile && npm run build:demo",
     "dev": "node ./bin/doc-builder.js --config=doc-builder.dev.config.js -w",
     "build:demo": "node ./bin/doc-builder.js --config=doc-builder.demo.config.js",
@@ -41,7 +40,6 @@
     "@typescript-eslint/eslint-plugin": "^5.15.0",
     "@typescript-eslint/parser": "^5.15.0",
     "eslint": "^8.9.0",
-    "husky": "^7.0.4",
     "less": "^4.1.2",
     "typescript": "^4.6.2"
   },

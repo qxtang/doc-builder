@@ -66,6 +66,25 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   };
 
+  const insertAbout = (ele) => {
+    const about = document.createElement('a');
+    about.className = 'children about';
+    about.title = '关于';
+    about.href = `/${window.root}`;
+    about.innerText = '关于';
+
+    const isActive = (function () {
+      const path = decodeURIComponent(window.location.pathname);
+      return [`/${window.root}/`, `/${window.root}/index.html`, '/', '/index.html'].includes(path);
+    })();
+
+    if (isActive) {
+      about.classList.add('active');
+    }
+
+    ele.appendChild(about);
+  };
+
   (function () {
     const menu = document.getElementById('menu');
     fetch(`${window.root}/dir_tree.json`)
@@ -73,6 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
       .then((data) => {
         // gen menu
         insertMenuHtmlByFileInfoArr(data, menu);
+        insertAbout(menu);
 
         // set last visit
         const path = decodeURIComponent(window.location.pathname);

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>docs - index</title>
+  <title>docs - doc1</title>
 
   <link rel="stylesheet" href="/doc-builder/resource/lib/github-markdown.min.css" />
   <link rel="stylesheet" href="/doc-builder/resource/style.css" />
@@ -27,39 +27,9 @@
 </head>
 
   <body>
-    <div class="menu" id="menu"></div>
-    <div class="mobile_menu" id="mobile_menu">≡</div>
-    <div class="content markdown-body"><h1>index</h1>
-<p>日照香炉生紫烟，遥看瀑布挂前川。<br>
-飞流直下三千尺，疑是银河落九天。</p>
-<pre><code class="language-javascript">const tools = {
-  debounce: (fn, wait = 500) =&gt; {
-    let timer = null;
-    return function () {
-      if (timer) {
-        clearTimeout(timer);
-      }
-      timer = setTimeout(() =&gt; {
-        fn.apply(this, arguments);
-      }, wait);
-    };
-  },
-  throttle: (fn, wait = 500) =&gt; {
-    let canrun = true;
-    return function () {
-      if (!canrun) {
-        return;
-      }
-      canrun = false;
-      setTimeout(() =&gt; {
-        fn.apply(this, arguments);
-        canrun = true;
-      }, wait);
-    };
-  },
-};
-</code></pre>
-<p><img src="https://picsum.photos/id/10/300/300" alt=""></p>
+    <div class="content markdown-body"><h1>topic1_1 - doc1</h1>
+<p>朝辞白帝彩云间，千里江陵一日还。<br>
+两岸猿声啼不住，轻舟已过万重山。</p>
 </div>
   </body>
 </html>

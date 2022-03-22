@@ -34,6 +34,9 @@ body {
     overflow-y: auto;
     background-color: #f5f5f5;
     transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 
     @media screen and (max-width: @mobile_width) {
       width: 0;
@@ -44,6 +47,7 @@ body {
     }
 
     .children {
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       height: @item_height;
@@ -54,6 +58,11 @@ body {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+
+      &.about {
+        border-top: 1px solid #cccccc;
+        margin-top: auto;
+      }
 
       &.active {
         color: #06f;
@@ -77,6 +86,7 @@ body {
     }
 
     .parent {
+      flex-shrink: 0;
       margin-left: 10px;
       height: @item_height;
       overflow: hidden;
