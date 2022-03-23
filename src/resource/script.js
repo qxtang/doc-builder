@@ -70,12 +70,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const about = document.createElement('a');
     about.className = 'children about';
     about.title = '关于';
-    about.href = `/${window.root}`;
+    about.href = `${window.root}/`;
     about.innerText = '关于';
 
     const isActive = (function () {
       const path = decodeURIComponent(window.location.pathname);
-      return [`/${window.root}/`, `/${window.root}/index.html`, '/', '/index.html'].includes(path);
+      return [`${window.root}/`, `${window.root}/index.html`, '/', '/index.html'].includes(path);
     })();
 
     if (isActive) {

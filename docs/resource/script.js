@@ -91,12 +91,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var about = document.createElement('a');
     about.className = 'children about';
     about.title = '关于';
-    about.href = "/".concat(window.root);
+    about.href = "".concat(window.root, "/");
     about.innerText = '关于';
 
     var isActive = function () {
       var path = decodeURIComponent(window.location.pathname);
-      return ["/".concat(window.root, "/"), "/".concat(window.root, "/index.html"), '/', '/index.html'].includes(path);
+      return ["".concat(window.root, "/"), "".concat(window.root, "/index.html"), '/', '/index.html'].includes(path);
     }();
 
     if (isActive) {
