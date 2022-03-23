@@ -61,7 +61,8 @@ body {
 
       &.about {
         border-top: 1px solid #cccccc;
-        margin-top: auto;
+        margin-top: 10px;
+        padding-top: 10px;
       }
 
       &.active {
@@ -135,15 +136,18 @@ body {
     position: fixed;
     bottom: calc(7px + 1vw);
     right: calc(7px + 1vw);
-    color: #ffffff;
-    background-color: #333333;
+    background-color: rgba(255, 255, 255, 0.8);
+    outline: 1px solid #cccccc;
     border-radius: 50%;
-    font-size: 30px;
-    font-weight: 900;
     height: 45px;
     width: 45px;
     align-items: center;
     justify-content: center;
+
+    > img {
+      height: 27px;
+      width: 27px;
+    }
 
     &:active,
     &:hover {

@@ -3,7 +3,9 @@
   <%- include('./head', { title: title + ' - ' + basename, favicon: favicon, root: root }); %>
   <body>
     <div class="menu" id="menu"></div>
-    <div class="mobile_menu" id="mobile_menu">≡</div>
+    <div class="mobile_menu" id="mobile_menu">
+      <img src="https://cdn.jsdelivr.net/gh/FortAwesome/font-awesome/svgs/solid/bars.svg" alt="" />
+    </div>
     <div class="content markdown-body"><%- html %></div>
   </body>
 </html>
