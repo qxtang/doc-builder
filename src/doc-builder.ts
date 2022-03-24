@@ -136,6 +136,14 @@ const getDirTree = (dir: string): Array<IDirTree> => {
 
   let res = fn(dir);
   res = res.filter((i) => i.dirname !== 'resource');
+
+  res.sort((a, b) => {
+    if (a.children) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
   return res;
 };
 
@@ -159,7 +167,7 @@ const renderDirTree = async (dirTree: Array<IDirTree>) => {
           root: config.root,
           html: html,
           title: config.title,
-          basename: basename,
+          basename: basename === 'index' ? '' : basename,
           favicon: config.favicon,
         };
 

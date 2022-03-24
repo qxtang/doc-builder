@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-  <%- include('./head', { title: title + ' - ' + basename, favicon: favicon, root: root }); %>
+  <%- include('./head', { title: basename ? (title + ' - ' + basename) : title, favicon: favicon, root: root }); %>
   <body>
     <div class="menu" id="menu"></div>
     <div class="mobile_menu" id="mobile_menu">

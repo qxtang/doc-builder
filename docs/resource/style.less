@@ -30,13 +30,14 @@ body {
 
   .menu {
     @item_height: 40px;
-    width: 260px;
+    width: 290px;
     overflow-y: auto;
     background-color: #f5f5f5;
     transition: all 0.2s;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    padding-bottom: 50px;
 
     @media screen and (max-width: @mobile_width) {
       width: 0;
@@ -50,9 +51,10 @@ body {
       flex-shrink: 0;
       display: flex;
       align-items: center;
+      justify-content: flex-start;
       height: @item_height;
       text-decoration: none;
-      padding: 0 8px;
+      padding: 0 10px 0;
       color: #333333;
 
       overflow: hidden;
@@ -98,7 +100,7 @@ body {
         align-items: center;
         justify-content: space-between;
         height: @item_height;
-        padding: 0 8px;
+        padding: 0 10px;
         font-weight: 900;
 
         overflow: hidden;
@@ -126,6 +128,26 @@ body {
           &::after {
             transform: rotate(180deg);
           }
+        }
+      }
+
+      > .children {
+        padding: 0 10px 0 20px;
+        height: @item_height - 10px;
+
+        &.active {
+          &::before {
+            background-color: #06f;
+          }
+        }
+
+        &::before {
+          content: '';
+          background-color: #333333;
+          height: 4px;
+          width: 4px;
+          border-radius: 50%;
+          margin-right: 7px;
         }
       }
     }
