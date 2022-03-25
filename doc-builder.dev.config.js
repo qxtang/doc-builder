@@ -1,5 +1,7 @@
 module.exports = {
   input: 'markdown',
-  output: 'docs',
-  port: '7676',
+  output: 'dist',
+  port: '8080',
+  // root: 'dist',
+  watch: true
 };

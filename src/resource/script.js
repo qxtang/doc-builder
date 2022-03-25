@@ -14,33 +14,23 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       if (isDir) {
-        const parentTextEle = document.createElement('span');
-        parentTextEle.innerText = info.dirname;
-        parentTextEle.title = info.dirname;
+        const parentTextEle = $(`<span title="${info.dirname}">${info.dirname}</span>`);
+        const parentEle = $(`<div class="parent expand" id="${info.id}"></div>`);
 
-        const parentEle = document.createElement('div');
-        parentEle.className = 'parent expand';
-        parentEle.id = info.id;
-        parentTextEle.addEventListener('click', function () {
-          parentEle.classList.toggle('expand');
+        parentTextEle.on('click', function () {
+          parentEle.toggleClass('expand');
         });
 
-        parentEle.appendChild(parentTextEle);
-        ele.appendChild(parentEle);
+        parentEle.append(parentTextEle);
+        $(ele).append(parentEle);
 
         insertMenuHtmlByFileInfoArr(info.children, parentEle);
       } else {
         const href = `${window.root}/${info.relative_path ? info.relative_path + '/' : ''}${info.basename}.html`;
-
-        const childrenEle = document.createElement('a');
-        childrenEle.className = 'children';
-        childrenEle.innerText = info.basename;
-        childrenEle.title = info.basename;
-        childrenEle.id = info.id;
-        childrenEle.href = href;
+        const childrenEle = $(`<a id="${info.id}" href="${href}" class="children" title="${info.basename}">${info.basename}</a>`);
 
         const host = window.location.protocol + '//' + window.location.host;
-        const url = decodeURIComponent(childrenEle.href);
+        const url = decodeURIComponent(childrenEle.prop('href'));
         const _path = url.replace(host, '');
 
         const isActive = (function () {
@@ -54,24 +44,20 @@ document.addEventListener('DOMContentLoaded', function () {
         })();
 
         if (isActive) {
-          childrenEle.classList.add('active');
+          childrenEle.addClass('active');
         }
 
         if (isLastVisit) {
-          childrenEle.classList.add('last_visit');
+          childrenEle.addClass('last_visit');
         }
 
-        ele.appendChild(childrenEle);
+        $(ele).append(childrenEle);
       }
     }
   };
 
   const insertAbout = (ele) => {
-    const about = document.createElement('a');
-    about.className = 'children about';
-    about.title = '关于';
-    about.href = `${window.root}/`;
-    about.innerText = '关于';
+    const about = $(`<a href="${window.root}/" class="children about" title="关于">关于</a>`);
 
     const isActive = (function () {
       const path = decodeURIComponent(window.location.pathname);
@@ -79,14 +65,15 @@ document.addEventListener('DOMContentLoaded', function () {
     })();
 
     if (isActive) {
-      about.classList.add('active');
+      about.addClass('active');
     }
 
-    ele.appendChild(about);
+    $(ele).append(about);
   };
 
   (function () {
-    const menu = document.getElementById('menu');
+    const menu = $('#menu');
+
     fetch(`${window.root}/dir_tree.json`)
       .then((res) => res.json())
       .then((data) => {
@@ -96,19 +83,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // set last visit
         const path = decodeURIComponent(window.location.pathname);
-        if (['/', '/index.html'].includes(path)) {
+        if ([`${window.root}/`, `${window.root}/index.html`, '/', '/index.html'].includes(path)) {
           return;
         }
         window.localStorage.setItem(LAST_VISIT_LOCALSTORAGE_KEY, path);
       });
   })();
 
+  // link&img open in new tab
+  (function () {
+    const link = $('.markdown-body a');
+    const imgs = $('.markdown-body img');
+
+    link.each(function () {
+      $(this).attr('target', '_blank');
+    });
+
+    imgs.on('click', function () {
+      window.open($(this).attr('src'));
+    });
+  })();
+
   // mobile_menu
   (function () {
-    const mobile_menu = document.getElementById('mobile_menu');
-    const menu = document.getElementById('menu');
-    mobile_menu.addEventListener('click', function () {
-      menu.classList.toggle('show');
+    const mobile_menu = $('#mobile_menu');
+    const menu = $('#menu');
+    mobile_menu.on('click', function () {
+      menu.toggleClass('show');
     });
   })();
 });

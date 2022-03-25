@@ -212,8 +212,10 @@ const copyTplResource = async () => {
 
 // 拷贝用户的资源
 const copyUserResource = async () => {
-  fs.copySync(resourcePath, path.join(outputPath, config.resource));
-  fs.copySync(path.join(cwd, 'manifest.json'), path.join(outputPath, 'manifest.json'));
+  try {
+    fs.copySync(resourcePath, path.join(outputPath, config.resource));
+    fs.copySync(path.join(cwd, 'manifest.json'), path.join(outputPath, 'manifest.json'));
+  } catch (e) { }
 };
 
 const doBuild = async () => {

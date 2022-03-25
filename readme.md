@@ -2,8 +2,8 @@
 
 - 将任意文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单，零配置
 - 支持无限级菜单
-- 响应式设计支持移动端访问
-- [Preview 示例预览](https://qxtang.github.io/doc-builder/)
+- 响应式设计支持移动端访问；非单页，利于 SEO、首屏加载快
+- [Preview 示例预览](https://qx9.gitee.io/mj/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/React.html)
 
 ## 安装 & 初始化
 
@@ -41,6 +41,7 @@ mkdir project && cd project && doc-builder --init
 
 ## 命令行参数
 
+- `--init` 初始化仓库模板
 - `--watch`，`-w` 启动本地服务
 - `--port` 本地运行端口号
 - `--host` 本地运行 host

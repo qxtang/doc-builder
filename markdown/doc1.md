@@ -8,3 +8,7 @@ console.log('hello world');
 ```
 
 ![](https://picsum.photos/id/237/200/300)
+
+![](./resource/test.drawio.png)
+
+[baidu.com](http://www.baidu.com)
