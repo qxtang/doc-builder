@@ -27,7 +27,9 @@ document.addEventListener('DOMContentLoaded', function () {
         insertMenuHtmlByFileInfoArr(info.children, parentEle);
       } else {
         const href = `${window.root}/${info.relative_path ? info.relative_path + '/' : ''}${info.basename}.html`;
-        const childrenEle = $(`<a id="${info.id}" href="${href}" class="children" title="${info.basename}">${info.basename}</a>`);
+        const childrenEle = $(
+          `<a id="${info.id}" href="${href}" class="children" title="${info.basename}">${info.basename}</a>`
+        );
 
         const host = window.location.protocol + '//' + window.location.host;
         const url = decodeURIComponent(childrenEle.prop('href'));
@@ -90,17 +92,17 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   })();
 
-  // link&img open in new tab
+  // link&img
   (function () {
-    const link = $('.markdown-body a');
+    const link = $('.markdown-body a').not('.swipebox');
     const imgs = $('.markdown-body img');
 
     link.each(function () {
       $(this).attr('target', '_blank');
     });
 
-    imgs.on('click', function () {
-      window.open($(this).attr('src'));
+    imgs.each(function () {
+      $(this).wrap(`<a href="${$(this).prop('src')}" class="swipebox" title="${$(this).prop('alt')}"></a>`);
     });
   })();
 
@@ -111,5 +113,9 @@ document.addEventListener('DOMContentLoaded', function () {
     mobile_menu.on('click', function () {
       menu.toggleClass('show');
     });
+  })();
+
+  (function () {
+    $('.swipebox').swipebox();
   })();
 });
