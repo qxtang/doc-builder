@@ -94,15 +94,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // link&img
   (function () {
-    const link = $('.markdown-body a').not('.swipebox');
-    const imgs = $('.markdown-body img');
+    const link = $('.markdown-body a');
 
     link.each(function () {
       $(this).attr('target', '_blank');
     });
 
-    imgs.each(function () {
-      $(this).wrap(`<a href="${$(this).prop('src')}" class="swipebox" title="${$(this).prop('alt')}"></a>`);
+    $('.markdown-body img').viewer({
+      title: false,
+      toolbar: false,
+      navbar: false,
     });
   })();
 
@@ -113,9 +114,5 @@ document.addEventListener('DOMContentLoaded', function () {
     mobile_menu.on('click', function () {
       menu.toggleClass('show');
     });
-  })();
-
-  (function () {
-    $('.swipebox').swipebox();
   })();
 });
