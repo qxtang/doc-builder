@@ -12,7 +12,6 @@ export interface IConfig {
 
 export interface IOption extends IConfig {
   config: string;
-  init: boolean;
 }
 
 export interface IDirTree {

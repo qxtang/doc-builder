@@ -17,19 +17,9 @@ $ npm install -g @qxtang/doc-builder
 - `doc-builder --input=[刚才创建的文件夹] -w` 启动本地服务
 - `doc-builder --input=[刚才创建的文件夹] --output=[输出文件夹]` 打包
 
-### 快速初始化
-
-```sh
-$ mkdir project && cd project
-$ doc-builder --init # 初始化模板项目
-$ npm run dev        # 本地服务模式
-$ npm run build      # 打包
-```
-
 ## 可用命令行配置参数
 
 ```txt
---init                 初始化模板项目 (default: false)
 -w, --watch            本地服务模式 (default: false)
 --config <config>      自定义配置文件，配置文件中的配置优先级高于命令行配置 (default: "")
 --port <port>          本地服务模式端口号 (default: "8181")

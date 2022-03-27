@@ -3,18 +3,15 @@
 import { IConfig, IDirTree, IOption } from './types';
 
 import chokidar from 'chokidar';
-import { exec } from 'child_process';
 import fs from 'fs-extra';
 import ejs from 'ejs';
 import path from 'path';
-import { promisify } from 'util';
 import liveServer from 'live-server';
 import markdownIt from 'markdown-it';
 import { Command } from 'commander';
 
 const program = new Command();
 program
-  .option('--init', '初始化模板项目', false)
   .option('-w, --watch', '本地服务模式', false)
   .option('--config <config>', '自定义配置文件，配置文件中的配置优先级高于命令行配置', '')
   .option('--port <port>', '本地服务模式端口号', '8181')
@@ -31,20 +28,9 @@ program
   .option('--root <root>', '站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 "path"', '');
 
 program.showHelpAfterError();
-program.addHelpText(
-  'after',
-  `
-也可以这样快速初始化:
-  $ mkdir project && cd project
-  $ doc-builder --init # 初始化模板项目
-  $ npm run dev        # 本地服务模式
-  $ npm run build      # 打包
-`
-);
 program.parse(process.argv);
 const options = program.opts<IOption>();
 
-const execAsync = promisify(exec);
 const markdownItInstance = markdownIt({
   html: true,
 });
@@ -113,8 +99,13 @@ const getDirTree = (dir: string): Array<IDirTree> => {
       const relative_path = path.relative(inputPath, dir);
       const output_path = path.join(outputPath, relative_path);
       const id = path.join(relative_path, filename);
+      const real_path = path.join(dir, filename);
+      const stat = fs.lstatSync(real_path);
+      const isDirectory = stat.isDirectory();
+      const isFile = stat.isFile();
+      const isStartsWithDot = filename.startsWith('.');
 
-      if (extname === '.md') {
+      if (['.md', '.markdown'].includes(extname) && isFile && !isStartsWithDot) {
         res.push({
           id,
           filename,
@@ -123,7 +114,7 @@ const getDirTree = (dir: string): Array<IDirTree> => {
           relative_path,
           output_path,
         });
-      } else if (extname === '') {
+      } else if (extname === '' && isDirectory) {
         res.push({
           id,
           dirname: filename,
@@ -244,29 +235,7 @@ const doBuild = async () => {
   buildTimer = setTimeout(fn, 2000);
 };
 
-const doInit = async () => {
-  try {
-    logger.info(`开始初始化:`, cwd);
-
-    await execAsync('git clone https://gitee.com/qx9/doc-builder-tpl.git .', { cwd });
-    fs.removeSync(path.join(cwd, '.git'));
-    await execAsync('npm install', { cwd });
-    logger.info(`
-初始化成功
-$ npm run dev 启动本地服务
-$ npm run build 打包
-    `);
-  } catch (e) {
-    logger.error(`初始化失败：`, e);
-  }
-};
-
 const main = async () => {
-  if (options.init) {
-    await doInit();
-    return;
-  }
-
   logger.info(`start ${isDev ? 'dev' : 'build'}`);
 
   if (!fs.existsSync(inputPath)) {
