@@ -3,7 +3,7 @@
 - 将任意文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单，零配置
 - 支持无限级菜单
 - 响应式设计支持移动端访问；非单页，利于 SEO、首屏加载快
-- [Preview 示例预览](https://qx9.gitee.io/mj/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/React.html)
+- [Preview 示例预览](https://qxtang.github.io/my-book/)
 
 ## 安装
 
@@ -64,3 +64,39 @@ $ npm install -g @qxtang/doc-builder
 ## 其他
 
 会自动忽略以小数点 `.` 开头的文件夹和文件
+
+## 与 GitHub Actions 结合食用更佳！❤
+
+- [示例仓库](https://github.com/qxtang/my-book)
+- 在 github 仓库下添加 actions 配置文件 `.github\workflows\CI.yml`
+
+  ```yml
+  name: CI
+  on:
+    push:
+      branches:
+        - main # 编写 markdown 的分支
+
+  jobs:
+    main:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+          with:
+            persist-credentials: false
+
+        - name: Install and Build # 安装与打包
+          run: |
+            npm install @qxtang/doc-builder@latest
+            npx doc-builder --input=. --root=your-path --ignore=node_modules,dist
+
+        - name: Deploy
+          uses: JamesIves/github-pages-deploy-action@releases/v3
+          with:
+            ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+            BRANCH: gh-pages # 发布站点的分支
+            FOLDER: dist # 输出文件夹
+  ```
+
+- 只需要在仓库编辑你的文档，推送保存，啥也不用干，自动部署
