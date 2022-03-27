@@ -4,17 +4,14 @@ const path = require('path');
 const cwd = process.cwd();
 const outputPath = path.join(cwd, 'bin');
 const srcPath = path.join(cwd, 'src');
-const arg = require('arg');
 const chokidar = require('chokidar');
+const { Command } = require('commander');
+const program = new Command();
 
-const args = arg({
-  '--watch': Boolean,
-
-  // Aliases
-  '-w': '--watch',
-});
-
-const isWatch = !!args['--watch'];
+program.option('-w, --watch', 'watch', false);
+program.parse(process.argv);
+const options = program.opts();
+const isWatch = options.watch;
 let timer = null;
 let lock = false;
 

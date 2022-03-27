@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-import { IConfig, IDirTree } from './types';
+import { IConfig, IDirTree, IOption } from './types';
 
-import arg from 'arg';
 import chokidar from 'chokidar';
 import { exec } from 'child_process';
 import fs from 'fs-extra';
@@ -11,77 +10,78 @@ import path from 'path';
 import { promisify } from 'util';
 import liveServer from 'live-server';
 import markdownIt from 'markdown-it';
+import { Command } from 'commander';
+
+const program = new Command();
+program
+  .option('--init', '初始化模板项目', false)
+  .option('-w, --watch', '本地服务模式', false)
+  .option('--config <config>', '自定义配置文件，配置文件中的配置优先级高于命令行配置', '')
+  .option('--port <port>', '本地服务模式端口号', '8181')
+  .option('--host <host>', '本地服务模式 host', '127.0.0.1')
+  .option('--output <output>', '输出文件夹', 'dist')
+  .option('--input <input>', '输入文件夹', 'docs')
+  .option(
+    '--resource <resource>',
+    '存放图片等资源的文件夹，路径相对于输入文件夹，打包时会一并复制，默认值 resource（即位置为 docs/resource），当然也可以使用自己的图床',
+    'resource'
+  )
+  .option('--title <title>', '站点主标题', 'docs')
+  .option('--favicon <favicon>', '自定义 favicon 资源路径', '/resource/favicon.ico')
+  .option(
+    '--root <root>',
+    ' 站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 "path"，默认值 ""',
+    ''
+  );
+
+program.showHelpAfterError();
+program.addHelpText(
+  'after',
+  `
+创建项目举例:
+  $ mkdir project && cd project
+  $ doc-builder --init # 初始化模板项目
+  $ npm run dev        # 本地服务模式
+  $ npm run build      # 打包
+`
+);
+program.parse(process.argv);
+const options = program.opts<IOption>();
 
 const execAsync = promisify(exec);
-
 const markdownItInstance = markdownIt({
   html: true,
 });
 const pkgName = 'DOC-BUILDER';
-
-const args = arg({
-  '--config': String,
-  '--init': Boolean,
-
-  // 配置
-  '--watch': Boolean,
-  '--input': String,
-  '--output': String,
-  '--resource': String,
-  '--port': String,
-  '--host': String,
-  '--title': String,
-  '--favicon': String,
-  '--root': String,
-
-  // Aliases
-  '-w': '--watch',
-});
-
 const cwd = process.cwd();
-
-const DEFAULT_CONFIG: IConfig = {
-  watch: false,
-  port: 8181,
-  host: '127.0.0.1',
-  output: 'dist',
-  input: 'docs',
-  resource: 'resource',
-  title: 'docs',
-  favicon: '/resource/favicon.ico',
-  root: '',
-};
 
 const config: IConfig = (function () {
   let cfgByFile: Partial<IConfig> = {};
 
-  if (args['--config']) {
-    const filepath = path.join(cwd, args['--config']);
+  if (options.config) {
+    const filepath = path.join(cwd, options.config);
     cfgByFile = require(filepath);
   }
 
   const port: number = (function () {
-    if (!isNaN(Number(args['--port']))) {
-      return Number(args['--port']);
-    }
     if (!isNaN(Number(cfgByFile.port))) {
       return Number(cfgByFile.port);
     }
-    return DEFAULT_CONFIG.port;
+    return Number(options.port);
   })();
 
-  const _root = args['--root'] || cfgByFile.root || DEFAULT_CONFIG.root;
+  const _root = cfgByFile.root || options.root;
   const root = _root ? `/${_root}` : _root;
 
   const result = {
-    watch: args['--watch'] || cfgByFile.watch || DEFAULT_CONFIG.watch,
+    watch: cfgByFile.watch ?? options.watch,
     port,
-    host: args['--host'] || cfgByFile.host || DEFAULT_CONFIG.host,
-    output: args['--output'] || cfgByFile.output || DEFAULT_CONFIG.output,
-    input: args['--input'] || cfgByFile.input || DEFAULT_CONFIG.input,
-    resource: args['--resource'] || cfgByFile.resource || DEFAULT_CONFIG.resource,
-    title: args['--title'] || cfgByFile.title || DEFAULT_CONFIG.title,
-    favicon: args['--favicon'] || cfgByFile.favicon || root + DEFAULT_CONFIG.favicon,
+    host: cfgByFile.host || options.host,
+    output: cfgByFile.output || options.output,
+    input: cfgByFile.input || options.input,
+    resource: cfgByFile.resource || options.resource,
+    title: cfgByFile.title || options.title,
+    favicon: cfgByFile.favicon || root + options.favicon,
     root,
   };
 
@@ -94,6 +94,16 @@ const outputPath = path.join(cwd, config.output);
 const resourcePath = path.join(inputPath, config.resource);
 
 let buildTimer: NodeJS.Timeout;
+
+// 打印客户日志封装
+const logger = {
+  info: (...args: any) => {
+    console.log(`[${new Date().toLocaleString()}] - [${pkgName}]:`, ...args);
+  },
+  error: (...args: any) => {
+    console.log(`[${new Date().toLocaleString()}] - [${pkgName}] - ERROR:`, ...args);
+  },
+};
 
 // 获取文件树
 const getDirTree = (dir: string): Array<IDirTree> => {
@@ -131,19 +141,20 @@ const getDirTree = (dir: string): Array<IDirTree> => {
       }
     });
 
+    res.sort((a) => {
+      if (a.children) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+
     return res;
   };
 
   let res = fn(dir);
   res = res.filter((i) => i.dirname !== 'resource');
 
-  res.sort((a, b) => {
-    if (a.children) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
   return res;
 };
 
@@ -177,7 +188,7 @@ const renderDirTree = async (dirTree: Array<IDirTree>) => {
           }
           const isPathExists = fs.pathExistsSync(info.output_path);
           if (!isPathExists) {
-            fs.mkdirSync(info.output_path);
+            fs.mkdirSync(info.output_path, { recursive: true });
           }
           fs.writeFileSync(path.join(info.output_path, `${basename}.html`), str, { encoding: 'utf-8' });
         });
@@ -191,7 +202,7 @@ const renderDirTree = async (dirTree: Array<IDirTree>) => {
             }
             const isPathExists = fs.pathExistsSync(info.output_path);
             if (!isPathExists) {
-              fs.mkdirSync(info.output_path);
+              fs.mkdirSync(info.output_path, { recursive: true });
             }
             fs.writeFileSync(path.join(info.output_path, `${basename}-share.html`), str, { encoding: 'utf-8' });
           }
@@ -215,7 +226,9 @@ const copyUserResource = async () => {
   try {
     fs.copySync(resourcePath, path.join(outputPath, config.resource));
     fs.copySync(path.join(cwd, 'manifest.json'), path.join(outputPath, 'manifest.json'));
-  } catch (e) { }
+  } catch (e) {
+    //
+  }
 };
 
 const doBuild = async () => {
@@ -225,7 +238,7 @@ const doBuild = async () => {
     await copyUserResource();
     await renderDirTree(dirTree);
     await genDirTreeJson(dirTree);
-    console.log(`[${pkgName}]: build finish`);
+    logger.info('build finish');
   };
 
   if (buildTimer) {
@@ -235,27 +248,33 @@ const doBuild = async () => {
   buildTimer = setTimeout(fn, 2000);
 };
 
-// Main
-(async function Main() {
-  if (args['--init']) {
-    try {
-      console.log(`[${pkgName}]: 开始初始化:`, cwd);
+const doInit = async () => {
+  try {
+    logger.info(`开始初始化:`, cwd);
 
-      await execAsync('git clone https://gitee.com/qx9/doc-builder-tpl.git .', { cwd });
-      fs.removeSync(path.join(cwd, '.git'));
-      await execAsync('npm install', { cwd });
-      console.log(`[${pkgName}]: \n初始化成功！\nnpm run dev --启动本地服务\nnpm run build --打包`);
-    } catch (e) {
-      console.log(`[${pkgName}]: 初始化失败：`, e);
-    }
+    await execAsync('git clone https://gitee.com/qx9/doc-builder-tpl.git .', { cwd });
+    fs.removeSync(path.join(cwd, '.git'));
+    await execAsync('npm install', { cwd });
+    logger.info(`
+初始化成功
+$ npm run dev 启动本地服务
+$ npm run build 打包
+    `);
+  } catch (e) {
+    logger.error(`初始化失败：`, e);
+  }
+};
 
+const main = async () => {
+  if (options.init) {
+    await doInit();
     return;
   }
 
-  console.log(`[${pkgName}]: start ${isDev ? 'dev' : 'build'}`);
+  logger.info(`start ${isDev ? 'dev' : 'build'}`);
 
   if (!fs.existsSync(inputPath)) {
-    console.log(`[${pkgName}]: 输入文件夹不存在:`, inputPath);
+    logger.error('输入文件夹不存在:', inputPath);
     return;
   }
 
@@ -268,7 +287,7 @@ const doBuild = async () => {
   if (isDev) {
     // watch input
     chokidar.watch([inputPath, __dirname], { depth: 10 }).on('change', async (filename: string) => {
-      console.log(`[${pkgName}]: file change:`, filename);
+      logger.info('file change:', filename);
 
       await doBuild();
     });
@@ -281,6 +300,8 @@ const doBuild = async () => {
       logLevel: 0,
     });
 
-    console.log(`[${pkgName}]: run at http://${config.host}:${config.port}`);
+    logger.info(`run at http://${config.host}:${config.port}`);
   }
-})();
+};
+
+main();

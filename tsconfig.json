@@ -3,7 +3,7 @@
     "rootDir": "src",
     "outDir": "./bin/",
     "noEmitOnError": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "esModuleInterop": true,
     "noUnusedParameters": false,
     "moduleResolution": "node",

@@ -10,6 +10,11 @@ export interface IConfig {
   root: string;
 }
 
+export interface IOption extends IConfig {
+  config: string;
+  init: boolean;
+}
+
 export interface IDirTree {
   id: string;
   filename: string;
