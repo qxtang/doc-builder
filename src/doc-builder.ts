@@ -28,17 +28,13 @@ program
   )
   .option('--title <title>', '站点主标题', 'docs')
   .option('--favicon <favicon>', '自定义 favicon 资源路径', '/resource/favicon.ico')
-  .option(
-    '--root <root>',
-    ' 站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 "path"，默认值 ""',
-    ''
-  );
+  .option('--root <root>', '站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 "path"', '');
 
 program.showHelpAfterError();
 program.addHelpText(
   'after',
   `
-创建项目举例:
+也可以这样快速初始化:
   $ mkdir project && cd project
   $ doc-builder --init # 初始化模板项目
   $ npm run dev        # 本地服务模式
