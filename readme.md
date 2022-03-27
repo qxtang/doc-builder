@@ -20,7 +20,7 @@ $ npm install -g @qxtang/doc-builder
 ## 可用命令行配置参数
 
 ```txt
--w, --watch            本地服务模式 (default: false)
+ -w, --watch            本地服务模式 (default: false)
 --config <config>      自定义配置文件，配置文件中的配置优先级高于命令行配置 (default: "")
 --port <port>          本地服务模式端口号 (default: "8181")
 --host <host>          本地服务模式 host (default: "127.0.0.1")
@@ -30,6 +30,7 @@ $ npm install -g @qxtang/doc-builder
 --title <title>        站点主标题 (default: "docs")
 --favicon <favicon>    自定义 favicon 资源路径 (default: "/resource/favicon.ico")
 --root <root>          站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 "path" (default: "")
+--ignore <ignore>      需要忽略的文件夹或文件列表，英文逗号分隔，在配置文件中为数组 (default: "")
 -h, --help             display help for command
 ```
 
@@ -50,6 +51,7 @@ $ npm install -g @qxtang/doc-builder
     title: 'docs';
     favicon: '';
     root: 'your path';
+    ignore: [];
   }
   ```
 
@@ -58,3 +60,7 @@ $ npm install -g @qxtang/doc-builder
 ## PWA 支持
 
 项目根目录下创建并编辑 manifest.json 即可
+
+## 其他
+
+会自动忽略以小数点 `.` 开头的文件夹和文件

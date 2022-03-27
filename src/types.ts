@@ -8,6 +8,7 @@ export interface IConfig {
   title: string;
   favicon: string;
   root: string;
+  ignore: Array<string> | string;
 }
 
 export interface IOption extends IConfig {

@@ -25,7 +25,8 @@ program
   )
   .option('--title <title>', '站点主标题', 'docs')
   .option('--favicon <favicon>', '自定义 favicon 资源路径', '/resource/favicon.ico')
-  .option('--root <root>', '站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 "path"', '');
+  .option('--root <root>', '站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 "path"', '')
+  .option('--ignore <ignore>', '需要忽略的文件夹或文件列表，英文逗号分隔，在配置文件中为数组', '');
 
 program.showHelpAfterError();
 program.parse(process.argv);
@@ -65,6 +66,7 @@ const config: IConfig = (function () {
     title: cfgByFile.title || options.title,
     favicon: cfgByFile.favicon || root + options.favicon,
     root,
+    ignore: cfgByFile.ignore || (options.ignore as string).split(','),
   };
 
   return result;
@@ -93,7 +95,7 @@ const getDirTree = (dir: string): Array<IDirTree> => {
     const res: Array<IDirTree> = [];
     const filenames = fs.readdirSync(dir);
 
-    filenames.forEach((filename: string) => {
+    for (const filename of filenames) {
       const extname = path.extname(filename);
       const basename = filename.substring(0, filename.indexOf(extname));
       const relative_path = path.relative(inputPath, dir);
@@ -105,7 +107,15 @@ const getDirTree = (dir: string): Array<IDirTree> => {
       const isFile = stat.isFile();
       const isStartsWithDot = filename.startsWith('.');
 
-      if (['.md', '.markdown'].includes(extname) && isFile && !isStartsWithDot) {
+      const isIgnore = (config.ignore as Array<string>).some((item) => {
+        return path.join(inputPath, item) === real_path;
+      });
+
+      if (isStartsWithDot || isIgnore) {
+        continue;
+      }
+
+      if (['.md', '.markdown'].includes(extname) && isFile) {
         res.push({
           id,
           filename,
@@ -114,7 +124,7 @@ const getDirTree = (dir: string): Array<IDirTree> => {
           relative_path,
           output_path,
         });
-      } else if (extname === '' && isDirectory) {
+      } else if (isDirectory) {
         res.push({
           id,
           dirname: filename,
@@ -126,7 +136,7 @@ const getDirTree = (dir: string): Array<IDirTree> => {
           children: fn(path.join(dir, filename)),
         });
       }
-    });
+    }
 
     res.sort((a) => {
       if (a.children) {
