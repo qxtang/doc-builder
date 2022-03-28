@@ -20,7 +20,7 @@ $ npm install -g @qxtang/doc-builder
 ## 可用命令行配置参数
 
 ```txt
- -w, --watch            本地服务模式 (default: false)
+-w, --watch           本地服务模式 (default: false)
 --config <config>      自定义配置文件，配置文件中的配置优先级高于命令行配置 (default: "")
 --port <port>          本地服务模式端口号 (default: "8181")
 --host <host>          本地服务模式 host (default: "127.0.0.1")
@@ -68,7 +68,7 @@ $ npm install -g @qxtang/doc-builder
 ## 与 GitHub Actions 结合食用更佳！❤
 
 - [示例仓库](https://github.com/qxtang/my-book)
-- 在 github 仓库下添加 actions 配置文件 `.github\workflows\CI.yml`
+- 给你的仓库添加一个权限足够的 secrets，创建并编辑 actions 配置文件 `.github\workflows\CI.yml`
 
   ```yml
   name: CI
@@ -94,7 +94,7 @@ $ npm install -g @qxtang/doc-builder
         - name: Deploy
           uses: JamesIves/github-pages-deploy-action@releases/v3
           with:
-            ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+            ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} # 仓库 secrets 名称
             BRANCH: gh-pages # 发布站点的分支
             FOLDER: dist # 输出文件夹
   ```
