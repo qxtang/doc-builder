@@ -13,20 +13,20 @@ import { Command } from 'commander';
 const program = new Command();
 program
   .option('-w, --watch', '本地服务模式', false)
-  .option('--config <config>', '自定义配置文件，配置文件中的配置优先级高于命令行配置', '')
+  .option('--config <config>', '声明配置文件', '')
   .option('--port <port>', '本地服务模式端口号', '8181')
   .option('--host <host>', '本地服务模式 host', '127.0.0.1')
   .option('--output <output>', '输出文件夹', 'dist')
-  .option('--input <input>', '输入文件夹', 'docs')
+  .option('--input <input>', '输入文件夹', '.')
   .option(
     '--resource <resource>',
-    '存放图片等资源的文件夹，路径相对于输入文件夹，打包时会一并复制，默认值 resource（即位置为 docs/resource），当然也可以使用自己的图床',
+    '存放图片等资源的文件夹，路径相对于输入文件夹，打包时会一并复制，当然也可以使用自己的图床',
     'resource'
   )
-  .option('--title <title>', '站点主标题', 'docs')
+  .option('--title <title>', '站点主标题', 'doc-builder')
   .option('--favicon <favicon>', '自定义 favicon 资源路径', '/resource/favicon.ico')
   .option('--root <root>', '站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 "path"', '')
-  .option('--ignore <ignore>', '需要忽略的文件夹或文件列表，英文逗号分隔，在配置文件中为数组', '');
+  .option('--ignore <ignore>', '需要忽略的文件夹或文件列表，英文逗号分隔，在配置文件中则为数组', '');
 
 program.showHelpAfterError();
 program.parse(process.argv);
@@ -74,7 +74,12 @@ const config: IConfig = (function () {
 
 const isDev = config.watch;
 const inputPath = path.join(cwd, config.input);
-const outputPath = path.join(cwd, config.output);
+const outputPath = (function () {
+  if (isDev) {
+    return path.join(__dirname, '.temp');
+  }
+  return path.join(cwd, config.output);
+})();
 const resourcePath = path.join(inputPath, config.resource);
 
 let buildTimer: NodeJS.Timeout;
