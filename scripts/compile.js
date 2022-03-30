@@ -35,6 +35,7 @@ const compileScript = () => {
 const moveTpl = () => {
   fs.copySync(path.join(srcPath, 'ejs'), path.join(outputPath, 'ejs'));
   fs.copySync(path.join(srcPath, 'resource'), path.join(outputPath, 'resource'));
+  fs.copySync(path.join(srcPath, 'default_index.md'), path.join(outputPath, 'default_index.md'));
 };
 
 const reset = () => {
@@ -71,7 +72,13 @@ const main = () => {
     clearTimeout(timer);
   }
 
-  timer = setTimeout(fn, 500);
+  timer = setTimeout(() => {
+    try {
+      fn();
+    } catch (e) {
+      console.log('COMPILE FAIL:', e, '\n\r', e.output?.toString());
+    }
+  }, 500);
 };
 
 main();

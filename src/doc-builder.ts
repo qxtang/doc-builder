@@ -174,8 +174,7 @@ const renderDirTree = async (dirTree: Array<IDirTree>) => {
       if (!isDir) {
         const markdown = fs.readFileSync(path.join(info.path, info.filename), { encoding: 'utf-8' });
         const html = markdownItInstance.render(markdown);
-        const extname = path.extname(info.filename);
-        const basename = info?.filename?.substring(0, info?.filename?.indexOf(extname));
+        const basename = info.basename;
         const ejsData = {
           root: config.root,
           html: html,
@@ -215,6 +214,19 @@ const renderDirTree = async (dirTree: Array<IDirTree>) => {
     });
   };
 
+  const hasUserIndex: boolean = dirTree.some((i) => i.basename === 'index');
+
+  if (!hasUserIndex) {
+    dirTree.push({
+      id: 'index.md',
+      filename: 'default_index.md',
+      basename: 'index',
+      path: __dirname,
+      relative_path: '',
+      output_path: outputPath,
+    });
+  }
+
   renderByFileInfoArr(dirTree);
 };
 
@@ -247,11 +259,12 @@ const doBuild = async () => {
     clearTimeout(buildTimer);
   }
 
+  logger.info('building...');
   buildTimer = setTimeout(fn, 2000);
 };
 
 const main = async () => {
-  logger.info(`start ${isDev ? 'dev' : 'build'}`);
+  logger.info(`start ${isDev ? 'dev' : 'build'}，your config:`, config);
 
   if (!fs.existsSync(inputPath)) {
     logger.error('输入文件夹不存在:', inputPath);
@@ -266,8 +279,8 @@ const main = async () => {
 
   if (isDev) {
     // watch input
-    chokidar.watch([inputPath, __dirname], { depth: 10 }).on('change', async (filename: string) => {
-      logger.info('file change:', filename);
+    chokidar.watch([inputPath], { depth: 10 }).on('all', async (eventName: string, filename: string) => {
+      logger.info(`${eventName}:`, filename);
 
       await doBuild();
     });
