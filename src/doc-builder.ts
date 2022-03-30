@@ -87,10 +87,10 @@ let buildTimer: NodeJS.Timeout;
 // 打印客户日志封装
 const logger = {
   info: (...args: any) => {
-    console.log(`[${new Date().toLocaleString()}] - [${pkgName}]:`, ...args);
+    console.log(`\x1B[1m[${new Date().toLocaleString()}] - ${pkgName}:\x1B[22m`, ...args);
   },
   error: (...args: any) => {
-    console.log(`[${new Date().toLocaleString()}] - [${pkgName}] - ERROR:`, ...args);
+    console.log(`\x1B[1m[${new Date().toLocaleString()}] - ${pkgName} - ERROR:\x1B[22m`, ...args);
   },
 };
 
@@ -247,6 +247,7 @@ const copyUserResource = async () => {
 
 const doBuild = async () => {
   const fn = async () => {
+    logger.info('building...');
     const dirTree = getDirTree(inputPath);
     await copyTplResource();
     await copyUserResource();
@@ -259,8 +260,7 @@ const doBuild = async () => {
     clearTimeout(buildTimer);
   }
 
-  logger.info('building...');
-  buildTimer = setTimeout(fn, 2000);
+  buildTimer = setTimeout(fn, 1000);
 };
 
 const main = async () => {
@@ -279,8 +279,8 @@ const main = async () => {
 
   if (isDev) {
     // watch input
-    chokidar.watch([inputPath], { depth: 10 }).on('all', async (eventName: string, filename: string) => {
-      logger.info(`${eventName}:`, filename);
+    chokidar.watch([inputPath], { depth: 10 }).on('change', async (filename: string) => {
+      logger.info('file change:', filename);
 
       await doBuild();
     });
