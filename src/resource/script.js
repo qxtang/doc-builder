@@ -94,11 +94,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // link&img
   (function () {
-    const link = $('.markdown-body a');
+    // const link = $('.markdown-body a');
 
-    link.each(function () {
-      $(this).attr('target', '_blank');
-    });
+    // link.each(function () {
+    //   $(this).attr('target', '_blank');
+    // });
 
     $('.markdown-body img').viewer({
       title: false,

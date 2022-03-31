@@ -8,6 +8,7 @@ import ejs from 'ejs';
 import path from 'path';
 import liveServer from 'live-server';
 import markdownIt from 'markdown-it';
+import markdownItAnchor from 'markdown-it-anchor';
 import { Command } from 'commander';
 
 const program = new Command();
@@ -35,6 +36,16 @@ const options = program.opts<IOption>();
 const markdownItInstance = markdownIt({
   html: true,
 });
+markdownItInstance.use(markdownItAnchor, {
+  level: 1,
+  permalink: true,
+  permalinkClass: 'header-anchor',
+  permalinkSymbol:
+    '<svg viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg>',
+  permalinkBefore: true,
+});
+markdownItInstance.use(require('markdown-it-table-of-contents'));
+
 const pkgName = 'DOC-BUILDER';
 const cwd = process.cwd();
 
@@ -76,7 +87,7 @@ const isDev = config.watch;
 const inputPath = path.join(cwd, config.input);
 const outputPath = (function () {
   if (isDev) {
-    return path.join(__dirname, '.temp');
+    return path.join(__dirname, '../.temp');
   }
   return path.join(cwd, config.output);
 })();
@@ -172,7 +183,7 @@ const renderDirTree = async (dirTree: Array<IDirTree>) => {
       const isDir = !!info.dirname;
 
       if (!isDir) {
-        const markdown = fs.readFileSync(path.join(info.path, info.filename), { encoding: 'utf-8' });
+        const markdown = fs.readFileSync(path.join(info.path, info.filename), { encoding: 'utf-8' }) + '[[toc]]';
         const html = markdownItInstance.render(markdown);
         const basename = info.basename;
         const ejsData = {
@@ -264,7 +275,7 @@ const doBuild = async () => {
 };
 
 const main = async () => {
-  logger.info(`start ${isDev ? 'dev' : 'build'}，your config:`, config);
+  logger.info(`start ${isDev ? 'dev' : 'build'}, your config:`, config);
 
   if (!fs.existsSync(inputPath)) {
     logger.error('输入文件夹不存在:', inputPath);
@@ -279,7 +290,7 @@ const main = async () => {
 
   if (isDev) {
     // watch input
-    chokidar.watch([inputPath], { depth: 10 }).on('change', async (filename: string) => {
+    chokidar.watch([inputPath, __dirname], { depth: 10 }).on('change', async (filename: string) => {
       logger.info('file change:', filename);
 
       await doBuild();
