@@ -59,10 +59,6 @@ $ npm install -g @qxtang/doc-builder
 
 - 传入 `doc-builder --config=builder.config.js`
 
-## PWA 支持
-
-根目录下创建并编辑 manifest.json 即可
-
 ## 其他
 
 - 自定义站点首页（关于页），创建并编辑 index.md 即可
