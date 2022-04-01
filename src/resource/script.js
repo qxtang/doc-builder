@@ -113,7 +113,11 @@ document.addEventListener('DOMContentLoaded', function () {
   // TOC
   (function () {
     const toc = $('.table-of-contents:last');
+    const li = $('.table-of-contents:last > ul > li');
     const content = $('.content.markdown-body');
-    content.after(toc);
+
+    if (li.length > 0) {
+      content.after(toc);
+    }
   })();
 });

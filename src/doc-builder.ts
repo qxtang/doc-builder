@@ -183,7 +183,7 @@ const renderDirTree = async (dirTree: Array<IDirTree>) => {
       const isDir = !!info.dirname;
 
       if (!isDir) {
-        const markdown = fs.readFileSync(path.join(info.path, info.filename), { encoding: 'utf-8' }) + '[[toc]]';
+        const markdown = fs.readFileSync(path.join(info.path, info.filename), { encoding: 'utf-8' }) + '\r\n[[toc]]';
         const html = markdownItInstance.render(markdown);
         const basename = info.basename;
         const ejsData = {
