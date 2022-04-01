@@ -50,7 +50,7 @@
     "live-server": "^1.2.1",
     "markdown-it": "^12.3.2",
     "markdown-it-anchor": "^8.4.1",
-    "markdown-it-table-of-contents": "^0.6.0",
+    "markdown-toc": "^1.2.0",
     "tslib": "^2.3.1"
   }
 }

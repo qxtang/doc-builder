@@ -109,15 +109,4 @@ document.addEventListener('DOMContentLoaded', function () {
       menu.toggleClass('show');
     });
   })();
-
-  // TOC
-  (function () {
-    const toc = $('.table-of-contents:last');
-    const li = $('.table-of-contents:last > ul > li');
-    const content = $('.content.markdown-body');
-
-    if (li.length > 0) {
-      content.after(toc);
-    }
-  })();
 });

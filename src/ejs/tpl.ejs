@@ -7,5 +7,8 @@
       <img src="https://cdn.jsdelivr.net/gh/FortAwesome/font-awesome/svgs/solid/bars.svg" alt="" />
     </div>
     <div class="content markdown-body"><%- html %></div>
+    <% if (tocHtml) { %>
+    <div class="table-of-contents"><%- tocHtml %></div>
+    <% } %>
   </body>
 </html>
