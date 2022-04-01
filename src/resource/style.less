@@ -70,112 +70,18 @@ body {
       width: 60vw;
     }
 
+    ul,
+    li {
+      list-style-type: none;
+    }
+    .dir {
+      color: red;
+    }
+
     .children {
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      height: @item_height;
-      text-decoration: none;
-      padding: 0 10px 0;
-      color: #333333;
-
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-
-      &.about {
-        border-top: 1px solid #cccccc;
-        margin-top: 10px;
-        padding-top: 10px;
-      }
-
-      &.active {
-        color: #06f;
-      }
-
-      &.last_visit {
-        &::after {
-          content: '上次看到';
-          font-size: 10px;
-          color: #ffffff;
-          background-color: #333333;
-          padding: 2px 4px;
-          border-radius: 4px;
-          margin-left: 5px;
-        }
-      }
-    }
-
-    > div.parent {
-      margin-left: 0px;
-    }
-
-    .parent {
-      flex-shrink: 0;
-      margin-left: 10px;
-      height: @item_height;
-      overflow: hidden;
-      cursor: pointer;
-
-      > span {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: @item_height;
-        padding: 0 10px;
-        font-weight: 900;
-
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-
-        &::after {
-          content: '';
-          transition: all 0.2s;
-          height: 0;
-          width: 0;
-          border-style: solid;
-          border-width: 5px;
-          border-top-color: #333333;
-          border-left-color: transparent;
-          border-right-color: transparent;
-          border-bottom-color: transparent;
-        }
-      }
-
-      &.expand {
-        height: auto;
-
-        > span {
-          &::after {
-            transform: rotate(180deg);
-          }
-        }
-      }
-
-      > .children {
-        padding: 0 10px 0 20px;
-        height: @item_height - 10px;
-
-        &.active {
-          &::before {
-            background-color: #06f;
-          }
-        }
-
-        &:last-child {
-          margin-bottom: 10px;
-        }
-
-        &::before {
-          content: '';
-          background-color: #333333;
-          height: 4px;
-          width: 4px;
-          border-radius: 50%;
-          margin-right: 7px;
-        }
+      color: green;
+      > a {
+        color: #0969da;
       }
     }
   }

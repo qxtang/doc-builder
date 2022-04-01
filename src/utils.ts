@@ -74,14 +74,30 @@ export const getDirTree = (params: { inputPath: string; outputPath: string; conf
   return res;
 };
 
-// 生成文件树 json
-export const genDirTreeJson = async (dirTree: Array<IDirTree>, outputPath: string) => {
-  fs.writeFileSync(path.join(outputPath, 'dir_tree.json'), JSON.stringify(dirTree), { encoding: 'utf-8' });
+const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string => {
+  return dirTree
+    .map((item: IDirTree) => {
+      const isDir = !!item.dirname;
+      if (isDir) {
+        return `
+            <ul>
+              <li id="${item.id}" class="dir">${item.dirname}</li>
+              ${getMenuHtmlByDirTree(item.children || [], config)}
+            </ul>
+          `;
+      } else {
+        const href = `${config.root}/${item.relative_path ? item.relative_path + '/' : ''}${item.basename}.html`;
+
+        return `<li id="${item.id}" class="children"><a href="${href}">${item.basename}</a></li>`;
+      }
+    })
+    .join('');
 };
 
 // 根据文件树执行渲染
 export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: IConfig; outputPath: string }) => {
   const { dirTree, config, outputPath } = params;
+  const menuHtml = getMenuHtmlByDirTree(dirTree, config);
 
   const renderByFileInfoArr = (fileInfoArr: Array<IDirTree> = []) => {
     fileInfoArr.forEach((info: IDirTree) => {
@@ -99,6 +115,7 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
           basename: basename === 'index' ? '' : basename,
           favicon: config.favicon,
           tocHtml,
+          menuHtml,
         };
 
         ejs.renderFile(path.resolve(__dirname, 'ejs/tpl.ejs'), ejsData, function (err: Error | null, str: string) {

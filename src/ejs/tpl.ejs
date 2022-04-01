@@ -2,7 +2,9 @@
 <html lang="zh-cn">
   <%- include('./head', { title: basename ? (title + ' - ' + basename) : title, favicon: favicon, root: root }); %>
   <body>
-    <div class="menu" id="menu"></div>
+    <ul class="menu" id="menu">
+      <%- menuHtml %>
+    </ul>
     <div class="mobile_menu" id="mobile_menu">
       <img src="https://cdn.jsdelivr.net/gh/FortAwesome/font-awesome/svgs/solid/bars.svg" alt="" />
     </div>
