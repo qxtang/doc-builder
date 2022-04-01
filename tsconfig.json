@@ -14,8 +14,9 @@
     "sourceMap": false,
     "declaration": false,
     "lib": ["es2017"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "importHelpers": true
   },
-  "include": ["src/doc-builder.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "./bin/"]
 }
