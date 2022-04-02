@@ -1,58 +1,64 @@
 /**
  * @description 根据 markdown 生成 toc html
  */
-
-// TODO any类型
 const markdownToc = require('markdown-toc');
 
-const getMinLevel = (headlineItems: any[]) => {
+interface Item {
+  lvl: number;
+  content: string | null;
+  slug: string | null;
+  children?: Array<Item>;
+  parent: Item | null;
+}
+
+const getMinLevel = (headlineItems: Array<Item>) => {
   return Math.min(...headlineItems.map((item) => item.lvl));
 };
 
-const addListItem = (lvl: number, content: string | null, slug: string | null, rootNode: any) => {
+const addListItem = (lvl: number, content: string | null, slug: string | null, rootNode: Item | null) => {
   const listItem = { lvl, content, slug, children: [], parent: rootNode };
-  rootNode.children.push(listItem);
+  rootNode?.children?.push(listItem);
   return listItem;
 };
 
-const flatHeadlineItemsToNestedTree = (headlineItems: any) => {
-  const toc: any = { lvl: getMinLevel(headlineItems) - 1, slug: null, content: null, children: [], parent: null };
-  let currentRootNode = toc;
+const flatHeadlineItemsToNestedTree = (headlineItems: Array<Item>) => {
+  const toc: Item = { lvl: getMinLevel(headlineItems) - 1, slug: null, content: null, children: [], parent: null };
+  let currentRootNode: Item | null = toc;
   let prevListItem = currentRootNode;
 
-  headlineItems.forEach((headlineItem: any) => {
-    if (headlineItem.lvl > prevListItem.lvl) {
-      Array.from({ length: headlineItem.lvl - prevListItem.lvl }).forEach((_) => {
+  headlineItems.forEach((item) => {
+    if (item.lvl > prevListItem.lvl) {
+      Array.from({ length: item.lvl - prevListItem.lvl }).forEach((_) => {
         currentRootNode = prevListItem;
-        prevListItem = addListItem(headlineItem.lvl, null, null, currentRootNode);
+        prevListItem = addListItem(item.lvl, null, null, currentRootNode);
       });
-      prevListItem.content = headlineItem.content;
-      prevListItem.slug = headlineItem.slug;
-    } else if (headlineItem.lvl === prevListItem.lvl) {
-      prevListItem = addListItem(headlineItem.lvl, headlineItem.content, headlineItem.slug, currentRootNode);
-    } else if (headlineItem.lvl < prevListItem.lvl) {
-      for (let i = 0; i < prevListItem.lvl - headlineItem.lvl; i++) {
-        currentRootNode = currentRootNode.parent;
+      prevListItem.content = item.content;
+      prevListItem.slug = item.slug;
+    } else if (item.lvl === prevListItem.lvl) {
+      prevListItem = addListItem(item.lvl, item.content, item.slug, currentRootNode);
+    } else if (item.lvl < prevListItem.lvl) {
+      for (let i = 0; i < prevListItem.lvl - item.lvl; i++) {
+        currentRootNode = currentRootNode?.parent as any;
       }
-      prevListItem = addListItem(headlineItem.lvl, headlineItem.content, headlineItem.slug, currentRootNode);
+      prevListItem = addListItem(item.lvl, item.content, item.slug, currentRootNode);
     }
   });
 
   return toc;
 };
 
-const tocItemToHtml = (tocItem: any) => {
+const tocItemToHtml = (tocItem: Item): string => {
   return (
     '<ul>' +
-    tocItem.children
-      .map((childItem: any) => {
+    tocItem?.children
+      ?.map((childItem: Item) => {
         let li = '<li>';
         const anchor = childItem.slug;
         const text = childItem.content;
 
         li += (anchor ? `<a href="#${anchor}">${text}</a>` : text) || '';
 
-        return li + (childItem.children.length > 0 ? tocItemToHtml(childItem) : '') + '</li>';
+        return li + (childItem?.children?.length as number > 0 ? tocItemToHtml(childItem) : '') + '</li>';
       })
       .join('') +
     '</ul>'
