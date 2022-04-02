@@ -2,7 +2,7 @@ import { IConfig } from '../types';
 import { IDirTree } from '../types';
 import fs from 'fs-extra';
 import path from 'path';
-import markdownItInstance from './markdownItInstance';
+import mdInstance from './mdInstance';
 import ejs from 'ejs';
 import getTocHtmlByMd from './getTocHtmlByMd';
 
@@ -119,7 +119,7 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
 
       if (!isDir) {
         const markdown = fs.readFileSync(path.join(info.path, info.filename), { encoding: 'utf-8' });
-        const html = markdownItInstance.render(markdown);
+        const html = mdInstance.render(markdown);
         const tocHtml = getTocHtmlByMd(markdown);
         const basename = info.basename;
         const ejsData = {
