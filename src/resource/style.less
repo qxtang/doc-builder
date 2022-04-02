@@ -1,5 +1,11 @@
 @mobile_width: 900px;
 
+.ddd {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
@@ -53,6 +59,8 @@ body {
 
   .menu {
     @item_height: 40px;
+    @step: 10px;
+
     width: @menu_width;
     overflow-y: auto;
     background-color: #f5f5f5;
@@ -74,14 +82,86 @@ body {
     li {
       list-style-type: none;
     }
-    .dir {
-      color: red;
+
+    .parent {
+      margin-left: @step;
+      overflow: hidden;
+      flex-shrink: 0;
+      height: @item_height;
+      transition: all .2s;
+
+      &.open {
+        height: auto;
+
+        > .dir {
+          > .triangle {
+            transform: rotate(180deg);
+          }
+        }
+      }
+
+      > .dir {
+        justify-content: space-between;
+        padding-right: 5px;
+
+        &:hover,
+        &:active {
+          opacity: 0.7;
+          cursor: pointer;
+        }
+
+        > span {
+          color: #000000;
+          font-weight: 900;
+
+          .ddd();
+        }
+
+        > .triangle {
+          flex-shrink: 0;
+          height: 24px;
+          width: 24px;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+          background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAMNJREFUSEvtksEJwzAMRa3gMTqFsQm9N9sk0yTbtPdiYjxFxjBWcU6hlPLd0OQinb/00OOTOmnoJK4S8GHmRbWo/psBKRestm3bSwl77xd4aRP8WbUx5l7uxBi7w8DGmJGI+gJk5inGONTCqz+21vbMPG5BRDSEEKYaeBXYOXfLOa+K36dpmm6e5wcKh8GlTCmlp1JqLdWHWbTWV7RsMLiUiYj0t4+YOaFlg8GoQjQnYNTU7pyo3q0QPSCqUVO7c6epfgGFYjEfQmd1ZwAAAABJRU5ErkJggg==");
+          transition: all .2s;
+        }
+      }
+    }
+
+    .dir,
+    .children {
+      min-height: @item_height;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
     }
 
     .children {
-      color: green;
+      padding-left: @step;
+      .ddd();
+
+      &.active {
+        > a {
+          color: #0969da;
+        }
+      }
+
+      &.about {
+        border-top: 1px solid #cccccc;
+        margin-top: @step;
+        padding-top: @step;
+      }
+
       > a {
-        color: #0969da;
+        .ddd();
+        color: #333333;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        height: @item_height;
+        width: 100%;
       }
     }
   }

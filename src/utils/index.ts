@@ -76,23 +76,36 @@ export const getDirTree = (params: { inputPath: string; outputPath: string; conf
 
 // 根据文件树生成菜单 html
 const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string => {
-  return dirTree
-    .map((item: IDirTree) => {
-      const isDir = !!item.dirname;
-      if (isDir) {
-        return `
-            <ul>
-              <li id="${item.id}" class="dir">${item.dirname}</li>
+  let res = '';
+
+  for (const item of dirTree) {
+    if (item.basename === 'index') {
+      continue;
+    }
+
+    const isDir = !!item.dirname;
+    if (isDir) {
+      res += `
+            <ul class="parent open">
+              <li id="${item.id}" class="dir">
+                <span>${item.dirname}</span>
+                <div class="triangle"></div>
+              </li>
               ${getMenuHtmlByDirTree(item.children || [], config)}
             </ul>
           `;
-      } else {
-        const href = `${config.root}/${item.relative_path ? item.relative_path + '/' : ''}${item.basename}.html`;
+    } else {
+      const href = `${config.root}/${item.relative_path ? item.relative_path + '/' : ''}${item.basename}.html`;
 
-        return `<li id="${item.id}" class="children"><a href="${href}">${item.basename}</a></li>`;
-      }
-    })
-    .join('');
+      res += `
+          <li id="${item.id}" class="children">
+            <a href="${href}">${item.basename}</a>
+          </li>
+        `;
+    }
+  }
+
+  return res;
 };
 
 // 根据文件树执行渲染

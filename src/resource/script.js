@@ -1,13 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const LAST_VISIT_LOCALSTORAGE_KEY = '20220315210423_LAST_VISIT_LOCALSTORAGE_KEY';
-
-  // set last visit
+  // menu
   (function () {
+    const dirs = $('.dir');
+    dirs.on('click', function () {
+      const p = $(this).parent('.parent');
+      p.toggleClass('open');
+    });
+
+    const links = $('.children > a');
+    const host = window.location.protocol + '//' + window.location.host;
     const path = decodeURIComponent(window.location.pathname);
-    if ([`${window.root}/`, `${window.root}/index.html`, '/', '/index.html'].includes(path)) {
-      return;
-    }
-    window.localStorage.setItem(LAST_VISIT_LOCALSTORAGE_KEY, path);
+
+    links.each(function () {
+      const url = decodeURIComponent($(this).prop('href'));
+      const _path = url.replace(host, '');
+      const isActive = (path === _path);
+
+      if (isActive) {
+        $(this).parent('.children').addClass('active');
+      }
+    });
   })();
 
   // viewer
