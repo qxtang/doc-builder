@@ -1,3 +1,8 @@
+/**
+ * @description 根据 markdown 生成 toc html
+ */
+
+// TODO any类型
 const markdownToc = require('markdown-toc');
 
 const getMinLevel = (headlineItems: any[]) => {

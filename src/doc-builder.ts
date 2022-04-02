@@ -6,8 +6,8 @@ import fs from 'fs-extra';
 import path from 'path';
 import liveServer from 'live-server';
 import { Command } from 'commander';
-import { getConfig } from './config';
-import logger from './logger';
+import { getConfig } from './utils/config';
+import logger from './utils/logger';
 import { copyTplResource, copyUserResource, getDirTree, renderDirTree } from './utils';
 
 const program = new Command();

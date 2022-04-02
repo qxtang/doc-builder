@@ -1,5 +1,5 @@
-import { IConfig } from './types.d';
-import { IDirTree } from './types';
+import { IConfig } from '../types';
+import { IDirTree } from '../types';
 import fs from 'fs-extra';
 import path from 'path';
 import markdownItInstance from './markdownItInstance';
@@ -74,6 +74,7 @@ export const getDirTree = (params: { inputPath: string; outputPath: string; conf
   return res;
 };
 
+// 根据文件树生成菜单 html
 const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string => {
   return dirTree
     .map((item: IDirTree) => {
@@ -118,7 +119,7 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
           menuHtml,
         };
 
-        ejs.renderFile(path.resolve(__dirname, 'ejs/tpl.ejs'), ejsData, function (err: Error | null, str: string) {
+        ejs.renderFile(path.resolve(__dirname, '../ejs/tpl.ejs'), ejsData, function (err: Error | null, str: string) {
           if (err) {
             throw err;
           }
@@ -141,7 +142,7 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
       id: 'index.md',
       filename: 'default_index.md',
       basename: 'index',
-      path: __dirname,
+      path: path.resolve(__dirname, '..'),
       relative_path: '',
       output_path: outputPath,
     });
@@ -152,7 +153,7 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
 
 // 拷贝模板资源
 export const copyTplResource = async (outputPath: string) => {
-  fs.copySync(path.resolve(__dirname, 'resource'), path.join(outputPath, 'resource'));
+  fs.copySync(path.resolve(__dirname, '../resource'), path.join(outputPath, 'resource'));
 };
 
 // 拷贝用户的资源

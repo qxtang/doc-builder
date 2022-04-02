@@ -19,6 +19,7 @@ const defaultRender =
     return self.renderToken(tokens, idx, options);
   };
 
+// a 标签新窗口打开
 markdownItInstance.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   const aIndex = tokens[idx].attrIndex('target');
 

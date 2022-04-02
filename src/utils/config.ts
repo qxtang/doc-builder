@@ -1,5 +1,5 @@
 import path from 'path';
-import { IConfig, IOption } from './types';
+import { IConfig, IOption } from '../types';
 
 interface IParams {
   options: IOption;
