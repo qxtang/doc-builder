@@ -128,6 +128,27 @@ body {
           transition: all .2s;
         }
       }
+
+      > .children {
+        min-height: 30px;
+
+        > a {
+          height: 30px;
+        }
+
+        &:last-child {
+          margin-bottom: 10px;
+        }
+
+        &::before {
+          content: '';
+          border-radius: 50%;
+          height: 4px;
+          width: 4px;
+          background-color: #333333;
+          margin-right: 6px;
+        }
+      }
     }
 
     .dir,
@@ -146,6 +167,10 @@ body {
         > a {
           color: #0969da;
         }
+
+        &::before {
+          background-color: #0969da;
+        }
       }
 
       &.about {
@@ -160,7 +185,7 @@ body {
         text-decoration: none;
         display: flex;
         align-items: center;
-        height: @item_height;
+        height: 100%;
         width: 100%;
       }
     }

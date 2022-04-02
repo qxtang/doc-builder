@@ -20,7 +20,7 @@ const compileTs = () => {
 };
 
 const compileLess = () => {
-  execSync(`npx less ${path.join(srcPath, 'resource/style.less')} ${path.join(outputPath, 'resource/style.css')} -x`);
+  execSync(`npx lessc ${path.join(srcPath, 'resource/style.less')} ${path.join(outputPath, 'resource/style.css')} -x --autoprefix="cover 99.5%"`);
 };
 
 const compileScript = () => {

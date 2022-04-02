@@ -5,7 +5,6 @@ const markdownItInstance = markdownIt({
   html: true,
 });
 markdownItInstance.use(markdownItAnchor, {
-  level: 1,
   permalink: markdownItAnchor.permalink.ariaHidden({
     placement: 'before',
     symbol:
@@ -21,9 +20,9 @@ const defaultRender =
 
 // a 标签新窗口打开
 markdownItInstance.renderer.rules.link_open = function (tokens, idx, options, env, self) {
-  const aIndex = tokens[idx].attrIndex('target');
+  const targetIndex = tokens[idx].attrIndex('target');
 
-  if (aIndex < 0 && tokens[idx].attrGet('class') !== 'header-anchor') {
+  if (targetIndex < 0 && tokens[idx].attrGet('class') !== 'header-anchor') {
     tokens[idx].attrPush(['target', '_blank']);
   }
 
