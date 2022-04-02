@@ -80,11 +80,13 @@ const main = async () => {
 
   if (isDev) {
     // watch input
-    chokidar.watch([inputPath, __dirname], { depth: 10 }).on('change', async (filename: string) => {
-      logger.info('file change:', filename);
+    chokidar
+      .watch([inputPath, __dirname], { depth: 10, ignored: /(^|[\/\\])\../ }) // ignore dotfiles
+      .on('change', async (filename: string) => {
+        logger.info('file change:', filename);
 
-      await doBuild();
-    });
+        await doBuild();
+      });
 
     liveServer.start({
       port: config.port,
