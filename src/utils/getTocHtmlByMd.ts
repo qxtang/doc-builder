@@ -1,3 +1,5 @@
+import { slugifyFn } from './index';
+
 /**
  * @description 根据 markdown 生成 toc html
  */
@@ -58,7 +60,7 @@ const tocItemToHtml = (tocItem: Item): string => {
 
         li += (anchor ? `<a href="#${anchor}">${text}</a>` : text) || '';
 
-        return li + (childItem?.children?.length as number > 0 ? tocItemToHtml(childItem) : '') + '</li>';
+        return li + ((childItem?.children?.length as number) > 0 ? tocItemToHtml(childItem) : '') + '</li>';
       })
       .join('') +
     '</ul>'
@@ -66,7 +68,10 @@ const tocItemToHtml = (tocItem: Item): string => {
 };
 
 const getTocHtmlByMd = (md: string): string => {
-  const flatHeadlineItems = markdownToc(md).json;
+  const flatHeadlineItems = markdownToc(md, {
+    slugify: slugifyFn,
+  }).json;
+
   if (flatHeadlineItems.length === 0) {
     return '';
   }

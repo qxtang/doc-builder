@@ -1,10 +1,12 @@
 import markdownIt from 'markdown-it';
 import markdownItAnchor from 'markdown-it-anchor';
+import { slugifyFn } from './index';
 
 const markdownItInstance = markdownIt({
   html: true,
 });
 markdownItInstance.use(markdownItAnchor, {
+  slugify: (s) => slugifyFn(s),
   permalink: markdownItAnchor.permalink.ariaHidden({
     placement: 'before',
     symbol:

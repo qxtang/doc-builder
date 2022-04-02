@@ -179,3 +179,8 @@ export const copyUserResource = async (params: { resourcePath: string; outputPat
     //
   }
 };
+
+// 通用 slugification function
+export const slugifyFn = (str: string) => {
+  return encodeURIComponent(String(str).trim().toLowerCase().replace(/\s+/g, '-'));
+};
