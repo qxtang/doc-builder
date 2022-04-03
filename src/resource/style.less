@@ -1,4 +1,6 @@
 @mobile_width: 900px;
+@font_family: 'Microsoft JhengHei', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+  sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
 
 .ddd {
   white-space: nowrap;
@@ -40,6 +42,7 @@ body {
   overflow-y: hidden;
   color: #333333;
   background-color: #ffffff;
+  font-family: @font_family;
 }
 
 a {
@@ -240,6 +243,7 @@ body {
       cursor: pointer;
 
       &.expand {
+        opacity: 1;
         background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAA3CAYAAACo29JGAAAAAXNSR0IArs4c6QAAAP1JREFUaEPt2CESAjEUA9DsIZFYzgEKh8ciOR4Ox3RmBbiKn+TTyeqd/r6kotMNC3/bwjYE96/tprk01zCBHMuGpUxtKc1NxdTwpzTXsJSpLaW5qZga/sRs7gbgBeDscrNwDwDHHXVxAVm4J4DDV2MWIAs3XHYgE2cHsnFWoAJnA6pwFqASJweqcVKgAycDunASoBNHBzpx9BuMC0eHjWPhwElgDpwMpsZJYUqcHKbCWWAKnA3GxllhTJwdxsTdAZxWff0ariuAt+tZj9mc6x32Z67j+iWDByeLunhQmisOVLZcmpNFXTwozRUHKlsuzcmiLh6U5ooDlS23dHMfGMMyOHBw2/sAAAAASUVORK5CYII=');
       }
 
@@ -282,13 +286,15 @@ body {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: calc(10px + 1vw) calc(10px + 1vw) 100px calc(10px + 1vw - 20px);
+    padding: calc(10px + 1vw) calc(30px + 1vw) 100px calc(30px + 1vw - 20px);
 
     @media screen and (max-width: @mobile_width) {
-      padding: calc(10px + 1vw) calc(10px + 1vw) 100px;
+      padding: 0.8rem 0.8rem 100px;
     }
 
     &.markdown-body {
+      font-family: @font_family;
+
       img {
         box-shadow: 0 0 7px 0 #aaaaaa;
         border-radius: 5px;
@@ -300,6 +306,16 @@ body {
 
       h1 {
         font-size: 1.5em;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        > a {
+          color: var(--color-fg-default);
+        }
       }
     }
   }
