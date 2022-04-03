@@ -54,11 +54,11 @@ const tocItemToHtml = (tocItem: Item): string => {
     '<ul>' +
     tocItem?.children
       ?.map((childItem: Item) => {
-        let li = '<li>';
+        let li = `<li title=${childItem.content}>`;
         const anchor = childItem.slug;
         const text = childItem.content;
 
-        li += (anchor ? `<a href="#${anchor}">${text}</a>` : text) || '';
+        li += (anchor ? `<a href="#${anchor}" data-anchor="#${anchor}">${text}</a>` : text) || '';
 
         return li + ((childItem?.children?.length as number) > 0 ? tocItemToHtml(childItem) : '') + '</li>';
       })

@@ -20,7 +20,12 @@ const compileTs = () => {
 };
 
 const compileLess = () => {
-  execSync(`npx lessc ${path.join(srcPath, 'resource/style.less')} ${path.join(outputPath, 'resource/style.css')} -x --autoprefix="cover 99.5%"`);
+  execSync(
+    `npx lessc ${path.join(srcPath, 'resource/style.less')} ${path.join(
+      outputPath,
+      'resource/style.css'
+    )} -x --autoprefix="cover 99.5%"`
+  );
 };
 
 const compileScript = () => {
@@ -43,7 +48,7 @@ const reset = () => {
   fs.mkdirSync(outputPath);
 };
 
-const main = () => {
+const compile = () => {
   const fn = () => {
     if (lock) {
       return;
@@ -81,12 +86,12 @@ const main = () => {
   }, 500);
 };
 
-main();
+compile();
 
 if (isWatch) {
   chokidar.watch(srcPath, { depth: 10 }).on('change', async (filename) => {
     console.log('src change:', filename);
 
-    main();
+    compile();
   });
 }

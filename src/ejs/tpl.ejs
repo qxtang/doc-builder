@@ -2,13 +2,16 @@
 <html lang="zh-cn">
   <%- include('./head', { title: basename ? (title + ' - ' + basename) : title, favicon: favicon, root: root }); %>
   <body>
-    <ul class="menu" id="menu">
+    <ul class="menu expand" id="menu">
       <%- menuHtml %>
 
       <li id="index.md" class="children about">
         <a href="<%= root %>/">关于</a>
       </li>
     </ul>
+    <div class="drager" id="drager">
+      <div class="switcher" id="switcher" title="展开或收起"></div>
+    </div>
     <div class="mobile_menu" id="mobile_menu">
       <img src="https://cdn.jsdelivr.net/gh/FortAwesome/font-awesome/svgs/solid/bars.svg" alt="" />
     </div>

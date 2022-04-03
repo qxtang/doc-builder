@@ -87,7 +87,7 @@ const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string
     if (isDir) {
       res += `
             <ul class="parent open">
-              <li id="${item.id}" class="dir">
+              <li id="${item.id}" class="dir" title="${item.dirname}">
                 <span>${item.dirname}</span>
                 <div class="triangle"></div>
               </li>
@@ -98,7 +98,7 @@ const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string
       const href = `${config.root}/${item.relative_path ? item.relative_path + '/' : ''}${item.basename}.html`;
 
       res += `
-          <li id="${item.id}" class="children">
+          <li id="${item.id}" class="children" title="${item.basename}">
             <a href="${href}">${item.basename}</a>
           </li>
         `;
@@ -181,6 +181,13 @@ export const copyUserResource = async (params: { resourcePath: string; outputPat
 };
 
 // 通用 slugification function
-export const slugifyFn = (str: string) => {
-  return encodeURIComponent(String(str).trim().toLowerCase().replace(/\s+/g, '-'));
+export const slugifyFn = (str: string, opt?: any) => {
+  const r = encodeURIComponent(String(str).trim().toLowerCase().replace(/\s+/g, '-'));
+  if (opt) {
+    if (opt.num === 0) {
+      return r;
+    }
+    return r + '-' + opt.num;
+  }
+  return r;
 };
