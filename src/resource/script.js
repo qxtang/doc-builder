@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-    body.mouseup(function (e) {
+    body.mouseup(function () {
       $(this).unbind('mousemove');
       $(this).css('cursor', 'default');
     });
@@ -147,8 +147,9 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const addHighlight = (str, keyword) => {
-      const regExp = new RegExp(keyword, 'g');
-      return str.replace(regExp, '<mark class="keyword" >' + keyword + '</mark>');
+      const regExp = new RegExp(keyword, 'gi');
+      const text = regExp.exec(str);
+      return str.replace(regExp, '<mark class="keyword">' + (text?.[0] || keyword) + '</mark>');
     };
 
     const handleInputChange = (value) => {
@@ -170,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         html = res
           .map((info) => {
-            const index = info.content.indexOf(value);
+            const index = info.content.toLowerCase().indexOf(value);
             const summary = `...${info.content.substring(index, index + 30)}...`;
             const href = `${window.root}/${info.relative_path ? info.relative_path + '/' : ''}${
               info.basename
