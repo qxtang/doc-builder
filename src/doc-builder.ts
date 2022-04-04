@@ -8,7 +8,7 @@ import liveServer from 'live-server';
 import { Command } from 'commander';
 import { getConfig } from './utils/config';
 import logger from './utils/logger';
-import { copyTplResource, copyUserResource, getDirTree, renderDirTree } from './utils';
+import { copyTplResource, copyUserResource, genDirTreeJson, getDirTree, renderDirTree } from './utils';
 
 const program = new Command();
 program
@@ -51,6 +51,7 @@ const doBuild = async () => {
   const fn = async () => {
     logger.info('building...');
     const dirTree = getDirTree({ inputPath, outputPath, config });
+    await genDirTreeJson(dirTree, outputPath);
     await copyTplResource(outputPath);
     await copyUserResource({ resourcePath, outputPath, config });
     await renderDirTree({ dirTree, config, outputPath });

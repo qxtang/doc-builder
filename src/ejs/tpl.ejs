@@ -3,8 +3,17 @@
   <%- include('./head', { title: basename ? (title + ' - ' + basename) : title, favicon: favicon, root: root }); %>
   <body>
     <ul class="menu expand" id="menu">
+      <div class="search_bar" id="search_bar">
+        <input type="text" placeholder="search..." />
+        <img
+          class="clear"
+          id="clear"
+          src="https://cdn.jsdelivr.net/gh/FortAwesome/font-awesome/svgs/solid/circle-xmark.svg"
+          alt=""
+        />
+        <div class="search_result" id="search_result"></div>
+      </div>
       <%- menuHtml %>
-
       <li id="index.md" class="children about">
         <a href="<%= root %>/">关于</a>
       </li>
@@ -19,5 +28,10 @@
     <% if (tocHtml) { %>
     <div class="table-of-contents"><%- tocHtml %></div>
     <% } %>
+
+    <!-- bottom scripts -->
+    <script src="//cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/jquery.mark.min.js"></script>
+    <script src="//unpkg.com/viewerjs@1.10.4/dist/viewer.min.js"></script>
+    <script src="//unpkg.com/jquery-viewer@1.0.1/dist/jquery-viewer.min.js"></script>
   </body>
 </html>

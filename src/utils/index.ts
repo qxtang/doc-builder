@@ -35,6 +35,8 @@ export const getDirTree = (params: { inputPath: string; outputPath: string; conf
       }
 
       if (['.md', '.markdown'].includes(extname) && isFile) {
+        const markdown = fs.readFileSync(path.join(dir, filename), { encoding: 'utf-8' });
+
         res.push({
           id,
           filename,
@@ -42,6 +44,10 @@ export const getDirTree = (params: { inputPath: string; outputPath: string; conf
           path: dir,
           relative_path,
           output_path,
+          content: mdInstance
+            .render(markdown)
+            .replace(/<[^>]+>/g, '')
+            .replace(/[\r\n]/g, ''),
         });
       } else if (isDirectory) {
         res.push({
@@ -167,6 +173,11 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
 // 拷贝模板资源
 export const copyTplResource = async (outputPath: string) => {
   fs.copySync(path.resolve(__dirname, '../resource'), path.join(outputPath, 'resource'));
+};
+
+// 生成文件树 json
+export const genDirTreeJson = async (dirTree: Array<IDirTree>, outputPath: string) => {
+  fs.writeFileSync(path.join(outputPath, 'dir_tree.json'), JSON.stringify(dirTree), { encoding: 'utf-8' });
 };
 
 // 拷贝用户的资源

@@ -1,6 +1,7 @@
 @mobile_width: 900px;
 @font_family: 'Microsoft JhengHei', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
-  sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+@font_color: #333333;
 
 .ddd {
   white-space: nowrap;
@@ -40,7 +41,7 @@ html,
 body {
   overflow-x: hidden;
   overflow-y: hidden;
-  color: #333333;
+  color: @font_color;
   background-color: #ffffff;
   font-family: @font_family;
 }
@@ -77,6 +78,83 @@ body {
     @media screen and (max-width: @mobile_width) {
       width: 0;
       border-right: unset;
+    }
+
+    > .search_bar {
+      width: 100%;
+      margin-bottom: 5px;
+      position: relative;
+      @input_height: 40px;
+
+      @media screen and (max-width: @mobile_width) {
+        display: none;
+      }
+
+      > input {
+        width: 100%;
+        border: unset;
+        padding: 8px 30px 8px 8px;
+        height: @input_height;
+      }
+
+      > .clear {
+        position: absolute;
+        top: calc(@input_height / 2 - 7px);
+        right: 8px;
+        height: 14px;
+        width: 14px;
+        cursor: pointer;
+        display: none;
+
+        &:after, &:hover {
+          opacity: .7;
+        }
+      }
+
+      > .search_result {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        right: 0;
+        background-color: #ffffff;
+        display: none;
+        z-index: 99;
+        box-shadow: 0 5px 10px -5px #cccccc;
+
+        > .empty {
+          text-align: center;
+          padding: 20px 0;
+        }
+
+        > .item {
+          border-bottom: 1px solid #eeeeee;
+          padding: 15px;
+          cursor: pointer;
+          text-decoration: none;
+          display: block;
+          color: @font_color;
+
+          .keyword {
+            color: red;
+          }
+
+          &:after, &:hover {
+            opacity: .7;
+          }
+
+          &:last-child {
+            border-bottom: unset;
+          }
+
+          > .title {
+            font-weight: 900;
+            margin-bottom: 5px;
+          }
+
+          > .content {
+          }
+        }
+      }
     }
 
     &.show {
@@ -163,7 +241,7 @@ body {
           border-radius: 50%;
           height: 4px;
           width: 4px;
-          background-color: #333333;
+          background-color: @font_color;
           margin-right: 6px;
         }
       }
@@ -199,7 +277,7 @@ body {
 
       > a {
         .ddd();
-        color: #333333;
+        color: @font_color;
         text-decoration: none;
         display: flex;
         align-items: center;
@@ -295,6 +373,10 @@ body {
     &.markdown-body {
       font-family: @font_family;
 
+      .keyword {
+        color: red;
+      }
+
       img {
         box-shadow: 0 0 7px 0 #aaaaaa;
         border-radius: 5px;
@@ -333,7 +415,7 @@ body {
 
     a {
       text-decoration: none;
-      color: #333333;
+      color: @font_color;
 
       &.active {
         font-weight: 900;

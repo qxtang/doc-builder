@@ -1,4 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
+  const utils = {
+    getQueryString: function (variable) {
+      const query = window.location.search.substring(1);
+      const vars = query.split('&');
+      for (var i = 0; i < vars.length; i++) {
+        const pair = vars[i].split('=');
+        if (pair[0] == variable) {
+          return decodeURIComponent(pair[1]);
+        }
+      }
+      return false;
+    },
+  };
+
   // menu
   (function () {
     const dirs = $('#menu .dir');
@@ -29,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const body = $('body');
     const menu = $('#menu');
 
-    drager.mouseover(function (e) {
+    drager.mouseover(function () {
       $(this).css('cursor', 'e-resize');
     });
 
@@ -54,15 +68,6 @@ document.addEventListener('DOMContentLoaded', function () {
     body.mouseup(function (e) {
       $(this).unbind('mousemove');
       $(this).css('cursor', 'default');
-    });
-  })();
-
-  // viewer
-  (function () {
-    $('.markdown-body img').viewer({
-      title: false,
-      toolbar: false,
-      navbar: false,
     });
   })();
 
@@ -108,5 +113,118 @@ document.addEventListener('DOMContentLoaded', function () {
     if ('onhashchange' in window) {
       window.onhashchange = fn;
     }
+  })();
+
+  // search_bar
+  (function () {
+    const input = $('#search_bar > input');
+    const clear = $('#search_bar > #clear');
+    let timer = null;
+
+    const getSearchResult = (str) => {
+      str = str.toLowerCase();
+      const tree = window.__doc_builder_dirTree__ || [];
+      const res = [];
+
+      const fn = (arr) => {
+        arr.forEach((info) => {
+          const isDir = !!info.dirname;
+          if (isDir) {
+            fn(info.children);
+          } else {
+            const findInTitle = info.basename.toLowerCase().indexOf(str) !== -1;
+            const findInContent = info.content.toLowerCase().indexOf(str) !== -1;
+
+            if (findInTitle || findInContent) {
+              res.push(info);
+            }
+          }
+        });
+      };
+
+      fn(tree);
+      return res;
+    };
+
+    const addHighlight = (str, keyword) => {
+      const regExp = new RegExp(keyword, 'g');
+      return str.replace(regExp, '<mark class="keyword" >' + keyword + '</mark>');
+    };
+
+    const handleInputChange = (value) => {
+      value = value.trim().toLowerCase();
+      const res = getSearchResult(value);
+      const showSearchResult = value.length !== 0;
+      const showEmpty = res.length === 0;
+      const wrapEle = $('#search_result');
+      let html = '';
+
+      if (value.length !== 0) {
+        clear.show();
+      } else {
+        clear.hide();
+      }
+
+      if (showEmpty) {
+        html = '<div class="empty">No Results!</div>';
+      } else {
+        html = res
+          .map((info) => {
+            const index = info.content.indexOf(value);
+            const summary = `...${info.content.substring(index, index + 30)}...`;
+            const href = `${window.root}/${info.relative_path ? info.relative_path + '/' : ''}${
+              info.basename
+            }.html?search=${value}`;
+
+            return `
+              <a class="item" href="${href}">
+                <div class="title">${addHighlight(info.basename, value)}</div>
+                <div class="content">${addHighlight(summary, value)}</div>
+              </a>
+            `;
+          })
+          .join('');
+      }
+
+      if (showSearchResult) {
+        wrapEle.html(html);
+        wrapEle.show();
+      } else {
+        wrapEle.hide();
+      }
+    };
+
+    input.bind('input propertychange', function (e) {
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      timer = setTimeout(() => {
+        handleInputChange(e.target.value);
+      }, 500);
+    });
+
+    clear.on('click', function () {
+      input.val('');
+      handleInputChange('');
+    });
+  })();
+
+  // keyword highlight
+  (function () {
+    const search = utils.getQueryString('search');
+
+    if (search) {
+      $('.content.markdown-body').mark(search, { className: 'keyword' });
+    }
+  })();
+
+  // viewer
+  (function () {
+    $('.markdown-body img').viewer({
+      title: false,
+      toolbar: false,
+      navbar: false,
+    });
   })();
 });

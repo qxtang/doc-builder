@@ -4,13 +4,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= title %></title>
 
+  <!-- styles -->
   <link rel="stylesheet" href="<%= root %>/resource/lib/github-markdown.min.css" />
   <link rel="stylesheet" href="<%= root %>/resource/style.css" />
   <link rel="stylesheet" href="<%= root %>/resource/lib/highlight.default.min.css" />
-  <script src="<%= root %>/resource/lib/jquery.min.js"></script>
-  <script src="//unpkg.com/viewerjs@1.10.4/dist/viewer.min.js"></script>
-  <script src="//unpkg.com/jquery-viewer@1.0.1/dist/jquery-viewer.min.js"></script>
   <link rel="stylesheet" href="//unpkg.com/viewerjs@1.10.4/dist/viewer.min.css" />
+
+  <!-- scripts -->
+  <script src="<%= root %>/resource/lib/jquery.min.js"></script>
 
   <link rel="manifest" href="<%= root %>/manifest.json" />
   <link rel="shortcut icon" type="image/x-icon" href="<%= favicon %>" />
@@ -21,6 +22,14 @@
 
   <script>
     window.root = '<%= root %>';
+
+    fetch(`${window.root}/dir_tree.json`)
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        window.__doc_builder_dirTree__ = res;
+      });
   </script>
 
   <script src="<%= root %>/resource/script.js"></script>

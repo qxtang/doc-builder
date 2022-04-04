@@ -24,4 +24,5 @@ export interface IDirTree {
   output_path: string;
   dirname?: string;
   children?: IDirTree[];
+  content?: string;
 }
