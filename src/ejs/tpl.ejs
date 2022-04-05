@@ -24,7 +24,10 @@
     <div class="mobile_menu" id="mobile_menu">
       <img src="https://cdn.jsdelivr.net/gh/FortAwesome/font-awesome/svgs/solid/bars.svg" alt="" />
     </div>
-    <div class="content markdown-body"><%- html %></div>
+    <div class="content markdown-body">
+      <%- html %>
+      <div class="btt" id="btt"></div>
+    </div>
     <% if (tocHtml) { %>
     <div class="table-of-contents"><%- tocHtml %></div>
     <% } %>

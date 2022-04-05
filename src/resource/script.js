@@ -236,4 +236,27 @@ document.addEventListener('DOMContentLoaded', function () {
       navbar: false,
     });
   })();
+
+  // btt
+  (function () {
+    const btt = $('#btt');
+    const content = $('body > .content');
+
+    content.scroll(function () {
+      if (content.scrollTop() > 50) {
+        btt.fadeIn(200);
+      } else {
+        btt.fadeOut(200);
+      }
+    });
+
+    btt.on('click', function () {
+      content.animate(
+        {
+          scrollTop: 0,
+        },
+        200
+      );
+    });
+  })();
 });

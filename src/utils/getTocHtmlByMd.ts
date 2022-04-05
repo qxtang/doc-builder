@@ -1,8 +1,8 @@
-import { slugifyFn } from './index';
-
 /**
  * @description 根据 markdown 生成 toc html
  */
+import { slugifyFn } from './index';
+
 const markdownToc = require('markdown-toc');
 
 interface Item {
