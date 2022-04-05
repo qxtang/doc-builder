@@ -1,7 +1,18 @@
+// variables
 @mobile_width: 900px;
 @font_family: 'Microsoft JhengHei', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
   sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
 @font_color: #333333;
+
+// mixins
+.img(@cursor: pointer) {
+  box-shadow: 0 0 7px 0 #aaaaaa;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #ffffff;
+  cursor: @cursor;
+  box-sizing: border-box;
+}
 
 .ddd {
   white-space: nowrap;
@@ -382,12 +393,7 @@ body {
       }
 
       img {
-        box-shadow: 0 0 7px 0 #aaaaaa;
-        border-radius: 5px;
-        padding: 10px;
-        background-color: #ffffff;
-        cursor: pointer;
-        box-sizing: border-box;
+        .img();
       }
 
       h1 {
@@ -419,10 +425,11 @@ body {
 
     a {
       text-decoration: none;
-      color: @font_color;
+      color: #555555;
 
       &.active {
         font-weight: 900;
+        color: @font_color;
       }
 
       &:hover,
@@ -434,5 +441,11 @@ body {
     @media screen and (max-width: @mobile_width) {
       display: none;
     }
+  }
+}
+
+.viewer-container {
+  img {
+    .img(unset);
   }
 }

@@ -44,11 +44,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const menu = $('#menu');
 
     drager.mouseover(function () {
-      $(this).css('cursor', 'e-resize');
+      if (menu.hasClass('expand')) {
+        $(this).css('cursor', 'e-resize');
+      } else {
+        $(this).css('cursor', 'unset');
+      }
     });
 
     drager.mousedown(function () {
-      $(this).css('cursor', 'e-resize');
+      if (menu.hasClass('expand')) {
+        $(this).css('cursor', 'e-resize');
+      } else {
+        $(this).css('cursor', 'unset');
+      }
       body.mousemove(function (e) {
         const _x = e.pageX;
 
