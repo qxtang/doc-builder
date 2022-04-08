@@ -39,7 +39,7 @@ const isDev = config.watch;
 const inputPath = path.join(cwd, config.input);
 const outputPath = (function () {
   if (isDev) {
-    return path.join(__dirname, '../.temp');
+    return path.join(__dirname, '../temp');
   }
   return path.join(cwd, config.output);
 })();
@@ -66,7 +66,7 @@ const doBuild = async () => {
 };
 
 const main = async () => {
-  logger.info(`start ${isDev ? 'dev' : 'build'}, your config:`, config);
+  logger.info(`start ${isDev ? 'dev' : 'build'}, your config:\n${JSON.stringify(config, null, 2)}`);
 
   if (!fs.existsSync(inputPath)) {
     logger.error('输入文件夹不存在:', inputPath);

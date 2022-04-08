@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
     },
   };
 
+  const isMobile = !!(document.body.clientWidth < 900);
+
   // menu
   (function () {
     const $dirs = $('#menu .dir');
@@ -39,6 +41,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // menu drag
   (function () {
+    if (isMobile) {
+      return;
+    }
+
     const $drager = $('#drager');
     const $body = $('body');
     const $menu = $('#menu');
@@ -81,6 +87,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // menu switcher
   (function () {
+    if (isMobile) {
+      return;
+    }
+
     const $menu = $('#menu');
     const $switcher = $('#drager > #switcher');
 
@@ -100,53 +110,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   })();
 
-  // toc active
-  (function () {
-    const $content = $('body > .content.markdown-body');
-    const $links = $('.table-of-contents a');
-    const $heads = $('.content.markdown-body a.header-anchor');
-    let timer = null;
-
-    const handleSetActive = function () {
-      const fn = function () {
-        if ($heads.length === 0) {
-          return;
-        }
-
-        const scrollHeight = $content.scrollTop() + 41;
-
-        console.clear();
-        console.log({ scroll_height: scrollHeight, scrollTop: $content.scrollTop() });
-
-        for (let i = 0; i < $heads.length; i++) {
-          const head = $heads[i];
-          const head_height = $(head).offset().top;
-          console.log($(head).text(), head_height);
-
-          if (Math.abs(head_height) < 70) {
-            console.log('命中：', $($links[i]).text());
-            $links.removeClass('active');
-            $($links[i]).addClass('active');
-          }
-        }
-      };
-
-      if (timer) {
-        clearTimeout(timer);
-      }
-
-      timer = setTimeout(fn, 500);
-    };
-
-    $content.bind('scroll', handleSetActive);
-
-    if ('onhashchange' in window) {
-      window.onhashchange = handleSetActive;
-    }
-  })();
-
   // search_bar
   (function () {
+    if (isMobile) {
+      return;
+    }
+
     const $input = $('#search_bar > input');
     const $clear = $('#search_bar > #clear');
     let timer = null;
@@ -261,6 +230,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // btt
   (function () {
+    if (isMobile) {
+      return;
+    }
+
     const $btt = $('#btt');
     const $content = $('body > .content');
 
