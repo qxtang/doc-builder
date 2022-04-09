@@ -61,7 +61,7 @@ $ npm install -g @qxtang/doc-builder
 ## 其他
 
 - 自定义站点首页（关于页），创建并编辑 index.md 即可
-- 会自动忽略以小数点 `.` 开头的文件夹和文件
+- 会自动忽略以小数点 `.` 开头的文件或文件夹
 
 ## 与 GitHub Actions 结合食用更佳！❤
 

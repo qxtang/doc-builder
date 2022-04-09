@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
         html = res
           .map((info) => {
             const index = info.content.toLowerCase().indexOf(value);
-            const summary = `...${info.content.substring(index, index + 30)}...`;
+            const summary = `...${info.content.substring(index, index + 50)}...`;
             const href = `${window.root}/${info.relative_path ? info.relative_path + '/' : ''}${
               info.basename
             }.html?search=${value}`;

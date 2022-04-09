@@ -356,6 +356,7 @@ body {
     width: 45px;
     align-items: center;
     justify-content: center;
+    z-index: 99;
 
     > img {
       height: 27px;
@@ -411,7 +412,7 @@ body {
     > .btt {
       position: fixed;
       bottom: 50px;
-      right: calc(@menu_width + 50px + 1vw);
+      right: calc(50px + 1vw);
       height: 42px;
       width: 42px;
       box-shadow: 0 1px 4px -2px rgb(0 0 0 / 13%), 0 2px 8px rgb(0 0 0 / 8%), 0 8px 16px 4px rgb(0 0 0 / 4%);
@@ -435,6 +436,10 @@ body {
 
       @media screen and (max-width: @mobile_width) {
         display: none;
+      }
+
+      &.withToc {
+        right: calc(@menu_width + 50px + 1vw);
       }
     }
   }

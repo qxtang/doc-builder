@@ -26,7 +26,11 @@
     </div>
     <div class="content markdown-body">
       <%- html %>
-      <div class="btt" id="btt"></div>
+      <% if (tocHtml) { %>
+        <div class="btt withToc" id="btt"></div>
+      <% } else { %>
+        <div class="btt" id="btt"></div>
+      <% } %>
     </div>
     <% if (tocHtml) { %>
     <div class="table-of-contents"><%- tocHtml %></div>
