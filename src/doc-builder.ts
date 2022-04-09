@@ -26,7 +26,7 @@ program
   .option('--title <title>', '站点主标题', 'doc-builder')
   .option('--favicon <favicon>', '自定义 favicon 资源路径', '/resource/favicon.ico')
   .option('--root <root>', '站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 "path"', '')
-  .option('--ignore <ignore>', '需要忽略的文件夹或文件列表，英文逗号分隔，在配置文件中则为数组', '');
+  .option('--ignore <ignore>', '需要忽略的文件夹或文件列表，英文逗号分隔，在配置文件中则为数组', 'node_modules,dist');
 
 program.showHelpAfterError();
 program.parse(process.argv);

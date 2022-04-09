@@ -72,7 +72,7 @@ const getTocHtmlByMd = (md: string): string => {
     slugify: slugifyFn,
   }).json;
 
-  if (flatHeadlineItems.length === 0) {
+  if (flatHeadlineItems.length <= 1) {
     return '';
   }
 

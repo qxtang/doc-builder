@@ -112,10 +112,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // search_bar
   (function () {
-    if (isMobile) {
-      return;
-    }
-
     const $input = $('#search_bar > input');
     const $clear = $('#search_bar > #clear');
     let timer = null;

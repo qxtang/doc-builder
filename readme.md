@@ -1,7 +1,6 @@
 # DOC-BUILDER
 
-- 一个命令行工具，将任意文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单
-- 极速零配置
+- 极速零配置，将任意文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单
 - 支持无限级菜单，全站搜索
 - 响应式设计支持移动端访问；非单页，利于 SEO、首屏加载快
 - [Preview 示例预览](https://qxtang.github.io/my-book/)
@@ -31,7 +30,7 @@ $ npm install -g @qxtang/doc-builder
 --title <title>        站点主标题 (default: "doc-builder")
 --favicon <favicon>    自定义 favicon 资源路径 (default: "/resource/favicon.ico")
 --root <root>          站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 "path" (default: "")
---ignore <ignore>      需要忽略的文件夹或文件列表，英文逗号分隔，在配置文件中则为数组 (default: "")
+--ignore <ignore>      需要忽略的文件夹或文件列表，英文逗号分隔，在配置文件中则为数组 (default: "node_modules,dist")
 -h, --help             display help for command
 ```
 
@@ -91,11 +90,15 @@ $ npm install -g @qxtang/doc-builder
             npx doc-builder --root="your path" --ignore=node_modules,dist
 
         - name: Deploy
-          uses: JamesIves/github-pages-deploy-action@releases/v3
+          uses: JamesIves/github-pages-deploy-action@v4.3.0
           with:
-            ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} # 仓库 secrets 名称
-            BRANCH: gh-pages # 发布站点的分支
-            FOLDER: dist # 输出文件夹
+            token: ${{ secrets.ACCESS_TOKEN }} # 仓库 secrets 名称
+            branch: gh-pages # 发布站点的分支
+            folder: dist # 输出文件夹
+            clean: true
+            clean-exclude: |
+              manifest.json
+              .nojekyll
   ```
 
 - 只需要在仓库编辑你的文档，保存推送，啥也不用干，自动部署
