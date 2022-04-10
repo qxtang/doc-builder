@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     },
   };
 
+  const LAST_VISIT_KEY = '20220410091109_LAST_VISIT_KEY';
   const isMobile = !!(document.body.clientWidth < 900);
 
   // menu
@@ -32,9 +33,15 @@ document.addEventListener('DOMContentLoaded', function () {
       const url = decodeURIComponent($(this).prop('href'));
       const _path = url.replace(host, '');
       const isActive = path === _path;
+      const lastVisit = window.localStorage.getItem(LAST_VISIT_KEY);
+      const isLastVisit = lastVisit === _path;
 
       if (isActive) {
         $(this).parent('.children').addClass('active');
+      }
+
+      if (isLastVisit) {
+        $(this).addClass('last-visit');
       }
     });
   })();
@@ -249,5 +256,14 @@ document.addEventListener('DOMContentLoaded', function () {
         200
       );
     });
+  })();
+
+  // set last visit
+  (function () {
+    const path = decodeURIComponent(window.location.pathname);
+    if ([`${window.root}/`, `${window.root}/index.html`, '/', '/index.html'].includes(path)) {
+      return;
+    }
+    window.localStorage.setItem(LAST_VISIT_KEY, path);
   })();
 });

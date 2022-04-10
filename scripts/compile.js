@@ -82,6 +82,7 @@ const compile = () => {
       fn();
     } catch (e) {
       console.log('COMPILE FAIL:', e, '\n\r', e.output?.toString());
+      throw new Error(e);
     }
   }, 500);
 };

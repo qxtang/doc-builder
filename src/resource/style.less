@@ -295,6 +295,21 @@ body {
         align-items: center;
         height: 100%;
         width: 100%;
+
+        &.last-visit {
+          &::after {
+            content: '上次看到';
+            font-size: 12px;
+            transform: scale(0.8);
+            border-radius: 6px;
+            padding: 2px 3px;
+            color: #ffffff;
+            background-color: #666666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
       }
     }
   }
