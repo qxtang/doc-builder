@@ -258,6 +258,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   })();
 
+  // jump hash
+  (function () {
+    const hash = window.location.hash.slice(1);
+    const $content = $('body > .content.markdown-body');
+
+    if (hash) {
+      const ele = document.getElementById(hash);
+      $content.animate({ scrollTop: $(ele)?.offset()?.top || 0 }, 0);
+    }
+  })();
+
   // set last visit
   (function () {
     const path = decodeURIComponent(window.location.pathname);
