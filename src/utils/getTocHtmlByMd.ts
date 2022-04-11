@@ -54,7 +54,7 @@ const tocItemToHtml = (tocItem: Item): string => {
     '<ul>' +
     tocItem?.children
       ?.map((childItem: Item) => {
-        let li = `<li title=${childItem.content}>`;
+        let li = `<li title="${childItem.content}">`;
         const anchor = childItem.slug;
         const text = childItem.content;
 
