@@ -7,11 +7,12 @@ export interface IConfig {
   resource: string;
   title: string;
   root: string;
-  ignore: Array<string> | string;
+  ignore: Array<string>;
 }
 
-export interface IOption extends IConfig {
+export interface IOption extends Omit<IConfig, "ignore"> {
   config: string;
+  ignore: string;
 }
 
 export interface IDirTree {

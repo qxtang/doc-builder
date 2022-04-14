@@ -26,7 +26,7 @@ export const getDirTree = (params: { inputPath: string; outputPath: string; conf
       const isFile = stat.isFile();
       const isStartsWithDot = filename.startsWith('.');
 
-      const isIgnore = (config.ignore as Array<string>).some((item) => {
+      const isIgnore = config.ignore.some((item) => {
         return path.join(inputPath, item) === real_path;
       });
 

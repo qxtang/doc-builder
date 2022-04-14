@@ -35,7 +35,7 @@ export const getConfig = (params: IParams): IConfig => {
     resource: cfgByFile.resource || options.resource,
     title: cfgByFile.title || options.title,
     root,
-    ignore: cfgByFile.ignore || (options.ignore as string).split(','),
+    ignore: cfgByFile.ignore || options.ignore.split(','),
   };
 
   return result;
