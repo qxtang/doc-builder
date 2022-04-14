@@ -202,7 +202,7 @@ export const slugifyFn = (str: string, opt?: any) => {
   return r;
 };
 
-// 生成默认 manifest.json
+// 生成 manifest.json
 export const genManifest = (params: { config: IConfig; outputPath: string }) => {
   const { config, outputPath } = params;
 

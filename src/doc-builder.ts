@@ -82,7 +82,10 @@ const main = async () => {
   if (isDev) {
     // watch input
     chokidar
-      .watch([inputPath, __dirname], { depth: 10, ignored: [/(^|[\/\\])\../, ...config.ignore] }) // ignore dotfiles
+      .watch([inputPath, __dirname], {
+        depth: 10,
+        ignored: [/(^|[\/\\])\../, ...config.ignore.map((i) => path.join(inputPath, i))],
+      }) // ignore dotfiles
       .on('change', async (filename: string) => {
         logger.info('file change:', filename);
 

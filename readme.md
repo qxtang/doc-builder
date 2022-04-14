@@ -95,7 +95,6 @@ $ npm install -g @qxtang/doc-builder
             folder: dist # 输出文件夹
             clean: true
             clean-exclude: |
-              manifest.json
               .nojekyll
   ```
 
