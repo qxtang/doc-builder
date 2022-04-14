@@ -42,16 +42,16 @@ $ npm install -g @qxtang/doc-builder
   // builder.config.js
 
   module.exports = {
-    watch: false;
-    port: 8181;
-    host: '127.0.0.1';
-    output: 'your dist';
-    input: 'your input';
-    resource: 'your resource';
-    title: 'your title';
-    root: 'your path';
-    ignore: [];
-  }
+    watch: false,
+    port: 8181,
+    host: '127.0.0.1',
+    output: 'your dist',
+    input: 'your input',
+    resource: 'your resource',
+    title: 'your title',
+    root: 'your path',
+    ignore: [],
+  };
   ```
 
 - 传入 `doc-builder --config=builder.config.js`

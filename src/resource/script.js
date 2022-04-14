@@ -85,6 +85,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // expand-all
   (function () {
+    if (isMobile) {
+      return;
+    }
+
     const $expandAll = $('#expand-all');
     const $parents = $('#menu .parent');
 
@@ -96,6 +100,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // collapse-all
   (function () {
+    if (isMobile) {
+      return;
+    }
+
     const $collapseAll = $('#collapse-all');
     const $parents = $('#menu .parent');
     const $dirs = $('#menu .dir');

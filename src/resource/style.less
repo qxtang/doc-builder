@@ -76,7 +76,7 @@ body {
   > .menu {
     @item_height: 40px;
     @step: 10px;
-    @background-color: #f5f5f5;
+    @background-color: #f7f7f7;
 
     width: 0;
     overflow-y: auto;
@@ -106,9 +106,6 @@ body {
       justify-content: center;
       z-index: 99;
       background-color: @background-color;
-
-      > span {
-      }
     }
 
     > .search_bar {
@@ -436,6 +433,7 @@ body {
 
     &.markdown-body {
       font-family: @font_family;
+      font-size: 14px;
 
       .keyword {
         color: red;
@@ -443,10 +441,6 @@ body {
 
       img {
         .img();
-      }
-
-      h1 {
-        font-size: 1.5em;
       }
 
       h1,
@@ -502,6 +496,7 @@ body {
     line-height: 1.8;
     max-height: 100vh;
     border-left: 1px solid #cccccc;
+    background-color: #f7f7f7;
 
     ul {
       padding-left: 1em;
