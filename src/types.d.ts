@@ -6,7 +6,6 @@ export interface IConfig {
   input: string;
   resource: string;
   title: string;
-  favicon: string;
   root: string;
   ignore: Array<string> | string;
 }

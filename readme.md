@@ -28,7 +28,6 @@ $ npm install -g @qxtang/doc-builder
 --input <input>        输入文件夹 (default: ".")
 --resource <resource>  存放图片等资源的文件夹，路径相对于输入文件夹，打包时会一并复制，当然也可以使用自己的图床 (default: "resource")
 --title <title>        站点主标题 (default: "doc-builder")
---favicon <favicon>    自定义 favicon 资源路径 (default: "/resource/favicon.ico")
 --root <root>          站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 "path" (default: "")
 --ignore <ignore>      需要忽略的文件夹或文件列表，英文逗号分隔，在配置文件中则为数组 (default: "node_modules,dist")
 -h, --help             display help for command
@@ -50,7 +49,6 @@ $ npm install -g @qxtang/doc-builder
     input: 'your input';
     resource: 'your resource';
     title: 'your title';
-    favicon: '';
     root: 'your path';
     ignore: [];
   }

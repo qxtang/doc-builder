@@ -34,7 +34,6 @@ export const getConfig = (params: IParams): IConfig => {
     input: cfgByFile.input || options.input,
     resource: cfgByFile.resource || options.resource,
     title: cfgByFile.title || options.title,
-    favicon: cfgByFile.favicon || root + options.favicon,
     root,
     ignore: cfgByFile.ignore || (options.ignore as string).split(','),
   };

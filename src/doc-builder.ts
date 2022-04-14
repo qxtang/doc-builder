@@ -8,7 +8,7 @@ import liveServer from 'live-server';
 import { Command } from 'commander';
 import { getConfig } from './utils/config';
 import logger from './utils/logger';
-import { copyTplResource, copyUserResource, genDirTreeJson, getDirTree, renderDirTree } from './utils';
+import { copyTplResource, copyUserResource, genDirTreeJson, genManifest, getDirTree, renderDirTree } from './utils';
 
 const program = new Command();
 program
@@ -24,7 +24,6 @@ program
     'resource'
   )
   .option('--title <title>', '站点主标题', 'doc-builder')
-  .option('--favicon <favicon>', '自定义 favicon 资源路径', '/resource/favicon.ico')
   .option('--root <root>', '站点根目录，例如你的站点要部署在 https://abc.com/path/，则需要设置为 "path"', '')
   .option('--ignore <ignore>', '需要忽略的文件夹或文件列表，英文逗号分隔，在配置文件中则为数组', 'node_modules,dist');
 
@@ -54,6 +53,7 @@ const doBuild = async () => {
     await genDirTreeJson(dirTree, outputPath);
     await copyTplResource(outputPath);
     await copyUserResource({ resourcePath, outputPath, config });
+    await genManifest({ config, outputPath });
     await renderDirTree({ dirTree, config, outputPath });
     logger.info('build finish');
   };

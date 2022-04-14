@@ -133,7 +133,6 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
           html: html,
           title: config.title,
           basename: basename === 'index' ? '' : basename,
-          favicon: config.favicon,
           tocHtml,
           menuHtml,
         };
@@ -201,4 +200,41 @@ export const slugifyFn = (str: string, opt?: any) => {
     return r + '-' + opt.num;
   }
   return r;
+};
+
+// 生成默认 manifest.json
+export const genManifest = (params: { config: IConfig; outputPath: string }) => {
+  const { config, outputPath } = params;
+
+  const res = {
+    name: config.title,
+    short_name: config.title,
+    display: 'standalone',
+    start_url: config.root,
+    orientation: 'natural',
+    icons: [
+      {
+        src: `${config.root}/resource/icons/128.png`,
+        sizes: '128x128',
+      },
+      {
+        src: `${config.root}/resource/icons/144.png`,
+        sizes: '144x144',
+      },
+      {
+        src: `${config.root}/resource/icons/192.png`,
+        sizes: '192x192',
+      },
+      {
+        src: `${config.root}/resource/icons/256.png`,
+        sizes: '256x256',
+      },
+      {
+        src: `${config.root}/resource/icons/512.png`,
+        sizes: '512x512',
+      },
+    ],
+  };
+
+  fs.writeFileSync(path.join(outputPath, 'manifest.json'), JSON.stringify(res), { encoding: 'utf-8' });
 };
