@@ -92,7 +92,7 @@ const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string
     const isDir = !!item.dirname;
     if (isDir) {
       res += `
-            <ul class="parent open">
+            <ul class="parent expand">
               <li id="${item.id}" class="dir" title="${item.dirname}">
                 <span>${item.dirname}</span>
                 <div class="triangle"></div>

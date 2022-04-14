@@ -1,3 +1,10 @@
+Array.prototype.remove = function (val) {
+  const index = this.indexOf(val);
+  if (index > -1) {
+    this.splice(index, 1);
+  }
+};
+
 document.addEventListener('DOMContentLoaded', function () {
   const utils = {
     getQueryString: function (variable) {
@@ -13,18 +20,44 @@ document.addEventListener('DOMContentLoaded', function () {
     },
   };
 
-  const LAST_VISIT_KEY = '20220410091109_LAST_VISIT_KEY';
+  const LAST_VISIT_STORAGE_KEY = '20220410091109_LAST_VISIT_KEY_FJHY3PHJ00';
+  const COLLAPSE_STORAGE_KEY = '20220414095652_COLLAPSE_KEY_IXIFMU64D7';
   const isMobile = !!(document.body.clientWidth < 900);
 
   // menu
   (function () {
     const $dirs = $('#menu .dir');
+    const $loading = $('#menu .loading');
 
-    $dirs.on('click', function () {
+    // 设置展开状态
+    $dirs.each(function () {
+      const curr = JSON.parse(window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]');
+      const id = $(this).attr('id');
       const $p = $(this).parent('.parent');
-      $p.toggleClass('open');
+
+      if (curr.includes(id)) {
+        $p.removeClass('expand');
+      }
     });
 
+    // 点击事件
+    $dirs.on('click', function () {
+      const $p = $(this).parent('.parent');
+      $p.toggleClass('expand');
+
+      const id = $(this).attr('id');
+      const hasExpand = $p.hasClass('expand');
+      const curr = JSON.parse(window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]');
+
+      if (hasExpand) {
+        curr.remove(id);
+      } else {
+        curr.push(id);
+      }
+      window.localStorage.setItem(COLLAPSE_STORAGE_KEY, JSON.stringify(curr));
+    });
+
+    // 设置上次看到状态
     const $links = $('#menu .children > a');
     const host = window.location.protocol + '//' + window.location.host;
     const path = decodeURIComponent(window.location.pathname);
@@ -33,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const url = decodeURIComponent($(this).prop('href'));
       const _path = url.replace(host, '');
       const isActive = path === _path;
-      const lastVisit = window.localStorage.getItem(LAST_VISIT_KEY);
+      const lastVisit = window.localStorage.getItem(LAST_VISIT_STORAGE_KEY);
       const isLastVisit = lastVisit === _path;
 
       if (isActive) {
@@ -43,6 +76,36 @@ document.addEventListener('DOMContentLoaded', function () {
       if (isLastVisit) {
         $(this).addClass('last-visit');
       }
+    });
+
+    setTimeout(function () {
+      $loading.remove();
+    }, 300);
+  })();
+
+  // expand-all
+  (function () {
+    const $expandAll = $('#expand-all');
+    const $parents = $('#menu .parent');
+
+    $expandAll.on('click', function () {
+      $parents.addClass('expand');
+      window.localStorage.setItem(COLLAPSE_STORAGE_KEY, '[]');
+    });
+  })();
+
+  // collapse-all
+  (function () {
+    const $collapseAll = $('#collapse-all');
+    const $parents = $('#menu .parent');
+    const $dirs = $('#menu .dir');
+    const ids = $.map($dirs, function (item) {
+      return $(item).attr('id');
+    });
+
+    $collapseAll.on('click', function () {
+      $parents.removeClass('expand');
+      window.localStorage.setItem(COLLAPSE_STORAGE_KEY, JSON.stringify(ids));
     });
   })();
 
@@ -99,11 +162,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const $menu = $('#menu');
+    const $expandAll = $('#expand-all');
+    const $collapseAll = $('#collapse-all');
     const $switcher = $('#drager > #switcher');
 
     $switcher.on('click', function () {
       $menu.removeAttr('style');
       $menu.toggleClass('expand');
+      $expandAll.toggle();
+      $collapseAll.toggle();
       $(this).toggleClass('expand');
     });
   })();
@@ -275,6 +342,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if ([`${window.root}/`, `${window.root}/index.html`, '/', '/index.html'].includes(path)) {
       return;
     }
-    window.localStorage.setItem(LAST_VISIT_KEY, path);
+    window.localStorage.setItem(LAST_VISIT_STORAGE_KEY, path);
   })();
 });

@@ -3,6 +3,9 @@
   <%- include('./head', { title: basename ? (title + ' - ' + basename) : title, favicon: favicon, root: root }); %>
   <body>
     <ul class="menu expand" id="menu">
+      <div class="loading">
+        <span>加载中...</span>
+      </div>
       <div class="search_bar" id="search_bar">
         <input type="text" placeholder="search..." />
         <img
@@ -19,7 +22,9 @@
       </li>
     </ul>
     <div class="drager" id="drager">
-      <div class="switcher" id="switcher" title="展开或收起"></div>
+      <div class="switcher btn" id="switcher" title="展开或收起"></div>
+      <div class="expand-all btn" id="expand-all" title="展开所有"></div>
+      <div class="collapse-all btn" id="collapse-all" title="收起所有"></div>
     </div>
     <div class="mobile_menu" id="mobile_menu">
       <img src="https://cdn.jsdelivr.net/gh/FortAwesome/font-awesome/svgs/solid/bars.svg" alt="" />
