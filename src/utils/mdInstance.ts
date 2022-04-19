@@ -26,7 +26,8 @@ mdInstance
   })
   .use(require('markdown-it-sub'))
   .use(require('markdown-it-sup'))
-  .use(require('markdown-it-mark'));
+  .use(require('markdown-it-mark'))
+  .use(require('markdown-it-attrs'));
 
 const defaultRender =
   mdInstance.renderer.rules.link_open ||
@@ -38,7 +39,7 @@ const defaultRender =
 mdInstance.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   const targetIndex = tokens[idx].attrIndex('target');
 
-  if (targetIndex < 0 && tokens[idx].attrGet('class') !== 'header-anchor') {
+  if (targetIndex < 0 && !['header-anchor', 'current'].includes(String(tokens[idx].attrGet('class')))) {
     tokens[idx].attrPush(['target', '_blank']);
   }
 
