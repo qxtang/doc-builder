@@ -4,7 +4,8 @@
   "description": "将任意文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单，零配置",
   "scripts": {
     "prepublishOnly": "npm run compile",
-    "dev": "node ./bin/doc-builder.js --config=config.dev.js",
+    "dev": "node ./bin/doc-builder.js --config=config.docs.dev.js",
+    "build:docs": "node ./bin/doc-builder.js --config=config.docs.build.js",
     "compile": "node ./scripts/compile.js",
     "compile:watch": "node ./scripts/compile.js -w"
   },

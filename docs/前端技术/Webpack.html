@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>demo - Webpack</title>
+
+  <!-- styles -->
+  <link rel="stylesheet" href="/doc-builder/resource/lib/github-markdown.min.css" />
+  <link rel="stylesheet" href="/doc-builder/resource/style.css" />
+  <link rel="stylesheet" href="/doc-builder/resource/lib/highlight.default.min.css" />
+  <link rel="stylesheet" href="/doc-builder/resource/lib/viewerjs-1.10.5/viewer.min.css" />
+
+  <!-- scripts -->
+  <script src="/doc-builder/resource/lib/jquery.min.js"></script>
+
+  <link rel="manifest" href="/doc-builder/manifest.json" />
+  <link rel="shortcut icon" type="image/x-icon" href="/doc-builder/resource/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="/doc-builder/resource/favicon.ico" />
+  <link rel="apple-touch-icon" href="/doc-builder/resource/favicon.ico" />
+
+  <!-- 编译时间：2022/8/14 13:18:31 -->
+
+  <script>
+    window.root = '/doc-builder';
+
+    // 提前把搜索数据库载入内存
+    fetch(`${window.root}/dir_tree.json`)
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        window.__doc_builder_dirTree__ = res;
+      });
+  </script>
+</head>
+
+  <body>
+    <ul class="menu expand" id="menu">
+      <div class="loading">
+        <span>加载中...</span>
+      </div>
+      <div class="search_bar" id="search_bar">
+        <input type="text" placeholder="search..." />
+        <img
+          class="clear"
+          id="clear"
+          src="/doc-builder/resource/icons/circle-xmark.svg"
+          alt=""
+        />
+        <div class="search_result" id="search_result"></div>
+      </div>
+      
+            <ul class="parent expand">
+              <li id="前端技术" class="dir" title="前端技术">
+                <span>前端技术</span>
+                <div class="triangle"></div>
+              </li>
+              
+            <ul class="parent expand">
+              <li id="前端技术\浏览器" class="dir" title="浏览器">
+                <span>浏览器</span>
+                <div class="triangle"></div>
+              </li>
+              
+          <li id="前端技术\浏览器\事件循环.md" class="children" title="事件循环">
+            <a href="/doc-builder/前端技术\浏览器/事件循环.html">事件循环</a>
+          </li>
+        
+          <li id="前端技术\浏览器\浏览器.md" class="children" title="浏览器">
+            <a href="/doc-builder/前端技术\浏览器/浏览器.html">浏览器</a>
+          </li>
+        
+          <li id="前端技术\浏览器\浏览器架构.md" class="children" title="浏览器架构">
+            <a href="/doc-builder/前端技术\浏览器/浏览器架构.html">浏览器架构</a>
+          </li>
+        
+          <li id="前端技术\浏览器\浏览器缓存.md" class="children" title="浏览器缓存">
+            <a href="/doc-builder/前端技术\浏览器/浏览器缓存.html">浏览器缓存</a>
+          </li>
+        
+            </ul>
+          
+            <ul class="parent expand">
+              <li id="前端技术\React" class="dir" title="React">
+                <span>React</span>
+                <div class="triangle"></div>
+              </li>
+              
+          <li id="前端技术\React\Fiber.md" class="children" title="Fiber">
+            <a href="/doc-builder/前端技术\React/Fiber.html">Fiber</a>
+          </li>
+        
+          <li id="前端技术\React\Hooks.md" class="children" title="Hooks">
+            <a href="/doc-builder/前端技术\React/Hooks.html">Hooks</a>
+          </li>
+        
+          <li id="前端技术\React\React.md" class="children" title="React">
+            <a href="/doc-builder/前端技术\React/React.html">React</a>
+          </li>
+        
+            </ul>
+          
+            <ul class="parent expand">
+              <li id="前端技术\Javascript" class="dir" title="Javascript">
+                <span>Javascript</span>
+                <div class="triangle"></div>
+              </li>
+              
+          <li id="前端技术\Javascript\Promise.md" class="children" title="Promise">
+            <a href="/doc-builder/前端技术\Javascript/Promise.html">Promise</a>
+          </li>
+        
+          <li id="前端技术\Javascript\代理对.md" class="children" title="代理对">
+            <a href="/doc-builder/前端技术\Javascript/代理对.html">代理对</a>
+          </li>
+        
+          <li id="前端技术\Javascript\其他.md" class="children" title="其他">
+            <a href="/doc-builder/前端技术\Javascript/其他.html">其他</a>
+          </li>
+        
+          <li id="前端技术\Javascript\原型链和继承.md" class="children" title="原型链和继承">
+            <a href="/doc-builder/前端技术\Javascript/原型链和继承.html">原型链和继承</a>
+          </li>
+        
+          <li id="前端技术\Javascript\数据类型.md" class="children" title="数据类型">
+            <a href="/doc-builder/前端技术\Javascript/数据类型.html">数据类型</a>
+          </li>
+        
+          <li id="前端技术\Javascript\模块.md" class="children" title="模块">
+            <a href="/doc-builder/前端技术\Javascript/模块.html">模块</a>
+          </li>
+        
+          <li id="前端技术\Javascript\正则表达式.md" class="children" title="正则表达式">
+            <a href="/doc-builder/前端技术\Javascript/正则表达式.html">正则表达式</a>
+          </li>
+        
+          <li id="前端技术\Javascript\闭包.md" class="children" title="闭包">
+            <a href="/doc-builder/前端技术\Javascript/闭包.html">闭包</a>
+          </li>
+        
+            </ul>
+          
+          <li id="前端技术\Babel.md" class="children" title="Babel">
+            <a href="/doc-builder/前端技术/Babel.html">Babel</a>
+          </li>
+        
+          <li id="前端技术\CSS.md" class="children" title="CSS">
+            <a href="/doc-builder/前端技术/CSS.html">CSS</a>
+          </li>
+        
+          <li id="前端技术\Flex布局.md" class="children" title="Flex布局">
+            <a href="/doc-builder/前端技术/Flex布局.html">Flex布局</a>
+          </li>
+        
+          <li id="前端技术\NodeJS.md" class="children" title="NodeJS">
+            <a href="/doc-builder/前端技术/NodeJS.html">NodeJS</a>
+          </li>
+        
+          <li id="前端技术\npm.md" class="children" title="npm">
+            <a href="/doc-builder/前端技术/npm.html">npm</a>
+          </li>
+        
+          <li id="前端技术\Typescript.md" class="children" title="Typescript">
+            <a href="/doc-builder/前端技术/Typescript.html">Typescript</a>
+          </li>
+        
+          <li id="前端技术\Webpack.md" class="children" title="Webpack">
+            <a href="/doc-builder/前端技术/Webpack.html">Webpack</a>
+          </li>
+        
+          <li id="前端技术\函数式编程.md" class="children" title="函数式编程">
+            <a href="/doc-builder/前端技术/函数式编程.html">函数式编程</a>
+          </li>
+        
+          <li id="前端技术\微前端.md" class="children" title="微前端">
+            <a href="/doc-builder/前端技术/微前端.html">微前端</a>
+          </li>
+        
+          <li id="前端技术\性能优化.md" class="children" title="性能优化">
+            <a href="/doc-builder/前端技术/性能优化.html">性能优化</a>
+          </li>
+        
+          <li id="前端技术\柯里化.md" class="children" title="柯里化">
+            <a href="/doc-builder/前端技术/柯里化.html">柯里化</a>
+          </li>
+        
+          <li id="前端技术\设计模式.md" class="children" title="设计模式">
+            <a href="/doc-builder/前端技术/设计模式.html">设计模式</a>
+          </li>
+        
+            </ul>
+          
+          <li id="单元测试.md" class="children" title="单元测试">
+            <a href="/doc-builder/单元测试.html">单元测试</a>
+          </li>
+        
+          <li id="网络.md" class="children" title="网络">
+            <a href="/doc-builder/网络.html">网络</a>
+          </li>
+        
+      <li id="index.md" class="children about">
+        <a href="/doc-builder/">关于</a>
+      </li>
+    </ul>
+    <div class="drager" id="drager">
+      <div class="switcher btn" id="switcher" title="展开或收起"></div>
+      <div class="expand-all btn" id="expand-all" title="展开所有"></div>
+      <div class="collapse-all btn" id="collapse-all" title="收起所有"></div>
+    </div>
+    <div class="mobile_menu" id="mobile_menu">
+      <img src="/doc-builder/resource/icons/bars.svg" alt="" />
+    </div>
+    <div class="content markdown-body">
+      <h1 id="webpack" tabindex="-1"><a class="header-anchor" href="#webpack">Webpack</a></h1>
+<ul>
+<li>是一个 JavaScript 的模块打包工具</li>
+<li>基于入口文件，自动地递归解析入口所需要加载的所有资源，然后用不同的 loader 来处理不同的文件，用 Plugin 来扩展 webpack 的功能</li>
+<li>通过分析模块之间的依赖，最终将所有模块打包成一份或者多份代码包，供 HTML 直接引用</li>
+<li>实质上，Webpack 仅仅提供了 打包功能 和一套 文件处理机制，然后通过生态中的各种 Loader 和 Plugin 对代码进行预编译和打包</li>
+<li>因此 Webpack 具有高度的可拓展性，能更好的发挥社区生态的力量</li>
+</ul>
+<h1 id="%E6%A6%82%E5%BF%B5" tabindex="-1"><a class="header-anchor" href="#%E6%A6%82%E5%BF%B5">概念</a></h1>
+<ul>
+<li>Entry: 入口文件，Webpack 会从该文件开始进行分析与编译；</li>
+<li>Output: 出口路径，打包后创建 bundler 的文件路径以及文件名；</li>
+<li>Module: 源码目录中的每一个文件，在 Webpack 中任何文件都可以作为一个模块，会根据配置的不同的 Loader 进行加载和打包；</li>
+<li>Chunk: webpack 打包过程中的产物，在进行模块的依赖分析的时候，代码分割出来的代码块，可以根据配置，将所有模块代码合并成一个或多个代码块，以便按需加载，提高性能；</li>
+<li>Loader: 模块加载器，进行各种文件类型的加载与转换，比如 babel-loader 将 jsx 转为 React.createElement；</li>
+<li>Plugin: 拓展插件，可以通过 Webpack 相应的事件钩子，介入到打包过程中的任意环节，从而对代码按需修改；</li>
+<li>Bundle: webpack 打包出来的文件，webpack 最终输出的东西，可以直接在浏览器运行。在抽离 css(当然也可以是图片、字体文件之类的)的情况下，一个 chunk 是会输出多个 bundle 的，但是默认情况下一般一个 chunk 也只是会输出一个 bundle</li>
+</ul>
+<h1 id="%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B" tabindex="-1"><a class="header-anchor" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">工作流程</a></h1>
+<ul>
+<li>初始化参数：从配置文件和 Shell 语句中读取与合并参数，得出最终的参数</li>
+<li>开始编译：用上一步得到的参数初始化 Compiler 对象，加载所有配置的插件，执行对象的 run 方法开始执行编译</li>
+<li>确定入口：根据配置中的 entry 找出所有的入口文件，生成依赖关系图</li>
+<li>编译模块，发广播：按文件类型，调用相应的 Loader 对模块进行编译，并在合适的时机点触发广播事件，Plugin 收听这些事件执行相应方法，再找出该模块依赖的模块，递归执行本步骤</li>
+<li>输出资源：将编译后的所有代码包装成一个个代码块（Chunk），并按依赖和配置确定输出内容，这个步骤，仍然可以通过 Plugin 进行文件的修改，是可以修改输出内容的最后机会</li>
+<li>保存：最后，根据 output 配置，把文件内容一一写入到文件系统，完成</li>
+</ul>
+<h1 id="%E6%96%87%E4%BB%B6%E6%8C%87%E7%BA%B9" tabindex="-1"><a class="header-anchor" href="#%E6%96%87%E4%BB%B6%E6%8C%87%E7%BA%B9">文件指纹</a></h1>
+<ul>
+<li>hash：所有的 bundle 使用同一个 hash 值，跟每一次 webpack 打包的过程有关</li>
+<li>chunkhash：根据每一个 chunk 的内容进行 hash，同一个 chunk 的所有 bundle 产物的 chunkhash 值是一样的。因此若其中一个 bundle 的修改，同一 chunk 的所有产物 hash 也会被修改</li>
+<li>contenthash：与文件内容本身相关</li>
+<li>注意：开发环境热更新下只能使用 hash 或者不使用 hash。在生产环境中我们一般使用 contenthash 或者 chunkhash，因为在热更新模式下，会导致 chunkhash 和 contenthash 计算错误</li>
+</ul>
+<h1 id="plugin" tabindex="-1"><a class="header-anchor" href="#plugin">Plugin</a></h1>
+<pre><code class="language-javascript"><span class="hljs-comment">// 示例</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyPlugin</span> {
+  <span class="hljs-comment">// 构造方法</span>
+  <span class="hljs-title function_">constructor</span> (options) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;MyPlugin constructor:&#x27;</span>, options);
+  }
+  <span class="hljs-comment">// 应用函数</span>
+  apply (compiler) {
+    <span class="hljs-comment">// Compiler 对象包含了 Webpack 环境所有的的配置信息，可以简单地把它理解为 Webpack 实例</span>
+
+    <span class="hljs-comment">// 绑定钩子事件</span>
+    compiler.<span class="hljs-title function_">plugin</span>(<span class="hljs-string">&#x27;compilation&#x27;</span>, <span class="hljs-function"><span class="hljs-params">compilation</span> =&gt;</span> {
+
+      <span class="hljs-comment">// Compilation 对象包含了当前的模块资源、编译生成资源、变化的文件等</span>
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;MyPlugin&#x27;</span>)
+    ));
+  }
+}
+
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-title class_">MyPlugin</span>
+</code></pre>
+<ul>
+<li><a href="https://www.webpackjs.com/contribute/writing-a-plugin/" target="_blank">https://www.webpackjs.com/contribute/writing-a-plugin/</a></li>
+<li>在 Webpack 运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果</li>
+</ul>
+<h2 id="%E9%92%A9%E5%AD%90" tabindex="-1"><a class="header-anchor" href="#%E9%92%A9%E5%AD%90">钩子</a></h2>
+<ul>
+<li><a href="https://www.webpackjs.com/api/compiler-hooks/" target="_blank">https://www.webpackjs.com/api/compiler-hooks/</a></li>
+<li><a href="https://www.webpackjs.com/api/compilation-hooks/" target="_blank">https://www.webpackjs.com/api/compilation-hooks/</a></li>
+</ul>
+<h1 id="loader" tabindex="-1"><a class="header-anchor" href="#loader">Loader</a></h1>
+<ul>
+<li>模块加载器，进行各种文件类型的加载与转换，比如 babel-loader 将 jsx 转为 React.createElement</li>
+<li>webpack 只认识 JavaScript，Loader 将资源转化成 Webpack 可以理解的内容形态</li>
+<li>通常是一个函数<pre><code class="language-javascript"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">source, sourceMap?, data?</span>) {
+  <span class="hljs-comment">// source：为 loader 的输入，可能是文件内容，也可能是上一个 loader 处理结果</span>
+  <span class="hljs-comment">// sourceMap：可选参数，代码的 sourcemap 结构</span>
+  <span class="hljs-comment">// data：可选参数，其它需要在 Loader 链中传递的信息</span>
+  <span class="hljs-keyword">return</span> source;
+};
+</code></pre>
+</li>
+<li>通过 return 语句返回处理结果，除此之外 Loader 还可以以 callback 方式返回更多信息，供下游 Loader 或者 Webpack 本身使用，callback 签名：<pre><code class="language-javascript"><span class="hljs-variable language_">this</span>.<span class="hljs-title function_">callback</span>(
+  <span class="hljs-comment">// 异常信息，Loader 正常运行时传递 null 值即可</span>
+  <span class="hljs-attr">err</span>: <span class="hljs-title class_">Error</span> | <span class="hljs-literal">null</span>,
+  <span class="hljs-comment">// 转译结果</span>
+  <span class="hljs-attr">content</span>: string | <span class="hljs-title class_">Buffer</span>,
+  <span class="hljs-comment">// 源码的 sourcemap 信息</span>
+  sourceMap?: <span class="hljs-title class_">SourceMap</span>,
+  <span class="hljs-comment">// 任意需要在 Loader 间传递的值</span>
+  <span class="hljs-comment">// 经常用来传递 ast 对象，避免重复解析</span>
+  data?: any
+);
+</code></pre>
+</li>
+</ul>
+<h2 id="%E5%B8%B8%E8%A7%81-loader" tabindex="-1"><a class="header-anchor" href="#%E5%B8%B8%E8%A7%81-loader">常见 loader</a></h2>
+<ul>
+<li>image-loader：加载并且压缩图片文件</li>
+<li>file-loader: 加载文件资源，如 字体 / 图片 等，具有移动/复制/命名等功能、把文件输出到一个文件夹中，在代码中通过相对 URL 去引用输出的文件</li>
+<li>url-loader: 通常用于加载图片，可以将小图片直接转换为 Date Url，减少请求；和 file-loader 类似，但是能在文件很小的情况下以 base64 的方式把文件内容注入到代码中去</li>
+<li>babel-loader: 加载 js / jsx 文件， 将 ES6 / ES7 代码转换成 ES5，抹平兼容性问题；</li>
+<li>ts-loader: 加载 ts / tsx 文件，编译 TypeScript；</li>
+<li>style-loader: 将 css 代码以 style 标签形式插入</li>
+</ul>
+<h2 id="%E5%A4%84%E7%90%86%E9%A1%BA%E5%BA%8F" tabindex="-1"><a class="header-anchor" href="#%E5%A4%84%E7%90%86%E9%A1%BA%E5%BA%8F">处理顺序</a></h2>
+<ul>
+<li>从右向左</li>
+</ul>
+<h1 id="webpack-%E5%88%86%E5%8C%85" tabindex="-1"><a class="header-anchor" href="#webpack-%E5%88%86%E5%8C%85">webpack 分包</a></h1>
+<h2 id="%E9%BB%98%E8%AE%A4%E7%9A%84%E5%88%86%E5%8C%85%E8%A7%84%E5%88%99" tabindex="-1"><a class="header-anchor" href="#%E9%BB%98%E8%AE%A4%E7%9A%84%E5%88%86%E5%8C%85%E8%A7%84%E5%88%99">默认的分包规则</a></h2>
+<ul>
+<li>同一个 entry 下触达到的模块组织成一个 chunk</li>
+<li>异步模块单独组织为一个 chunk</li>
+<li>entry.runtime 单独组织成一个 chunk</li>
+</ul>
+<h2 id="%E9%85%8D%E7%BD%AE-splitchunks" tabindex="-1"><a class="header-anchor" href="#%E9%85%8D%E7%BD%AE-splitchunks">配置 splitChunks</a></h2>
+<pre><code class="language-javascript"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+  <span class="hljs-attr">splitChunks</span>: {
+    <span class="hljs-comment">// 表示选择哪些 chunks 进行分割，可选值有：async，initial和all</span>
+    <span class="hljs-attr">chunks</span>: <span class="hljs-string">&#x27;async&#x27;</span>,
+    <span class="hljs-comment">// 表示新分离出的chunk必须大于等于minSize，默认为30000，约30kb。</span>
+    <span class="hljs-attr">minSize</span>: <span class="hljs-number">30000</span>,
+    <span class="hljs-comment">// 表示一个模块至少应被minChunks个chunk所包含才能分割。默认为1。</span>
+    <span class="hljs-attr">minChunks</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-comment">// 表示按需加载文件时，并行请求的最大数目。默认为5。</span>
+    <span class="hljs-attr">maxAsyncRequests</span>: <span class="hljs-number">5</span>,
+    <span class="hljs-comment">// 表示加载入口文件时，并行请求的最大数目。默认为3。</span>
+    <span class="hljs-attr">maxInitialRequests</span>: <span class="hljs-number">3</span>,
+    <span class="hljs-comment">// 表示拆分出的chunk的名称连接符。默认为~。如chunk~vendors.js</span>
+    <span class="hljs-attr">automaticNameDelimiter</span>: <span class="hljs-string">&#x27;~&#x27;</span>,
+    <span class="hljs-comment">// 设置chunk的文件名。默认为true。当为true时，splitChunks基于chunk和cacheGroups的key自动命名。</span>
+    <span class="hljs-attr">name</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-comment">// cacheGroups 下可以可以配置多个组，每个组根据test设置条件，符合test条件的模块，就分配到该组。模块可以被多个组引用，但最终会根据priority来决定打包到哪个组中。默认将所有来自 node_modules目录的模块打包至vendors组，将两个以上的chunk所共享的模块打包至default组。</span>
+    <span class="hljs-attr">cacheGroups</span>: {
+      <span class="hljs-attr">vendors</span>: {
+        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/[\\/]node_modules[\\/]/</span>,
+        <span class="hljs-attr">priority</span>: -<span class="hljs-number">10</span>,
+      },
+      <span class="hljs-attr">default</span>: {
+        <span class="hljs-attr">minChunks</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">priority</span>: -<span class="hljs-number">20</span>,
+        <span class="hljs-attr">reuseExistingChunk</span>: <span class="hljs-literal">true</span>,
+      },
+    },
+  },
+};
+</code></pre>
+<h2 id="runtime%EF%BC%88%E8%BF%90%E8%A1%8C%E6%97%B6%E4%BB%A3%E7%A0%81%EF%BC%89-%E5%88%86%E5%8C%85" tabindex="-1"><a class="header-anchor" href="#runtime%EF%BC%88%E8%BF%90%E8%A1%8C%E6%97%B6%E4%BB%A3%E7%A0%81%EF%BC%89-%E5%88%86%E5%8C%85">Runtime（运行时代码） 分包</a></h2>
+<ul>
+<li>Webpack 5 之后还能根据 entry.runtime 配置单独打包运行时代码</li>
+<li>除业务代码外，Webpack 编译产物中还需要包含一些用于支持 webpack 模块化、异步加载等特性的支撑性代码，这类代码在 webpack 中被统称为 runtime</li>
+</ul>
+<h1 id="rollup-%E5%92%8C-webpack-%E5%8C%BA%E5%88%AB" tabindex="-1"><a class="header-anchor" href="#rollup-%E5%92%8C-webpack-%E5%8C%BA%E5%88%AB">rollup 和 webpack 区别</a></h1>
+<ul>
+<li>webpack 拆分代码， 按需加载；</li>
+<li>Rollup 所有资源放在同一个地方，一次性加载，利用 tree-shake 特性来剔除项目中未使用的代码，减少冗余</li>
+<li>对于应用使用 webpack，对于类库使用 Rollup，rollup 适用于基础库的打包，如 vue、react</li>
+<li>如果你需要代码拆分(Code Splitting)，或者你有很多静态资源需要处理，再或者你构建的项目需要引入很多 CommonJS 模块的依赖，那么 webpack 是个很不错的选择。</li>
+<li>如果您的代码库是基于 ES2015 模块的，而且希望你写的代码能够被其他人直接使用，你需要的打包工具可能是 Rollup。</li>
+</ul>
+<h1 id="tree-shaking" tabindex="-1"><a class="header-anchor" href="#tree-shaking">Tree-Shaking</a></h1>
+<h2 id="%E5%90%AB%E4%B9%89" tabindex="-1"><a class="header-anchor" href="#%E5%90%AB%E4%B9%89">含义</a></h2>
+<ul>
+<li>基于 ES Module 规范的死码删除技术</li>
+<li>在运行过程中静态分析模块之间的导入导出，确定 ESM 模块中哪些导出值未曾被其它模块使用，并将其删除，以此实现打包产物的优化</li>
+</ul>
+<h2 id="%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86" tabindex="-1"><a class="header-anchor" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86">实现原理</a></h2>
+<ul>
+<li><a href="https://juejin.cn/post/7019104818568364069" target="_blank">https://juejin.cn/post/7019104818568364069</a></li>
+</ul>
+<h2 id="%E5%AE%9E%E7%8E%B0-tree-shaking-%E6%8A%80%E6%9C%AF%E7%9A%84%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6" tabindex="-1"><a class="header-anchor" href="#%E5%AE%9E%E7%8E%B0-tree-shaking-%E6%8A%80%E6%9C%AF%E7%9A%84%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6">实现 Tree Shaking 技术的必要条件</a></h2>
+<ul>
+<li>在 CommonJs、AMD、CMD 等旧版本的 JavaScript 模块化方案中，导入导出行为是高度动态，难以预测的</li>
+<li>而 ESM 方案则从规范层面规避这一行为，它要求所有的导入导出语句只能出现在模块顶层，且导入导出的模块名必须为字符串常量</li>
+<li>所以，ESM 下模块之间的依赖关系是高度确定的，与运行状态无关，编译工具只需要对 ESM 模块做静态分析，就可以从代码字面量中推断出哪些模块值未曾被其它模块使用</li>
+</ul>
+
+      
+        <div class="btt withToc" id="btt"></div>
+      
+    </div>
+    
+    <div class="table-of-contents"><ul><li title="Webpack"><a href="#webpack" data-anchor="#webpack">Webpack</a></li><li title="概念"><a href="#%E6%A6%82%E5%BF%B5" data-anchor="#%E6%A6%82%E5%BF%B5">概念</a></li><li title="工作流程"><a href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B" data-anchor="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">工作流程</a></li><li title="文件指纹"><a href="#%E6%96%87%E4%BB%B6%E6%8C%87%E7%BA%B9" data-anchor="#%E6%96%87%E4%BB%B6%E6%8C%87%E7%BA%B9">文件指纹</a></li><li title="Plugin"><a href="#plugin" data-anchor="#plugin">Plugin</a><ul><li title="钩子"><a href="#%E9%92%A9%E5%AD%90" data-anchor="#%E9%92%A9%E5%AD%90">钩子</a></li></ul></li><li title="Loader"><a href="#loader" data-anchor="#loader">Loader</a><ul><li title="常见 loader"><a href="#%E5%B8%B8%E8%A7%81-loader" data-anchor="#%E5%B8%B8%E8%A7%81-loader">常见 loader</a></li><li title="处理顺序"><a href="#%E5%A4%84%E7%90%86%E9%A1%BA%E5%BA%8F" data-anchor="#%E5%A4%84%E7%90%86%E9%A1%BA%E5%BA%8F">处理顺序</a></li></ul></li><li title="webpack 分包"><a href="#webpack-%E5%88%86%E5%8C%85" data-anchor="#webpack-%E5%88%86%E5%8C%85">webpack 分包</a><ul><li title="默认的分包规则"><a href="#%E9%BB%98%E8%AE%A4%E7%9A%84%E5%88%86%E5%8C%85%E8%A7%84%E5%88%99" data-anchor="#%E9%BB%98%E8%AE%A4%E7%9A%84%E5%88%86%E5%8C%85%E8%A7%84%E5%88%99">默认的分包规则</a></li><li title="配置 splitChunks"><a href="#%E9%85%8D%E7%BD%AE-splitchunks" data-anchor="#%E9%85%8D%E7%BD%AE-splitchunks">配置 splitChunks</a></li><li title="Runtime（运行时代码） 分包"><a href="#runtime%EF%BC%88%E8%BF%90%E8%A1%8C%E6%97%B6%E4%BB%A3%E7%A0%81%EF%BC%89-%E5%88%86%E5%8C%85" data-anchor="#runtime%EF%BC%88%E8%BF%90%E8%A1%8C%E6%97%B6%E4%BB%A3%E7%A0%81%EF%BC%89-%E5%88%86%E5%8C%85">Runtime（运行时代码） 分包</a></li></ul></li><li title="rollup 和 webpack 区别"><a href="#rollup-%E5%92%8C-webpack-%E5%8C%BA%E5%88%AB" data-anchor="#rollup-%E5%92%8C-webpack-%E5%8C%BA%E5%88%AB">rollup 和 webpack 区别</a></li><li title="Tree-Shaking"><a href="#tree-shaking" data-anchor="#tree-shaking">Tree-Shaking</a><ul><li title="含义"><a href="#%E5%90%AB%E4%B9%89" data-anchor="#%E5%90%AB%E4%B9%89">含义</a></li><li title="实现原理"><a href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86" data-anchor="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86">实现原理</a></li><li title="实现 Tree Shaking 技术的必要条件"><a href="#%E5%AE%9E%E7%8E%B0-tree-shaking-%E6%8A%80%E6%9C%AF%E7%9A%84%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6" data-anchor="#%E5%AE%9E%E7%8E%B0-tree-shaking-%E6%8A%80%E6%9C%AF%E7%9A%84%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6">实现 Tree Shaking 技术的必要条件</a></li></ul></li></ul></div>
+    
+
+    <!-- bottom scripts -->
+    <script src="/doc-builder/resource/lib/mark.js-8.11.1/jquery.mark.min.js"></script>
+    <script src="/doc-builder/resource/lib/viewerjs-1.10.5/viewer.min.js"></script>
+    <script src="/doc-builder/resource/lib/jquery-viewer-1.0.1/jquery-viewer.min.js"></script>
+    <script src="/doc-builder/resource/script.js"></script>
+  </body>
+</html>

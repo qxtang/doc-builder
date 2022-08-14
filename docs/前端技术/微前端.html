@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>demo - 微前端</title>
+
+  <!-- styles -->
+  <link rel="stylesheet" href="/doc-builder/resource/lib/github-markdown.min.css" />
+  <link rel="stylesheet" href="/doc-builder/resource/style.css" />
+  <link rel="stylesheet" href="/doc-builder/resource/lib/highlight.default.min.css" />
+  <link rel="stylesheet" href="/doc-builder/resource/lib/viewerjs-1.10.5/viewer.min.css" />
+
+  <!-- scripts -->
+  <script src="/doc-builder/resource/lib/jquery.min.js"></script>
+
+  <link rel="manifest" href="/doc-builder/manifest.json" />
+  <link rel="shortcut icon" type="image/x-icon" href="/doc-builder/resource/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="/doc-builder/resource/favicon.ico" />
+  <link rel="apple-touch-icon" href="/doc-builder/resource/favicon.ico" />
+
+  <!-- 编译时间：2022/8/14 13:18:31 -->
+
+  <script>
+    window.root = '/doc-builder';
+
+    // 提前把搜索数据库载入内存
+    fetch(`${window.root}/dir_tree.json`)
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        window.__doc_builder_dirTree__ = res;
+      });
+  </script>
+</head>
+
+  <body>
+    <ul class="menu expand" id="menu">
+      <div class="loading">
+        <span>加载中...</span>
+      </div>
+      <div class="search_bar" id="search_bar">
+        <input type="text" placeholder="search..." />
+        <img
+          class="clear"
+          id="clear"
+          src="/doc-builder/resource/icons/circle-xmark.svg"
+          alt=""
+        />
+        <div class="search_result" id="search_result"></div>
+      </div>
+      
+            <ul class="parent expand">
+              <li id="前端技术" class="dir" title="前端技术">
+                <span>前端技术</span>
+                <div class="triangle"></div>
+              </li>
+              
+            <ul class="parent expand">
+              <li id="前端技术\浏览器" class="dir" title="浏览器">
+                <span>浏览器</span>
+                <div class="triangle"></div>
+              </li>
+              
+          <li id="前端技术\浏览器\事件循环.md" class="children" title="事件循环">
+            <a href="/doc-builder/前端技术\浏览器/事件循环.html">事件循环</a>
+          </li>
+        
+          <li id="前端技术\浏览器\浏览器.md" class="children" title="浏览器">
+            <a href="/doc-builder/前端技术\浏览器/浏览器.html">浏览器</a>
+          </li>
+        
+          <li id="前端技术\浏览器\浏览器架构.md" class="children" title="浏览器架构">
+            <a href="/doc-builder/前端技术\浏览器/浏览器架构.html">浏览器架构</a>
+          </li>
+        
+          <li id="前端技术\浏览器\浏览器缓存.md" class="children" title="浏览器缓存">
+            <a href="/doc-builder/前端技术\浏览器/浏览器缓存.html">浏览器缓存</a>
+          </li>
+        
+            </ul>
+          
+            <ul class="parent expand">
+              <li id="前端技术\React" class="dir" title="React">
+                <span>React</span>
+                <div class="triangle"></div>
+              </li>
+              
+          <li id="前端技术\React\Fiber.md" class="children" title="Fiber">
+            <a href="/doc-builder/前端技术\React/Fiber.html">Fiber</a>
+          </li>
+        
+          <li id="前端技术\React\Hooks.md" class="children" title="Hooks">
+            <a href="/doc-builder/前端技术\React/Hooks.html">Hooks</a>
+          </li>
+        
+          <li id="前端技术\React\React.md" class="children" title="React">
+            <a href="/doc-builder/前端技术\React/React.html">React</a>
+          </li>
+        
+            </ul>
+          
+            <ul class="parent expand">
+              <li id="前端技术\Javascript" class="dir" title="Javascript">
+                <span>Javascript</span>
+                <div class="triangle"></div>
+              </li>
+              
+          <li id="前端技术\Javascript\Promise.md" class="children" title="Promise">
+            <a href="/doc-builder/前端技术\Javascript/Promise.html">Promise</a>
+          </li>
+        
+          <li id="前端技术\Javascript\代理对.md" class="children" title="代理对">
+            <a href="/doc-builder/前端技术\Javascript/代理对.html">代理对</a>
+          </li>
+        
+          <li id="前端技术\Javascript\其他.md" class="children" title="其他">
+            <a href="/doc-builder/前端技术\Javascript/其他.html">其他</a>
+          </li>
+        
+          <li id="前端技术\Javascript\原型链和继承.md" class="children" title="原型链和继承">
+            <a href="/doc-builder/前端技术\Javascript/原型链和继承.html">原型链和继承</a>
+          </li>
+        
+          <li id="前端技术\Javascript\数据类型.md" class="children" title="数据类型">
+            <a href="/doc-builder/前端技术\Javascript/数据类型.html">数据类型</a>
+          </li>
+        
+          <li id="前端技术\Javascript\模块.md" class="children" title="模块">
+            <a href="/doc-builder/前端技术\Javascript/模块.html">模块</a>
+          </li>
+        
+          <li id="前端技术\Javascript\正则表达式.md" class="children" title="正则表达式">
+            <a href="/doc-builder/前端技术\Javascript/正则表达式.html">正则表达式</a>
+          </li>
+        
+          <li id="前端技术\Javascript\闭包.md" class="children" title="闭包">
+            <a href="/doc-builder/前端技术\Javascript/闭包.html">闭包</a>
+          </li>
+        
+            </ul>
+          
+          <li id="前端技术\Babel.md" class="children" title="Babel">
+            <a href="/doc-builder/前端技术/Babel.html">Babel</a>
+          </li>
+        
+          <li id="前端技术\CSS.md" class="children" title="CSS">
+            <a href="/doc-builder/前端技术/CSS.html">CSS</a>
+          </li>
+        
+          <li id="前端技术\Flex布局.md" class="children" title="Flex布局">
+            <a href="/doc-builder/前端技术/Flex布局.html">Flex布局</a>
+          </li>
+        
+          <li id="前端技术\NodeJS.md" class="children" title="NodeJS">
+            <a href="/doc-builder/前端技术/NodeJS.html">NodeJS</a>
+          </li>
+        
+          <li id="前端技术\npm.md" class="children" title="npm">
+            <a href="/doc-builder/前端技术/npm.html">npm</a>
+          </li>
+        
+          <li id="前端技术\Typescript.md" class="children" title="Typescript">
+            <a href="/doc-builder/前端技术/Typescript.html">Typescript</a>
+          </li>
+        
+          <li id="前端技术\Webpack.md" class="children" title="Webpack">
+            <a href="/doc-builder/前端技术/Webpack.html">Webpack</a>
+          </li>
+        
+          <li id="前端技术\函数式编程.md" class="children" title="函数式编程">
+            <a href="/doc-builder/前端技术/函数式编程.html">函数式编程</a>
+          </li>
+        
+          <li id="前端技术\微前端.md" class="children" title="微前端">
+            <a href="/doc-builder/前端技术/微前端.html">微前端</a>
+          </li>
+        
+          <li id="前端技术\性能优化.md" class="children" title="性能优化">
+            <a href="/doc-builder/前端技术/性能优化.html">性能优化</a>
+          </li>
+        
+          <li id="前端技术\柯里化.md" class="children" title="柯里化">
+            <a href="/doc-builder/前端技术/柯里化.html">柯里化</a>
+          </li>
+        
+          <li id="前端技术\设计模式.md" class="children" title="设计模式">
+            <a href="/doc-builder/前端技术/设计模式.html">设计模式</a>
+          </li>
+        
+            </ul>
+          
+          <li id="单元测试.md" class="children" title="单元测试">
+            <a href="/doc-builder/单元测试.html">单元测试</a>
+          </li>
+        
+          <li id="网络.md" class="children" title="网络">
+            <a href="/doc-builder/网络.html">网络</a>
+          </li>
+        
+      <li id="index.md" class="children about">
+        <a href="/doc-builder/">关于</a>
+      </li>
+    </ul>
+    <div class="drager" id="drager">
+      <div class="switcher btn" id="switcher" title="展开或收起"></div>
+      <div class="expand-all btn" id="expand-all" title="展开所有"></div>
+      <div class="collapse-all btn" id="collapse-all" title="收起所有"></div>
+    </div>
+    <div class="mobile_menu" id="mobile_menu">
+      <img src="/doc-builder/resource/icons/bars.svg" alt="" />
+    </div>
+    <div class="content markdown-body">
+      <h1 id="%E5%BE%AE%E5%89%8D%E7%AB%AF" tabindex="-1"><a class="header-anchor" href="#%E5%BE%AE%E5%89%8D%E7%AB%AF">微前端</a></h1>
+<ul>
+<li>微前端不一定是一种新技术，也不必太复杂。只要我们保证代码隔离和团队自治，无论我们采用何种技术栈，我们都可以达到相同的效果</li>
+</ul>
+<h2 id="%E7%94%B1%E6%9D%A5" tabindex="-1"><a class="header-anchor" href="#%E7%94%B1%E6%9D%A5">由来</a></h2>
+<ul>
+<li>工程越来越大，打包越来越慢</li>
+<li>团队人员多，产品功能复杂，代码冲突频繁、影响面大</li>
+<li>在后端服务开发中，为了解决庞大的一整块后端服务带来的变更与扩展方面的限制，出现了微服务架构</li>
+<li>把应用程序设计成一系列松耦合的细粒度服务</li>
+<li>允许使用不同的编程语言来编写不同服务</li>
+<li>前端也出现这样的问题，即，一种由独立交付的多个应用组成整体的架构风格。将前端应用分解成一些更小更简单的能够独立开发、测试、部署的小块，而在用户看来仍然是内聚的单个产品</li>
+<li>比起一整块的前端代码库，微前端架构下的代码库倾向于更小/简单、更容易开发</li>
+<li>传统开发的缺点
+<ul>
+<li>历史项目，祖传代码</li>
+<li>交付压力，当时求快</li>
+<li>就近就熟，当时求稳</li>
+<li>导致技术栈落后，甚至强行混用多种技术栈，耦合混乱，不敢动，牵一发动全身</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>每个微前端都应具备有自己的持续交付流水线（包括构建、测试并部署到生产环境），且要能独立部署，不必过多考虑其它代码库的状态</p>
+</blockquote>
+<h2 id="%E6%84%8F%E4%B9%89" tabindex="-1"><a class="header-anchor" href="#%E6%84%8F%E4%B9%89">意义</a></h2>
+<ul>
+<li>技术栈无关，主框架不限制接入应用的技术栈，微应用具备完全自主权</li>
+<li>独立开发、独立部署，微应用仓库独立，前后端可独立开发，部署完成后主框架自动完成同步更新</li>
+<li>增量升级，在面对各种复杂场景时，我们通常很难对一个已经存在的系统做全量的技术栈升级或重构，而微前端是一种非常好的实施渐进式重构的手段和策略</li>
+<li>独立运行时，每个微应用之间状态隔离，运行时状态不共享</li>
+<li>微前端架构旨在解决单体应用在一个相对长的时间跨度下，由于参与的人员、团队的增多、变迁，从一个普通应用演变成一个巨石应用后，随之而来的应用不可维护的问题。这类问题在企业级 Web 应用中尤其常见。</li>
+</ul>
+<h2 id="%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88" tabindex="-1"><a class="header-anchor" href="#%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88">技术方案</a></h2>
+<h3 id="package-%E9%9B%86%E6%88%90" tabindex="-1"><a class="header-anchor" href="#package-%E9%9B%86%E6%88%90">package 集成</a></h3>
+<ul>
+<li>将每个微前端发布为一个 npm 包，并让容器应用程序将所有微前端应用作为依赖项</li>
+<li>这意味着只要有一个包更新，即使是小版本，宿主也要重新构建一次。不建议使用这种方案</li>
+</ul>
+<h3 id="iframe" tabindex="-1"><a class="header-anchor" href="#iframe">iframe</a></h3>
+<ul>
+<li>优点：隔离得很彻底</li>
+<li>缺点：速度慢，浏览器处理 iframe 要启动更多的进程；页面刷新难以保存状态，路由、历史记录等等</li>
+</ul>
+<h3 id="%E4%BD%BF%E7%94%A8-umd-%E5%8C%85" tabindex="-1"><a class="header-anchor" href="#%E4%BD%BF%E7%94%A8-umd-%E5%8C%85">使用 umd 包</a></h3>
+<ul>
+<li>通过 script 标签引入放在 cdn 上的资源，可以始终保持最新，子应用更新不需要通知宿主</li>
+<li>具有完全的灵活性，宿主可以控制什么时候载入每个应用，以及渲染应用时额外传参数</li>
+</ul>
+<h2 id="%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E5%AD%98%E5%9C%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%99%AE%E9%81%8D%E9%97%AE%E9%A2%98" tabindex="-1"><a class="header-anchor" href="#%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E5%AD%98%E5%9C%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%99%AE%E9%81%8D%E9%97%AE%E9%A2%98">微前端架构存在的一些普遍问题</a></h2>
+<h3 id="%E4%B8%8B%E8%BD%BD%E9%87%8F" tabindex="-1"><a class="header-anchor" href="#%E4%B8%8B%E8%BD%BD%E9%87%8F">下载量</a></h3>
+<ul>
+<li>独立构建的 JavaScript 文件可能导致重复的公共依赖，从而增加用户的下载量</li>
+<li>例如，如果每个微应用都包括自己的 React 副本，那么用户就得多次下载 React</li>
+</ul>
+<h3 id="%E7%8E%AF%E5%A2%83%E5%B7%AE%E5%BC%82" tabindex="-1"><a class="header-anchor" href="#%E7%8E%AF%E5%A2%83%E5%B7%AE%E5%BC%82">环境差异</a></h3>
+<ul>
+<li>在本地开发时无法把所有微应用和对应的后端都启动起来，不得不在本地进行环境的简化。</li>
+<li>如果开发环境和生产环境不严谨一致，容易造成问题。如果开发者想要完全模拟生产环境，会比较耗时</li>
+</ul>
+<h3 id="%E6%B2%BB%E7%90%86%E5%A4%8D%E6%9D%82%E6%80%A7" tabindex="-1"><a class="header-anchor" href="#%E6%B2%BB%E7%90%86%E5%A4%8D%E6%9D%82%E6%80%A7">治理复杂性</a></h3>
+<ul>
+<li>要管理更多的东西：更多的代码库、更多的工具、更多的构建管道、更多的服务器、更多的域名等</li>
+</ul>
+
+      
+        <div class="btt withToc" id="btt"></div>
+      
+    </div>
+    
+    <div class="table-of-contents"><ul><li title="微前端"><a href="#%E5%BE%AE%E5%89%8D%E7%AB%AF" data-anchor="#%E5%BE%AE%E5%89%8D%E7%AB%AF">微前端</a><ul><li title="由来"><a href="#%E7%94%B1%E6%9D%A5" data-anchor="#%E7%94%B1%E6%9D%A5">由来</a></li><li title="意义"><a href="#%E6%84%8F%E4%B9%89" data-anchor="#%E6%84%8F%E4%B9%89">意义</a></li><li title="技术方案"><a href="#%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88" data-anchor="#%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88">技术方案</a><ul><li title="package 集成"><a href="#package-%E9%9B%86%E6%88%90" data-anchor="#package-%E9%9B%86%E6%88%90">package 集成</a></li><li title="iframe"><a href="#iframe" data-anchor="#iframe">iframe</a></li><li title="使用 umd 包"><a href="#%E4%BD%BF%E7%94%A8-umd-%E5%8C%85" data-anchor="#%E4%BD%BF%E7%94%A8-umd-%E5%8C%85">使用 umd 包</a></li></ul></li><li title="微前端架构存在的一些普遍问题"><a href="#%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E5%AD%98%E5%9C%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%99%AE%E9%81%8D%E9%97%AE%E9%A2%98" data-anchor="#%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E5%AD%98%E5%9C%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%99%AE%E9%81%8D%E9%97%AE%E9%A2%98">微前端架构存在的一些普遍问题</a><ul><li title="下载量"><a href="#%E4%B8%8B%E8%BD%BD%E9%87%8F" data-anchor="#%E4%B8%8B%E8%BD%BD%E9%87%8F">下载量</a></li><li title="环境差异"><a href="#%E7%8E%AF%E5%A2%83%E5%B7%AE%E5%BC%82" data-anchor="#%E7%8E%AF%E5%A2%83%E5%B7%AE%E5%BC%82">环境差异</a></li><li title="治理复杂性"><a href="#%E6%B2%BB%E7%90%86%E5%A4%8D%E6%9D%82%E6%80%A7" data-anchor="#%E6%B2%BB%E7%90%86%E5%A4%8D%E6%9D%82%E6%80%A7">治理复杂性</a></li></ul></li></ul></li></ul></div>
+    
+
+    <!-- bottom scripts -->
+    <script src="/doc-builder/resource/lib/mark.js-8.11.1/jquery.mark.min.js"></script>
+    <script src="/doc-builder/resource/lib/viewerjs-1.10.5/viewer.min.js"></script>
+    <script src="/doc-builder/resource/lib/jquery-viewer-1.0.1/jquery-viewer.min.js"></script>
+    <script src="/doc-builder/resource/script.js"></script>
+  </body>
+</html>

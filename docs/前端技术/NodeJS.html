@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>demo - NodeJS</title>
+
+  <!-- styles -->
+  <link rel="stylesheet" href="/doc-builder/resource/lib/github-markdown.min.css" />
+  <link rel="stylesheet" href="/doc-builder/resource/style.css" />
+  <link rel="stylesheet" href="/doc-builder/resource/lib/highlight.default.min.css" />
+  <link rel="stylesheet" href="/doc-builder/resource/lib/viewerjs-1.10.5/viewer.min.css" />
+
+  <!-- scripts -->
+  <script src="/doc-builder/resource/lib/jquery.min.js"></script>
+
+  <link rel="manifest" href="/doc-builder/manifest.json" />
+  <link rel="shortcut icon" type="image/x-icon" href="/doc-builder/resource/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="/doc-builder/resource/favicon.ico" />
+  <link rel="apple-touch-icon" href="/doc-builder/resource/favicon.ico" />
+
+  <!-- 编译时间：2022/8/14 13:18:31 -->
+
+  <script>
+    window.root = '/doc-builder';
+
+    // 提前把搜索数据库载入内存
+    fetch(`${window.root}/dir_tree.json`)
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        window.__doc_builder_dirTree__ = res;
+      });
+  </script>
+</head>
+
+  <body>
+    <ul class="menu expand" id="menu">
+      <div class="loading">
+        <span>加载中...</span>
+      </div>
+      <div class="search_bar" id="search_bar">
+        <input type="text" placeholder="search..." />
+        <img
+          class="clear"
+          id="clear"
+          src="/doc-builder/resource/icons/circle-xmark.svg"
+          alt=""
+        />
+        <div class="search_result" id="search_result"></div>
+      </div>
+      
+            <ul class="parent expand">
+              <li id="前端技术" class="dir" title="前端技术">
+                <span>前端技术</span>
+                <div class="triangle"></div>
+              </li>
+              
+            <ul class="parent expand">
+              <li id="前端技术\浏览器" class="dir" title="浏览器">
+                <span>浏览器</span>
+                <div class="triangle"></div>
+              </li>
+              
+          <li id="前端技术\浏览器\事件循环.md" class="children" title="事件循环">
+            <a href="/doc-builder/前端技术\浏览器/事件循环.html">事件循环</a>
+          </li>
+        
+          <li id="前端技术\浏览器\浏览器.md" class="children" title="浏览器">
+            <a href="/doc-builder/前端技术\浏览器/浏览器.html">浏览器</a>
+          </li>
+        
+          <li id="前端技术\浏览器\浏览器架构.md" class="children" title="浏览器架构">
+            <a href="/doc-builder/前端技术\浏览器/浏览器架构.html">浏览器架构</a>
+          </li>
+        
+          <li id="前端技术\浏览器\浏览器缓存.md" class="children" title="浏览器缓存">
+            <a href="/doc-builder/前端技术\浏览器/浏览器缓存.html">浏览器缓存</a>
+          </li>
+        
+            </ul>
+          
+            <ul class="parent expand">
+              <li id="前端技术\React" class="dir" title="React">
+                <span>React</span>
+                <div class="triangle"></div>
+              </li>
+              
+          <li id="前端技术\React\Fiber.md" class="children" title="Fiber">
+            <a href="/doc-builder/前端技术\React/Fiber.html">Fiber</a>
+          </li>
+        
+          <li id="前端技术\React\Hooks.md" class="children" title="Hooks">
+            <a href="/doc-builder/前端技术\React/Hooks.html">Hooks</a>
+          </li>
+        
+          <li id="前端技术\React\React.md" class="children" title="React">
+            <a href="/doc-builder/前端技术\React/React.html">React</a>
+          </li>
+        
+            </ul>
+          
+            <ul class="parent expand">
+              <li id="前端技术\Javascript" class="dir" title="Javascript">
+                <span>Javascript</span>
+                <div class="triangle"></div>
+              </li>
+              
+          <li id="前端技术\Javascript\Promise.md" class="children" title="Promise">
+            <a href="/doc-builder/前端技术\Javascript/Promise.html">Promise</a>
+          </li>
+        
+          <li id="前端技术\Javascript\代理对.md" class="children" title="代理对">
+            <a href="/doc-builder/前端技术\Javascript/代理对.html">代理对</a>
+          </li>
+        
+          <li id="前端技术\Javascript\其他.md" class="children" title="其他">
+            <a href="/doc-builder/前端技术\Javascript/其他.html">其他</a>
+          </li>
+        
+          <li id="前端技术\Javascript\原型链和继承.md" class="children" title="原型链和继承">
+            <a href="/doc-builder/前端技术\Javascript/原型链和继承.html">原型链和继承</a>
+          </li>
+        
+          <li id="前端技术\Javascript\数据类型.md" class="children" title="数据类型">
+            <a href="/doc-builder/前端技术\Javascript/数据类型.html">数据类型</a>
+          </li>
+        
+          <li id="前端技术\Javascript\模块.md" class="children" title="模块">
+            <a href="/doc-builder/前端技术\Javascript/模块.html">模块</a>
+          </li>
+        
+          <li id="前端技术\Javascript\正则表达式.md" class="children" title="正则表达式">
+            <a href="/doc-builder/前端技术\Javascript/正则表达式.html">正则表达式</a>
+          </li>
+        
+          <li id="前端技术\Javascript\闭包.md" class="children" title="闭包">
+            <a href="/doc-builder/前端技术\Javascript/闭包.html">闭包</a>
+          </li>
+        
+            </ul>
+          
+          <li id="前端技术\Babel.md" class="children" title="Babel">
+            <a href="/doc-builder/前端技术/Babel.html">Babel</a>
+          </li>
+        
+          <li id="前端技术\CSS.md" class="children" title="CSS">
+            <a href="/doc-builder/前端技术/CSS.html">CSS</a>
+          </li>
+        
+          <li id="前端技术\Flex布局.md" class="children" title="Flex布局">
+            <a href="/doc-builder/前端技术/Flex布局.html">Flex布局</a>
+          </li>
+        
+          <li id="前端技术\NodeJS.md" class="children" title="NodeJS">
+            <a href="/doc-builder/前端技术/NodeJS.html">NodeJS</a>
+          </li>
+        
+          <li id="前端技术\npm.md" class="children" title="npm">
+            <a href="/doc-builder/前端技术/npm.html">npm</a>
+          </li>
+        
+          <li id="前端技术\Typescript.md" class="children" title="Typescript">
+            <a href="/doc-builder/前端技术/Typescript.html">Typescript</a>
+          </li>
+        
+          <li id="前端技术\Webpack.md" class="children" title="Webpack">
+            <a href="/doc-builder/前端技术/Webpack.html">Webpack</a>
+          </li>
+        
+          <li id="前端技术\函数式编程.md" class="children" title="函数式编程">
+            <a href="/doc-builder/前端技术/函数式编程.html">函数式编程</a>
+          </li>
+        
+          <li id="前端技术\微前端.md" class="children" title="微前端">
+            <a href="/doc-builder/前端技术/微前端.html">微前端</a>
+          </li>
+        
+          <li id="前端技术\性能优化.md" class="children" title="性能优化">
+            <a href="/doc-builder/前端技术/性能优化.html">性能优化</a>
+          </li>
+        
+          <li id="前端技术\柯里化.md" class="children" title="柯里化">
+            <a href="/doc-builder/前端技术/柯里化.html">柯里化</a>
+          </li>
+        
+          <li id="前端技术\设计模式.md" class="children" title="设计模式">
+            <a href="/doc-builder/前端技术/设计模式.html">设计模式</a>
+          </li>
+        
+            </ul>
+          
+          <li id="单元测试.md" class="children" title="单元测试">
+            <a href="/doc-builder/单元测试.html">单元测试</a>
+          </li>
+        
+          <li id="网络.md" class="children" title="网络">
+            <a href="/doc-builder/网络.html">网络</a>
+          </li>
+        
+      <li id="index.md" class="children about">
+        <a href="/doc-builder/">关于</a>
+      </li>
+    </ul>
+    <div class="drager" id="drager">
+      <div class="switcher btn" id="switcher" title="展开或收起"></div>
+      <div class="expand-all btn" id="expand-all" title="展开所有"></div>
+      <div class="collapse-all btn" id="collapse-all" title="收起所有"></div>
+    </div>
+    <div class="mobile_menu" id="mobile_menu">
+      <img src="/doc-builder/resource/icons/bars.svg" alt="" />
+    </div>
+    <div class="content markdown-body">
+      <h1 id="nodejs-%E7%89%B9%E7%82%B9" tabindex="-1"><a class="header-anchor" href="#nodejs-%E7%89%B9%E7%82%B9">nodejs 特点</a></h1>
+<ul>
+<li>它是一个 Javascript 运行环境</li>
+<li>依赖于 Chrome V8 引擎进行代码解释</li>
+<li>事件驱动</li>
+<li>非阻塞 I/O</li>
+<li>单进程，单线程</li>
+</ul>
+<h1 id="nodejs-%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98" tabindex="-1"><a class="header-anchor" href="#nodejs-%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98">nodejs 解决的问题</a></h1>
+<ul>
+<li>并发连接
+<ul>
+<li>异步机制、事件驱动整个过程没有阻塞新用户的连接，也不需要维护已有用户的连接。</li>
+<li>基于这样的机制，理论上陆续有用户请求连接，NodeJS 都可以进行响应，因此 NodeJS 能支持比 Java、PHP 程序更高的并发量.虽然维护事件队列也需要成本</li>
+</ul>
+</li>
+<li>I/O 阻塞
+<ul>
+<li>Java、PHP 也有办法实现并行请求（子线程），但 NodeJS 通过回调函数（Callback）和异步机制会做得很自然。</li>
+</ul>
+</li>
+</ul>
+<h1 id="nodejs-%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9" tabindex="-1"><a class="header-anchor" href="#nodejs-%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9">nodejs 的优缺点</a></h1>
+<p>优点：</p>
+<ul>
+<li>高并发（最重要的优点）</li>
+<li>适合 I/O 密集型应用</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>不适合 CPU 密集型应用，由于 JavaScript 单线程的原因，如果有长时间运行的计算（比如大循环），将会导致 CPU 时间片不能释放，使得后续 I/O 无法发起；</li>
+<li>只支持单核 CPU，不能充分利用 CPU</li>
+<li>可靠性低，一旦代码某个环节崩溃，整个系统都崩溃</li>
+<li>开源组件库质量参差不齐，更新快，向下不兼容</li>
+</ul>
+<p>解决方案：</p>
+<ul>
+<li>Nginx 反向代理，负载均衡，开多个进程，绑定多个端口</li>
+<li>开多个进程监听同一个端口，使用 cluster 模块；使用比如 pm2 之类的工具</li>
+</ul>
+<h1 id="%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF" tabindex="-1"><a class="header-anchor" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">应用场景</a></h1>
+<ul>
+<li>RESTful API</li>
+<li>统一 Web 应用的 UI 层</li>
+<li>大量 Ajax 请求的应用</li>
+</ul>
+<h1 id="nodejs-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86" tabindex="-1"><a class="header-anchor" href="#nodejs-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">nodejs 异常处理</a></h1>
+<ul>
+<li>try catch，缺点明显：无法处理异步代码块内出现的异常，比如 setTimeout</li>
+<li>使用 event 原生模块，监听 error 事件</li>
+<li>原生模块的 callback 函数一般都会抛出错误（第一个参数）</li>
+</ul>
+<h1 id="node-%E6%A8%A1%E5%9D%97" tabindex="-1"><a class="header-anchor" href="#node-%E6%A8%A1%E5%9D%97">node 模块</a></h1>
+<h2 id="%E6%A8%A1%E5%9D%97%E8%A7%84%E8%8C%83" tabindex="-1"><a class="header-anchor" href="#%E6%A8%A1%E5%9D%97%E8%A7%84%E8%8C%83">模块规范</a></h2>
+<ul>
+<li>Node 模块系统借鉴 CommonJS 来实现</li>
+<li>CommonJS 对模块的定义主要分为：模块引用、模块定义和模块标识 3 个部分</li>
+</ul>
+<h3 id="%E6%A8%A1%E5%9D%97%E5%BC%95%E7%94%A8" tabindex="-1"><a class="header-anchor" href="#%E6%A8%A1%E5%9D%97%E5%BC%95%E7%94%A8">模块引用</a></h3>
+<ul>
+<li>存在 require() 方法，这个方法接受模块标识，以此引入一个模块的 API 到当前上下文中</li>
+</ul>
+<h3 id="%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%B9%89" tabindex="-1"><a class="header-anchor" href="#%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%B9%89">模块定义</a></h3>
+<ul>
+<li>上下文提供了 exports 对象用于导出当前模块的方法或者变量，并且它是唯一导出的出口</li>
+<li>在模块中，还存在一个 module 对象，它代表模块自身，而 exports 是 module 的属性</li>
+<li>在 Node 中，一个文件就是一个模块，将方法挂载在 exports 对象上作为属性即可定义导出的方式</li>
+</ul>
+<h3 id="%E6%A8%A1%E5%9D%97%E6%A0%87%E8%AF%86" tabindex="-1"><a class="header-anchor" href="#%E6%A8%A1%E5%9D%97%E6%A0%87%E8%AF%86">模块标识</a></h3>
+<ul>
+<li>就是传递给 require() 方法的参数</li>
+<li>符合小驼峰命名的字符串，或者以.、..开头的相对路径，或者绝对路径</li>
+<li>可以没有文件名后缀.js</li>
+</ul>
+<h2 id="%E6%A8%A1%E5%9D%97%E5%AE%9E%E7%8E%B0" tabindex="-1"><a class="header-anchor" href="#%E6%A8%A1%E5%9D%97%E5%AE%9E%E7%8E%B0">模块实现</a></h2>
+<ul>
+<li>在 Node 中引入模块，需要经历 3 个步骤：路径分析、文件定位、编译执行</li>
+<li>Node 模块分为两类：Node 提供的模块（核心模块）、用户编写的模块（文件模块）</li>
+</ul>
+<h3 id="%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8B%E5%8C%BA%E5%88%AB" tabindex="-1"><a class="header-anchor" href="#%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8B%E5%8C%BA%E5%88%AB">两种类型区别</a></h3>
+<ul>
+<li>核心模块部分在 Node 源代码的编译过程中，编译进了二进制执行文件。在 Node 进程启动时，部分核心模块已被直接加载进内存中，所以这部分核心模块引入时，文件定位和编译执行这两个步骤可以省略掉，并且在路径分析中优先判断，所以它的加载速度是最快的</li>
+<li>文件模块则是在运行时动态加载，需要完整的路径分析、文件定位、编译执行过程，速度比核心模块慢</li>
+</ul>
+<h3 id="%E7%BC%93%E5%AD%98%E4%BC%98%E5%85%88%E7%89%B9%E6%80%A7" tabindex="-1"><a class="header-anchor" href="#%E7%BC%93%E5%AD%98%E4%BC%98%E5%85%88%E7%89%B9%E6%80%A7">缓存优先特性</a></h3>
+<ul>
+<li>Node 对引入过的模块都会进行缓存，以减少二次引入时的开销，Node 缓存的是编译和执行之后的对象</li>
+</ul>
+<h3 id="%E8%B7%AF%E5%BE%84%E5%88%86%E6%9E%90" tabindex="-1"><a class="header-anchor" href="#%E8%B7%AF%E5%BE%84%E5%88%86%E6%9E%90">路径分析</a></h3>
+<ul>
+<li>标识符的分类：核心模块、.或..开始的相对路径、以/开始的绝对路径、非路径形式</li>
+<li>核心模块：核心模块的优先级仅次于缓存加载；它在 Node 的源代码编译过程中已经编译为二进制代码，加载过程最快</li>
+<li>路径形式：1、转为真实路径；2、将编译执行后的结果存放到缓存中；</li>
+<li>自定义模块（非路径形式，可能是一个包的形式）：这类模块的查找是最费时的，也是所有方式中最慢的一种</li>
+</ul>
+<h3 id="%E6%96%87%E4%BB%B6%E5%AE%9A%E4%BD%8D" tabindex="-1"><a class="header-anchor" href="#%E6%96%87%E4%BB%B6%E5%AE%9A%E4%BD%8D">文件定位</a></h3>
+<ul>
+<li>扩展名分析：允许在标识符中不包含文件扩展名，会按.js、.json、.node 的次序补足扩展名，依次尝试，调用了 fs 模块同步阻塞式地判断文件是否存在，所以如果是 .node 和 .json 文件，在传递给 require() 的标识符中带上扩展名，会加快一点速度</li>
+<li>可能没有查找到对应文件，如果得到一个目录，此时将目录当做一个包来处理，查找 package.json 的 main 属性，同样进行拓展名分析</li>
+<li>如果 package.json 和 main 字段没有找到，则寻找文件夹下的 index 文件，同样进行拓展名分析</li>
+<li>最后都没找到则抛出查找失败的异常</li>
+</ul>
+<h3 id="%E7%BC%96%E8%AF%91%E6%89%A7%E8%A1%8C" tabindex="-1"><a class="header-anchor" href="#%E7%BC%96%E8%AF%91%E6%89%A7%E8%A1%8C">编译执行</a></h3>
+<ul>
+<li>.js 文件：通过 fs 模块同步读取文件后编译执行</li>
+<li>.node 文件：这是用 C/C++ 编写的扩展文件，通过 dlopen() 方法加载最后编译生成的文件</li>
+<li>.json 文件：通过 fs 模块同步读取文件后，用 JSON.parse() 解析返回结果</li>
+<li>其余扩展名：它们都被当做.js 文件载入</li>
+<li>每一个编译成功的模块都会将其文件路径作为索引缓存在 <code>Module._cache</code> 对象上，以提高二次引入的性能</li>
+</ul>
+<h3 id="%E6%A8%A1%E5%9D%97%E5%86%85%E9%83%A8%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E7%9A%84%E7%94%B1%E6%9D%A5" tabindex="-1"><a class="header-anchor" href="#%E6%A8%A1%E5%9D%97%E5%86%85%E9%83%A8%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E7%9A%84%E7%94%B1%E6%9D%A5">模块内部全局变量的由来</a></h3>
+<p>require、exports、module、<code>__filename</code>、<code>__dirname</code>等变量的由来：</p>
+<ul>
+<li>在编译的过程中，Node 对获取的 JavaScript 文件内容进行了头尾包装。在头部添加了 <code>(function (exports, require, module, __filename, __dirname) {\n</code>，在尾部添加了 <code>\n})</code></li>
+<li>这样每个模块文件之间都进行了作用域隔离</li>
+</ul>
+<h1 id="%E5%8C%85%E7%BB%93%E6%9E%84" tabindex="-1"><a class="header-anchor" href="#%E5%8C%85%E7%BB%93%E6%9E%84">包结构</a></h1>
+<ul>
+<li>package.json：包描述文件</li>
+<li>bin：用于存放可执行二进制文件的目录</li>
+<li>lib：用于存放 JavaScript 代码的目录</li>
+<li>doc：用于存放文档的目录</li>
+<li>test：用于存放单元测试用例的代码</li>
+</ul>
+<h1 id="nodejs-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF" tabindex="-1"><a class="header-anchor" href="#nodejs-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF">nodejs 事件循环</a></h1>
+<h2 id="node-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB" tabindex="-1"><a class="header-anchor" href="#node-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB">node 事件循环与浏览器的区别</a></h2>
+<ul>
+<li><a href="https://juejin.cn/post/6844903761949753352" target="_blank">https://juejin.cn/post/6844903761949753352</a></li>
+</ul>
+<h1 id="cluster-%E5%8E%9F%E7%90%86" tabindex="-1"><a class="header-anchor" href="#cluster-%E5%8E%9F%E7%90%86">cluster 原理</a></h1>
+<!-- TODO -->
+<h1 id="pipe-%E5%8E%9F%E7%90%86" tabindex="-1"><a class="header-anchor" href="#pipe-%E5%8E%9F%E7%90%86">pipe 原理</a></h1>
+<!-- TODO -->
+<h1 id="%E6%B4%8B%E8%91%B1%E5%9C%88%E6%A8%A1%E5%9E%8B" tabindex="-1"><a class="header-anchor" href="#%E6%B4%8B%E8%91%B1%E5%9C%88%E6%A8%A1%E5%9E%8B">洋葱圈模型</a></h1>
+<ul>
+<li>每次当有一个请求进入的时候，每个中间件都会被执行两次</li>
+<li>每个中间件都接收了一个 next 参数，在 next 函数运行之前的中间件代码会在一开始就执行，next 函数之后的代码会在内部的中间件全部运行结束之后才执行，就像一根筷子穿过一个洋葱，同一层皮会被筷子穿过两次</li>
+</ul>
+<h2 id="%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF" tabindex="-1"><a class="header-anchor" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF">实现思路</a></h2>
+<ul>
+<li>this.middleware 是中间件集合的数组</li>
+<li>koa-compose 模块的 compose 方法用来构建执行顺序</li>
+</ul>
+<pre><code class="language-javascript"><span class="hljs-comment">// middleware 用来保存中间件</span>
+app.<span class="hljs-property">use</span> = <span class="hljs-function">(<span class="hljs-params">fn</span>) =&gt;</span> {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">middleware</span>.<span class="hljs-title function_">push</span>(fn);
+  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;
+};
+
+<span class="hljs-comment">// compose 组合函数来规定执行次序</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">compose</span>(<span class="hljs-params">middleware</span>) {
+  <span class="hljs-comment">// context：上下文，next：传入的接下来要运行的函数</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span> (<span class="hljs-params">context, next</span>) {
+    <span class="hljs-keyword">function</span> <span class="hljs-title function_">dispatch</span>(<span class="hljs-params">i</span>) {
+      index = i;
+      <span class="hljs-comment">// 中间件</span>
+      <span class="hljs-keyword">let</span> fn = middleware[i];
+      <span class="hljs-keyword">if</span> (!fn) <span class="hljs-keyword">return</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>();
+      <span class="hljs-keyword">try</span> {
+        <span class="hljs-comment">// 我们这边假设和上文中的例子一样，有A、B、C三个中间件</span>
+        <span class="hljs-comment">// 通过dispatch(0)发起了第一个中间件A的执行</span>
+        <span class="hljs-comment">// A中间件执行之后，next作为dispatch(1)会被执行</span>
+        <span class="hljs-comment">// 从而发起了下一个中间件B的执行，然后是中间件C被执行</span>
+        <span class="hljs-comment">// 所有的中间件都执行了一遍后，执行Promise.resolve()</span>
+        <span class="hljs-comment">// 最里面的中间件C的await next()运行结束，会继续执行console.log(&quot;C2&quot;)</span>
+        <span class="hljs-comment">// 整个中间件C的运行结束又触发了Promise.resolve</span>
+        <span class="hljs-comment">// 中间件B开始执行console.log(&quot;B2&quot;)</span>
+        <span class="hljs-comment">// 同理，中间件A执行console.log(&quot;A2&quot;)</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(
+          <span class="hljs-title function_">fn</span>(context, <span class="hljs-function">() =&gt;</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-title function_">dispatch</span>(i + <span class="hljs-number">1</span>);
+          })
+        );
+      } <span class="hljs-keyword">catch</span> (err) {
+        <span class="hljs-keyword">return</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">reject</span>(err);
+      }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">dispatch</span>(<span class="hljs-number">0</span>);
+  };
+}
+</code></pre>
+
+      
+        <div class="btt withToc" id="btt"></div>
+      
+    </div>
+    
+    <div class="table-of-contents"><ul><li title="nodejs 特点"><a href="#nodejs-%E7%89%B9%E7%82%B9" data-anchor="#nodejs-%E7%89%B9%E7%82%B9">nodejs 特点</a></li><li title="nodejs 解决的问题"><a href="#nodejs-%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98" data-anchor="#nodejs-%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98">nodejs 解决的问题</a></li><li title="nodejs 的优缺点"><a href="#nodejs-%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9" data-anchor="#nodejs-%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9">nodejs 的优缺点</a></li><li title="应用场景"><a href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF" data-anchor="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">应用场景</a></li><li title="nodejs 异常处理"><a href="#nodejs-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86" data-anchor="#nodejs-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">nodejs 异常处理</a></li><li title="node 模块"><a href="#node-%E6%A8%A1%E5%9D%97" data-anchor="#node-%E6%A8%A1%E5%9D%97">node 模块</a><ul><li title="模块规范"><a href="#%E6%A8%A1%E5%9D%97%E8%A7%84%E8%8C%83" data-anchor="#%E6%A8%A1%E5%9D%97%E8%A7%84%E8%8C%83">模块规范</a><ul><li title="模块引用"><a href="#%E6%A8%A1%E5%9D%97%E5%BC%95%E7%94%A8" data-anchor="#%E6%A8%A1%E5%9D%97%E5%BC%95%E7%94%A8">模块引用</a></li><li title="模块定义"><a href="#%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%B9%89" data-anchor="#%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%B9%89">模块定义</a></li><li title="模块标识"><a href="#%E6%A8%A1%E5%9D%97%E6%A0%87%E8%AF%86" data-anchor="#%E6%A8%A1%E5%9D%97%E6%A0%87%E8%AF%86">模块标识</a></li></ul></li><li title="模块实现"><a href="#%E6%A8%A1%E5%9D%97%E5%AE%9E%E7%8E%B0" data-anchor="#%E6%A8%A1%E5%9D%97%E5%AE%9E%E7%8E%B0">模块实现</a><ul><li title="两种类型区别"><a href="#%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8B%E5%8C%BA%E5%88%AB" data-anchor="#%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8B%E5%8C%BA%E5%88%AB">两种类型区别</a></li><li title="缓存优先特性"><a href="#%E7%BC%93%E5%AD%98%E4%BC%98%E5%85%88%E7%89%B9%E6%80%A7" data-anchor="#%E7%BC%93%E5%AD%98%E4%BC%98%E5%85%88%E7%89%B9%E6%80%A7">缓存优先特性</a></li><li title="路径分析"><a href="#%E8%B7%AF%E5%BE%84%E5%88%86%E6%9E%90" data-anchor="#%E8%B7%AF%E5%BE%84%E5%88%86%E6%9E%90">路径分析</a></li><li title="文件定位"><a href="#%E6%96%87%E4%BB%B6%E5%AE%9A%E4%BD%8D" data-anchor="#%E6%96%87%E4%BB%B6%E5%AE%9A%E4%BD%8D">文件定位</a></li><li title="编译执行"><a href="#%E7%BC%96%E8%AF%91%E6%89%A7%E8%A1%8C" data-anchor="#%E7%BC%96%E8%AF%91%E6%89%A7%E8%A1%8C">编译执行</a></li><li title="模块内部全局变量的由来"><a href="#%E6%A8%A1%E5%9D%97%E5%86%85%E9%83%A8%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E7%9A%84%E7%94%B1%E6%9D%A5" data-anchor="#%E6%A8%A1%E5%9D%97%E5%86%85%E9%83%A8%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E7%9A%84%E7%94%B1%E6%9D%A5">模块内部全局变量的由来</a></li></ul></li></ul></li><li title="包结构"><a href="#%E5%8C%85%E7%BB%93%E6%9E%84" data-anchor="#%E5%8C%85%E7%BB%93%E6%9E%84">包结构</a></li><li title="nodejs 事件循环"><a href="#nodejs-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF" data-anchor="#nodejs-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF">nodejs 事件循环</a><ul><li title="node 事件循环与浏览器的区别"><a href="#node-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB" data-anchor="#node-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB">node 事件循环与浏览器的区别</a></li></ul></li><li title="cluster 原理"><a href="#cluster-%E5%8E%9F%E7%90%86" data-anchor="#cluster-%E5%8E%9F%E7%90%86">cluster 原理</a></li><li title="pipe 原理"><a href="#pipe-%E5%8E%9F%E7%90%86" data-anchor="#pipe-%E5%8E%9F%E7%90%86">pipe 原理</a></li><li title="洋葱圈模型"><a href="#%E6%B4%8B%E8%91%B1%E5%9C%88%E6%A8%A1%E5%9E%8B" data-anchor="#%E6%B4%8B%E8%91%B1%E5%9C%88%E6%A8%A1%E5%9E%8B">洋葱圈模型</a><ul><li title="实现思路"><a href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF" data-anchor="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF">实现思路</a></li></ul></li></ul></div>
+    
+
+    <!-- bottom scripts -->
+    <script src="/doc-builder/resource/lib/mark.js-8.11.1/jquery.mark.min.js"></script>
+    <script src="/doc-builder/resource/lib/viewerjs-1.10.5/viewer.min.js"></script>
+    <script src="/doc-builder/resource/lib/jquery-viewer-1.0.1/jquery-viewer.min.js"></script>
+    <script src="/doc-builder/resource/script.js"></script>
+  </body>
+</html>

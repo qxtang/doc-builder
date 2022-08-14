@@ -3,7 +3,7 @@
 - 极速零配置，将任意文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单
 - 支持无限级菜单，全站搜索
 - 响应式设计支持移动端访问；非单页，利于 SEO、首屏加载快
-- [Preview 示例预览](https://qxtang.github.io/my-book/)
+- [Preview 示例预览](https://qxtang.github.io/doc-builder/)
 
 ## 安装
 

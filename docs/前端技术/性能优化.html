@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>demo - 性能优化</title>
+
+  <!-- styles -->
+  <link rel="stylesheet" href="/doc-builder/resource/lib/github-markdown.min.css" />
+  <link rel="stylesheet" href="/doc-builder/resource/style.css" />
+  <link rel="stylesheet" href="/doc-builder/resource/lib/highlight.default.min.css" />
+  <link rel="stylesheet" href="/doc-builder/resource/lib/viewerjs-1.10.5/viewer.min.css" />
+
+  <!-- scripts -->
+  <script src="/doc-builder/resource/lib/jquery.min.js"></script>
+
+  <link rel="manifest" href="/doc-builder/manifest.json" />
+  <link rel="shortcut icon" type="image/x-icon" href="/doc-builder/resource/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="/doc-builder/resource/favicon.ico" />
+  <link rel="apple-touch-icon" href="/doc-builder/resource/favicon.ico" />
+
+  <!-- 编译时间：2022/8/14 13:18:31 -->
+
+  <script>
+    window.root = '/doc-builder';
+
+    // 提前把搜索数据库载入内存
+    fetch(`${window.root}/dir_tree.json`)
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        window.__doc_builder_dirTree__ = res;
+      });
+  </script>
+</head>
+
+  <body>
+    <ul class="menu expand" id="menu">
+      <div class="loading">
+        <span>加载中...</span>
+      </div>
+      <div class="search_bar" id="search_bar">
+        <input type="text" placeholder="search..." />
+        <img
+          class="clear"
+          id="clear"
+          src="/doc-builder/resource/icons/circle-xmark.svg"
+          alt=""
+        />
+        <div class="search_result" id="search_result"></div>
+      </div>
+      
+            <ul class="parent expand">
+              <li id="前端技术" class="dir" title="前端技术">
+                <span>前端技术</span>
+                <div class="triangle"></div>
+              </li>
+              
+            <ul class="parent expand">
+              <li id="前端技术\浏览器" class="dir" title="浏览器">
+                <span>浏览器</span>
+                <div class="triangle"></div>
+              </li>
+              
+          <li id="前端技术\浏览器\事件循环.md" class="children" title="事件循环">
+            <a href="/doc-builder/前端技术\浏览器/事件循环.html">事件循环</a>
+          </li>
+        
+          <li id="前端技术\浏览器\浏览器.md" class="children" title="浏览器">
+            <a href="/doc-builder/前端技术\浏览器/浏览器.html">浏览器</a>
+          </li>
+        
+          <li id="前端技术\浏览器\浏览器架构.md" class="children" title="浏览器架构">
+            <a href="/doc-builder/前端技术\浏览器/浏览器架构.html">浏览器架构</a>
+          </li>
+        
+          <li id="前端技术\浏览器\浏览器缓存.md" class="children" title="浏览器缓存">
+            <a href="/doc-builder/前端技术\浏览器/浏览器缓存.html">浏览器缓存</a>
+          </li>
+        
+            </ul>
+          
+            <ul class="parent expand">
+              <li id="前端技术\React" class="dir" title="React">
+                <span>React</span>
+                <div class="triangle"></div>
+              </li>
+              
+          <li id="前端技术\React\Fiber.md" class="children" title="Fiber">
+            <a href="/doc-builder/前端技术\React/Fiber.html">Fiber</a>
+          </li>
+        
+          <li id="前端技术\React\Hooks.md" class="children" title="Hooks">
+            <a href="/doc-builder/前端技术\React/Hooks.html">Hooks</a>
+          </li>
+        
+          <li id="前端技术\React\React.md" class="children" title="React">
+            <a href="/doc-builder/前端技术\React/React.html">React</a>
+          </li>
+        
+            </ul>
+          
+            <ul class="parent expand">
+              <li id="前端技术\Javascript" class="dir" title="Javascript">
+                <span>Javascript</span>
+                <div class="triangle"></div>
+              </li>
+              
+          <li id="前端技术\Javascript\Promise.md" class="children" title="Promise">
+            <a href="/doc-builder/前端技术\Javascript/Promise.html">Promise</a>
+          </li>
+        
+          <li id="前端技术\Javascript\代理对.md" class="children" title="代理对">
+            <a href="/doc-builder/前端技术\Javascript/代理对.html">代理对</a>
+          </li>
+        
+          <li id="前端技术\Javascript\其他.md" class="children" title="其他">
+            <a href="/doc-builder/前端技术\Javascript/其他.html">其他</a>
+          </li>
+        
+          <li id="前端技术\Javascript\原型链和继承.md" class="children" title="原型链和继承">
+            <a href="/doc-builder/前端技术\Javascript/原型链和继承.html">原型链和继承</a>
+          </li>
+        
+          <li id="前端技术\Javascript\数据类型.md" class="children" title="数据类型">
+            <a href="/doc-builder/前端技术\Javascript/数据类型.html">数据类型</a>
+          </li>
+        
+          <li id="前端技术\Javascript\模块.md" class="children" title="模块">
+            <a href="/doc-builder/前端技术\Javascript/模块.html">模块</a>
+          </li>
+        
+          <li id="前端技术\Javascript\正则表达式.md" class="children" title="正则表达式">
+            <a href="/doc-builder/前端技术\Javascript/正则表达式.html">正则表达式</a>
+          </li>
+        
+          <li id="前端技术\Javascript\闭包.md" class="children" title="闭包">
+            <a href="/doc-builder/前端技术\Javascript/闭包.html">闭包</a>
+          </li>
+        
+            </ul>
+          
+          <li id="前端技术\Babel.md" class="children" title="Babel">
+            <a href="/doc-builder/前端技术/Babel.html">Babel</a>
+          </li>
+        
+          <li id="前端技术\CSS.md" class="children" title="CSS">
+            <a href="/doc-builder/前端技术/CSS.html">CSS</a>
+          </li>
+        
+          <li id="前端技术\Flex布局.md" class="children" title="Flex布局">
+            <a href="/doc-builder/前端技术/Flex布局.html">Flex布局</a>
+          </li>
+        
+          <li id="前端技术\NodeJS.md" class="children" title="NodeJS">
+            <a href="/doc-builder/前端技术/NodeJS.html">NodeJS</a>
+          </li>
+        
+          <li id="前端技术\npm.md" class="children" title="npm">
+            <a href="/doc-builder/前端技术/npm.html">npm</a>
+          </li>
+        
+          <li id="前端技术\Typescript.md" class="children" title="Typescript">
+            <a href="/doc-builder/前端技术/Typescript.html">Typescript</a>
+          </li>
+        
+          <li id="前端技术\Webpack.md" class="children" title="Webpack">
+            <a href="/doc-builder/前端技术/Webpack.html">Webpack</a>
+          </li>
+        
+          <li id="前端技术\函数式编程.md" class="children" title="函数式编程">
+            <a href="/doc-builder/前端技术/函数式编程.html">函数式编程</a>
+          </li>
+        
+          <li id="前端技术\微前端.md" class="children" title="微前端">
+            <a href="/doc-builder/前端技术/微前端.html">微前端</a>
+          </li>
+        
+          <li id="前端技术\性能优化.md" class="children" title="性能优化">
+            <a href="/doc-builder/前端技术/性能优化.html">性能优化</a>
+          </li>
+        
+          <li id="前端技术\柯里化.md" class="children" title="柯里化">
+            <a href="/doc-builder/前端技术/柯里化.html">柯里化</a>
+          </li>
+        
+          <li id="前端技术\设计模式.md" class="children" title="设计模式">
+            <a href="/doc-builder/前端技术/设计模式.html">设计模式</a>
+          </li>
+        
+            </ul>
+          
+          <li id="单元测试.md" class="children" title="单元测试">
+            <a href="/doc-builder/单元测试.html">单元测试</a>
+          </li>
+        
+          <li id="网络.md" class="children" title="网络">
+            <a href="/doc-builder/网络.html">网络</a>
+          </li>
+        
+      <li id="index.md" class="children about">
+        <a href="/doc-builder/">关于</a>
+      </li>
+    </ul>
+    <div class="drager" id="drager">
+      <div class="switcher btn" id="switcher" title="展开或收起"></div>
+      <div class="expand-all btn" id="expand-all" title="展开所有"></div>
+      <div class="collapse-all btn" id="collapse-all" title="收起所有"></div>
+    </div>
+    <div class="mobile_menu" id="mobile_menu">
+      <img src="/doc-builder/resource/icons/bars.svg" alt="" />
+    </div>
+    <div class="content markdown-body">
+      <h1 id="%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96" tabindex="-1"><a class="header-anchor" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96">性能优化</a></h1>
+<h2 id="%E4%BB%A3%E7%A0%81%E5%B1%82%E9%9D%A2" tabindex="-1"><a class="header-anchor" href="#%E4%BB%A3%E7%A0%81%E5%B1%82%E9%9D%A2">代码层面</a></h2>
+<ul>
+<li>缓存 dom 查找结果</li>
+<li>用 innerHTML 代替 DOM 操作，减少 DOM 操作次数</li>
+<li>不频繁修改 DOM</li>
+<li>如果要修改 DOM 的多个样式可以用 cssText 一次性将要改的样式写入，或将样式写到 class 里，再修改 DOM 的 class 名称</li>
+</ul>
+<pre><code class="language-jsx"><span class="hljs-comment">// bad</span>
+<span class="hljs-keyword">const</span> el = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.myDiv&#x27;</span>);
+el.<span class="hljs-property">style</span>.<span class="hljs-property">borderLeft</span> = <span class="hljs-string">&#x27;1px&#x27;</span>;
+el.<span class="hljs-property">style</span>.<span class="hljs-property">borderRight</span> = <span class="hljs-string">&#x27;2px&#x27;</span>;
+el.<span class="hljs-property">style</span>.<span class="hljs-property">padding</span> = <span class="hljs-string">&#x27;5px&#x27;</span>;
+
+<span class="hljs-comment">// good</span>
+<span class="hljs-keyword">const</span> el = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.myDiv&#x27;</span>);
+el.<span class="hljs-property">style</span>.<span class="hljs-property">cssText</span> += <span class="hljs-string">&#x27;border-left: 1px; border-right: 2px; padding: 5px;&#x27;</span>;
+<span class="hljs-comment">// cssText会覆盖已存在的样式，所以使用 +=</span>
+</code></pre>
+<ul>
+<li>列表绑定事件，使用事件委托</li>
+<li>如无必要，不要重写原生方法，因为原生方法底层是用 C/C++实现的，速度更快</li>
+<li>CSS 能做的事情，尽量不用 JS 来做</li>
+<li>避免 css 表达式比如 calc</li>
+</ul>
+<h2 id="webpack%E3%80%81babel-%E5%B1%82%E9%9D%A2" tabindex="-1"><a class="header-anchor" href="#webpack%E3%80%81babel-%E5%B1%82%E9%9D%A2">webpack、babel 层面</a></h2>
+<ul>
+<li>webpack 按需加载，React.lazy + import()，Webpack 4 之后，只需要用异步语句 <code>require.ensure(&quot;./xx.js&quot;)</code> 或 <code>import(&quot;./xx.js&quot;)</code> 方式引入模块，就可以实现模块的动态加载，这种能力本质也是基于 Chunk 实现的，遇到异步引入语句时会为该模块单独生成一个 chunk</li>
+<li>webpack 配置 external，将通用库抽离，不打包进 bundle，比如 jquery、lodash，使用 CDN，并开启强缓存</li>
+<li>配置 babel 动态 polyfill，只针对不支持的浏览器引入 polyfill</li>
+<li>配置 file-loader，使小图使用 base64</li>
+<li>借助 webpack-bundle-analyzer 工具分析打包出的文件包含哪些，大小占比如何，模块包含关系</li>
+<li>webpack 的 tree-shaking 删除多余代码</li>
+<li>antd 按需加载，babel-plugin-import</li>
+<li><a href="./Webpack.html#webpack-%E5%88%86%E5%8C%85" class="current">webpack 拆包优化</a></li>
+</ul>
+<h2 id="%E5%85%B6%E4%BB%96" tabindex="-1"><a class="header-anchor" href="#%E5%85%B6%E4%BB%96">其他</a></h2>
+<ul>
+<li>不常修改的资源（jquery），开启强缓存优化，配置响应头 Cache-Control 与 Expires</li>
+<li>减少 http 请求次数：雪碧图、小图片使用字体图标代替</li>
+<li>css 放顶部、js 放底部，非关键性的脚本（比如百度统计），script 标签加上 defer 或者 async</li>
+<li>单页应用首屏加载放个 loading，优化用户感知，利用一些过渡效果、骨架屏</li>
+<li>使用 link 标签的 rel 属性，设置 prefetch、preload（preload 将会把资源得下载顺序权重提高，使得关键数据提前下载好，优化页面打开速度）</li>
+<li>注意项目中是否使用了字体，字体加载也会让首屏加载变得很慢</li>
+<li>压缩 js、css 代码</li>
+<li>减少 cookie 的体积</li>
+<li>使用公共 CDN，好处：如果其他网站刚好也用过同一个资源，会得到缓存</li>
+<li>服务端开启 gzip（gzip 只对文本文件有效，比如 js、css，流文件无效，比如图片）</li>
+<li>路由懒加载</li>
+<li>图片懒加载</li>
+</ul>
+<h2 id="%E5%B0%86%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%94%BE%E5%9C%A8%E5%85%B6%E4%BB%96%E5%9F%9F%E5%90%8D%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%88cdn%EF%BC%89" tabindex="-1"><a class="header-anchor" href="#%E5%B0%86%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%94%BE%E5%9C%A8%E5%85%B6%E4%BB%96%E5%9F%9F%E5%90%8D%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%88cdn%EF%BC%89">将静态资源放在其他域名的原因（CDN）</a></h2>
+<ul>
+<li>浏览器对于相同域名有并发请求数限制</li>
+<li>请求时不会发送 cookie，节省了流量</li>
+<li>cookie 会发送给二级域名，所以这些静态资源不放在二级域名，放在单独一级域名</li>
+</ul>
+<h2 id="script-%E6%A0%87%E7%AD%BE%E7%9A%84-defer-%E5%92%8C-async" tabindex="-1"><a class="header-anchor" href="#script-%E6%A0%87%E7%AD%BE%E7%9A%84-defer-%E5%92%8C-async">script 标签的 defer 和 async</a></h2>
+<ul>
+<li>没有 defer 或 async 属性，浏览器会立即加载并执行相应的脚本</li>
+<li>async：立即下载，下载完立即执行，不确定顺序执行。对于完全独立的脚本来才去使用 async，比如谷歌统计百度统计。一定会在页面的 load 事件前执行，但不确定在 DOMContentLoaded 事件触发前后执行。</li>
+<li>defer：立即下载，将延迟到整个页面都解析完毕后再运行</li>
+</ul>
+<h2 id="js-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%94%BE%E6%9C%80%E4%B8%8B%E9%9D%A2%EF%BC%9F" tabindex="-1"><a class="header-anchor" href="#js-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%94%BE%E6%9C%80%E4%B8%8B%E9%9D%A2%EF%BC%9F">js 为什么放最下面？</a></h2>
+<ul>
+<li>当文档加载过程中遇到 js 文件，html 文档会挂起渲染（加载解析渲染同步）的线程，不仅要等待文档中 js 文件加载完毕，还要等待解析执行完毕，才可以恢复 html 文档的渲染线程，因为 JS 有可能会修改 DOM，比如 document.write，这意味着，在 JS 执行完成前，后续所有资源的下载可能是没有必要的，这是 js 阻塞后续资源下载的原因。所以平时的代码中，js 是放在 html 文档末尾的</li>
+</ul>
+<h2 id="css-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%94%BE%E6%9C%80%E4%B8%8A%E9%9D%A2%EF%BC%9F" tabindex="-1"><a class="header-anchor" href="#css-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%94%BE%E6%9C%80%E4%B8%8A%E9%9D%A2%EF%BC%9F">css 为什么放最上面？</a></h2>
+<ul>
+<li>CSS 不会阻塞 DOM 的解析，但会阻塞 DOM 渲染</li>
+<li>css 是由单独的下载线程异步下载的</li>
+<li>但会阻塞 render 树渲染（渲染时需等 css 加载完毕，因为 render 树需要 css 信息）</li>
+</ul>
+<h2 id="gzip" tabindex="-1"><a class="header-anchor" href="#gzip">gzip</a></h2>
+<ul>
+<li>只对文本文件有效，比如 js、css，流文件无效，比如图片</li>
+<li>需要客户端和服务端的同时支持</li>
+<li>客户端支持：请求头中有个 Accept-Encoding 来标识对压缩的支持，content-encoding: gzip</li>
+<li>服务端支持：能够返回经过 gzip 压缩的文件</li>
+</ul>
+<h2 id="%E9%87%8D%E7%BB%98%EF%BC%88repaint%EF%BC%89%E4%B8%8E%E5%9B%9E%E6%B5%81%EF%BC%88reflow%EF%BC%89" tabindex="-1"><a class="header-anchor" href="#%E9%87%8D%E7%BB%98%EF%BC%88repaint%EF%BC%89%E4%B8%8E%E5%9B%9E%E6%B5%81%EF%BC%88reflow%EF%BC%89">重绘（repaint）与回流（reflow）</a></h2>
+<ul>
+<li>重绘：当元素样式的改变不影响布局时，触发重绘，此时由于只需要 UI 层面的重新像素绘制，因此 损耗较少。</li>
+<li>回流、重排：当元素的尺寸、结构或触发某些属性时，触发回流。此时，浏览器需要重新经过计算，计算后还需要重新页面布局，因此是较耗性能的操作。</li>
+</ul>
+<p>触发回流的操作：</p>
+<ul>
+<li>页面初次渲染</li>
+<li>浏览器窗口大小改变</li>
+<li>元素尺寸、位置、内容发生改变</li>
+<li>元素字体大小变化</li>
+<li>添加或者删除可见的 dom 元素</li>
+<li>激活 CSS 伪类（例如：:hover）</li>
+<li>查询某些属性或调用某些方法</li>
+</ul>
+<p>回流必定触发重绘，重绘不一定触发回流。重绘的开销较小，回流的代价较高。</p>
+<h2 id="%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E8%A7%A6%E5%8F%91%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98" tabindex="-1"><a class="header-anchor" href="#%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E8%A7%A6%E5%8F%91%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98">如何避免触发回流和重绘</a></h2>
+<p>CSS：</p>
+<ul>
+<li>避免使用 table 布局。</li>
+<li>尽可能在 DOM 树的最末端改变 class。</li>
+<li>避免设置多层内联样式。</li>
+<li>将动画效果应用到 position 属性为 absolute 或 fixed 的元素上</li>
+<li>避免使用 CSS 表达式（例如：calc()）</li>
+<li>CSS3 硬件加速（GPU 加速）</li>
+</ul>
+<p>JavaScript：</p>
+<ul>
+<li>避免频繁操作样式，最好一次性重写 style 属性，或者将样式列表定义为 class 并一次性更改 class 属性</li>
+<li>避免频繁操作 DOM，创建一个 documentFragment，在它上面应用所有 DOM 操作，最后再把它添加到文档中</li>
+<li>也可以先为元素设置 display: none，操作结束后再把它显示出来。因为在 display 属性为 none 的元素上进行的 DOM 操作不会引发回流和重绘</li>
+<li>避免频繁读取会引发回流/重绘的属性或方法（offsetTop、offsetLeft、offsetWidth、offsetHeight、getBoundingClientRect 等），如果确实需要多次使用，就用一个变量缓存起来</li>
+<li>对具有复杂动画的元素使用绝对定位，使它脱离文档流，否则会引起父元素及后续元素频繁回流</li>
+</ul>
+<h1 id="requestanimationframe" tabindex="-1"><a class="header-anchor" href="#requestanimationframe">requestAnimationFrame</a></h1>
+<ul>
+<li>使用一个回调函数作为参数。这个回调函数会在浏览器重绘之前调用</li>
+<li>浏览器用于定时循环操作的一个接口，类似于 setTimeout，主要用途是按帧对网页进行重绘</li>
+<li>设置这个 API 的目的是为了让各种网页动画效果（DOM 动画、Canvas 动画、SVG 动画、WebGL 动画）能够有一个统一的刷新机制，从而节省系统资源，提高系统性能，改善视觉效果</li>
+<li>代码中使用这个 API，就是告诉浏览器希望执行一个动画，让浏览器在下一个动画帧安排一次网页重绘</li>
+<li>优势在于可以充分利用显示器的刷新机制，比较节省系统资源</li>
+<li>显示器有固定的刷新频率（60Hz 或 75Hz），也就是说，每秒最多只能重绘 60 次或 75 次，requestAnimationFrame 的基本思想就是与这个刷新频率保持同步</li>
+<li>cancelAnimationFrame 用于取消重绘，它的参数是 requestAnimationFrame 返回的一个代表任务 ID 的整数值</li>
+<li>为了提高性能和电池寿命，因此在大多数浏览器里，当 requestAnimationFrame() 运行在后台标签页或者隐藏的 <code>&lt;iframe&gt;</code> 里时，requestAnimationFrame() 会被暂停调用以提升性能和电池寿命</li>
+<li>当浏览器渲染线程被过度占用时这个 API 调用间隔会非常不稳定，它并不是银弹</li>
+</ul>
+<p><strong>使用：</strong></p>
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">test</span>(<span class="hljs-params">timestamp</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(timestamp);
+  <span class="hljs-title function_">requestAnimationFrame</span>(test);
+}
+<span class="hljs-title function_">requestAnimationFrame</span>(test);
+</code></pre>
+
+      
+        <div class="btt withToc" id="btt"></div>
+      
+    </div>
+    
+    <div class="table-of-contents"><ul><li title="性能优化"><a href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96" data-anchor="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96">性能优化</a><ul><li title="代码层面"><a href="#%E4%BB%A3%E7%A0%81%E5%B1%82%E9%9D%A2" data-anchor="#%E4%BB%A3%E7%A0%81%E5%B1%82%E9%9D%A2">代码层面</a></li><li title="webpack、babel 层面"><a href="#webpack%E3%80%81babel-%E5%B1%82%E9%9D%A2" data-anchor="#webpack%E3%80%81babel-%E5%B1%82%E9%9D%A2">webpack、babel 层面</a></li><li title="其他"><a href="#%E5%85%B6%E4%BB%96" data-anchor="#%E5%85%B6%E4%BB%96">其他</a></li><li title="将静态资源放在其他域名的原因（CDN）"><a href="#%E5%B0%86%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%94%BE%E5%9C%A8%E5%85%B6%E4%BB%96%E5%9F%9F%E5%90%8D%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%88cdn%EF%BC%89" data-anchor="#%E5%B0%86%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%94%BE%E5%9C%A8%E5%85%B6%E4%BB%96%E5%9F%9F%E5%90%8D%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%88cdn%EF%BC%89">将静态资源放在其他域名的原因（CDN）</a></li><li title="script 标签的 defer 和 async"><a href="#script-%E6%A0%87%E7%AD%BE%E7%9A%84-defer-%E5%92%8C-async" data-anchor="#script-%E6%A0%87%E7%AD%BE%E7%9A%84-defer-%E5%92%8C-async">script 标签的 defer 和 async</a></li><li title="js 为什么放最下面？"><a href="#js-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%94%BE%E6%9C%80%E4%B8%8B%E9%9D%A2%EF%BC%9F" data-anchor="#js-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%94%BE%E6%9C%80%E4%B8%8B%E9%9D%A2%EF%BC%9F">js 为什么放最下面？</a></li><li title="css 为什么放最上面？"><a href="#css-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%94%BE%E6%9C%80%E4%B8%8A%E9%9D%A2%EF%BC%9F" data-anchor="#css-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%94%BE%E6%9C%80%E4%B8%8A%E9%9D%A2%EF%BC%9F">css 为什么放最上面？</a></li><li title="gzip"><a href="#gzip" data-anchor="#gzip">gzip</a></li><li title="重绘（repaint）与回流（reflow）"><a href="#%E9%87%8D%E7%BB%98%EF%BC%88repaint%EF%BC%89%E4%B8%8E%E5%9B%9E%E6%B5%81%EF%BC%88reflow%EF%BC%89" data-anchor="#%E9%87%8D%E7%BB%98%EF%BC%88repaint%EF%BC%89%E4%B8%8E%E5%9B%9E%E6%B5%81%EF%BC%88reflow%EF%BC%89">重绘（repaint）与回流（reflow）</a></li><li title="如何避免触发回流和重绘"><a href="#%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E8%A7%A6%E5%8F%91%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98" data-anchor="#%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E8%A7%A6%E5%8F%91%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98">如何避免触发回流和重绘</a></li></ul></li><li title="requestAnimationFrame"><a href="#requestanimationframe" data-anchor="#requestanimationframe">requestAnimationFrame</a></li></ul></div>
+    
+
+    <!-- bottom scripts -->
+    <script src="/doc-builder/resource/lib/mark.js-8.11.1/jquery.mark.min.js"></script>
+    <script src="/doc-builder/resource/lib/viewerjs-1.10.5/viewer.min.js"></script>
+    <script src="/doc-builder/resource/lib/jquery-viewer-1.0.1/jquery-viewer.min.js"></script>
+    <script src="/doc-builder/resource/script.js"></script>
+  </body>
+</html>
