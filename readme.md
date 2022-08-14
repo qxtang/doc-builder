@@ -71,7 +71,7 @@ $ npm install -g @qxtang/doc-builder
   on:
     push:
       branches:
-        - main # 编写 markdown 的分支
+        - main # 你的分支
 
   jobs:
     main:
@@ -82,10 +82,10 @@ $ npm install -g @qxtang/doc-builder
           with:
             persist-credentials: false
 
-        - name: Install and Build # 安装与打包
+        - name: Install and Build
           run: |
             npm install @qxtang/doc-builder@latest
-            npx doc-builder --root="your path" --ignore=node_modules,dist
+            npx doc-builder --title="your title" --root="your path" --ignore=node_modules,dist
 
         - name: Deploy
           uses: JamesIves/github-pages-deploy-action@v4.3.0
