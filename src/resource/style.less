@@ -65,6 +65,24 @@ a {
   }
 }
 
+@media print {
+  .menu,
+  .drager,
+  .table-of-contents,
+  #btt {
+    display: none !important;
+  }
+
+  body {
+    height: max-content !important;
+  }
+
+  html,
+  body {
+    overflow-y: auto;
+  }
+}
+
 body {
   display: flex;
   justify-content: space-between;
@@ -440,7 +458,7 @@ body {
       }
 
       img {
-        .img();
+        .img(zoom-in);
       }
 
       h1,
