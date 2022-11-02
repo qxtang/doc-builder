@@ -1,14 +1,22 @@
 import { IConfig, IOption } from './types';
 import chokidar from 'chokidar';
 import ora from 'ora';
+import chalk from 'chalk';
 import fs from 'fs-extra';
 import path from 'path';
 import liveServer from 'live-server';
 import { Command } from 'commander';
 import { APP_NAME, CWD, getConfig } from './utils/config';
 import logger from './utils/logger';
-import { copyTplResource, copyUserResource, genDirTreeJson, genManifest, getDirTree, printWelcomeInfo, renderDirTree, sleep } from './utils';
-import chalk from 'chalk';
+import {
+  copyTplResource,
+  copyUserResource,
+  genDirTreeJson,
+  genManifest,
+  getDirTree,
+  printWelcomeInfo,
+  renderDirTree
+} from './utils';
 
 class DocBuilder {
   building: boolean;
@@ -98,7 +106,9 @@ class DocBuilder {
       }
     };
 
-    await fn();
+    if (!this.building) {
+      await fn();
+    }
   }
 
   run(): void {

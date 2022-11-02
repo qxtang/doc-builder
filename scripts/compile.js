@@ -1,10 +1,16 @@
-const { execSync } = require('child_process');
-const fs = require('fs-extra');
-const path = require('path');
-const cwd = process.cwd();
-const outputPath = path.join(cwd, 'bin');
-const srcPath = path.join(cwd, 'src');
+const { exec } = require('child_process');
 const chokidar = require('chokidar');
+const fs = require('fs-extra');
+const less = require('less');
+const ora = require('ora');
+const LessPluginAutoPrefix = require('less-plugin-autoprefix');
+const path = require('path');
+const babel = require('@babel/core');
+
+const CWD = process.cwd();
+const OUTPUT_PATH = path.join(CWD, 'bin');
+const SRC_PATH = path.join(CWD, 'src');
+
 const { Command } = require('commander');
 const program = new Command();
 
@@ -12,91 +18,147 @@ program.option('-w, --watch', 'watch', false);
 program.parse(process.argv);
 const options = program.opts();
 const isWatch = options.watch;
-let timer = null;
-let lock = false;
 
-// TODO api
-const compileTs = () => {
-  execSync(`npx tsc -p ${cwd}`);
+let compiling = false;
+let requestWhileCompiling = false;
+
+const compileTs = async () => {
+  return new Promise((resolve, reject) => {
+    exec(
+      'npx tsc',
+      {
+        cwd: CWD
+      },
+      function (err) {
+        if (err) {
+          reject(err);
+        }
+        resolve();
+      }
+    );
+  });
 };
 
-// TODO api
-const compileLess = () => {
-  execSync(
-    `npx lessc ${path.join(srcPath, 'resource/style.less')} ${path.join(
-      outputPath,
-      'resource/style.css'
-    )} -x --autoprefix="cover 99.5%"`
-  );
+const compileLess = async () => {
+  return new Promise((resolve, reject) => {
+    const autoPrefixPlugin = new LessPluginAutoPrefix({ browsers: ['cover 99.5%'] });
+    const lessInput = fs.readFileSync(path.join(SRC_PATH, 'resource/style.less'), { encoding: 'utf-8' });
+    const lessOutputPath = path.join(OUTPUT_PATH, 'resource/style.css');
+
+    less.render(
+      lessInput,
+      {
+        compress: true,
+        plugins: [autoPrefixPlugin]
+      },
+      (err, output) => {
+        if (err) {
+          reject(err);
+        }
+
+        fs.writeFileSync(lessOutputPath, output.css, { encoding: 'utf-8' });
+        resolve();
+      }
+    );
+  });
 };
 
-// TODO api
-const compileScript = () => {
-  execSync(
-    `npx babel --config-file ${path.join(cwd, 'babel.script.config.js')} ${path.join(
-      srcPath,
-      'resource/script.js'
-    )} --out-file ${path.join(outputPath, 'resource/script.js')}`
-  );
+const compileScript = async () => {
+  return new Promise((resolve, reject) => {
+    const code = fs.readFileSync(path.join(SRC_PATH, 'resource/script.js'), { encoding: 'utf-8' });
+    const output = path.join(OUTPUT_PATH, 'resource/script.js');
+
+    babel.transform(
+      code,
+      {
+        presets: [
+          [
+            '@babel/env',
+            {
+              targets: 'cover 99.5%'
+            }
+          ]
+        ]
+      },
+      function (err, result) {
+        if (err) {
+          reject(err);
+        }
+        fs.writeFileSync(output, result.code, { encoding: 'utf-8' });
+        resolve();
+      }
+    );
+  });
 };
 
-const moveTpl = () => {
-  fs.copySync(path.join(srcPath, 'ejs'), path.join(outputPath, 'ejs'));
-  fs.copySync(path.join(srcPath, 'resource'), path.join(outputPath, 'resource'));
-  fs.copySync(path.join(srcPath, 'default_index.md'), path.join(outputPath, 'default_index.md'));
+const moveTpl = async () => {
+  return new Promise((resolve) => {
+    fs.copySync(path.join(SRC_PATH, 'ejs'), path.join(OUTPUT_PATH, 'ejs'));
+    fs.copySync(path.join(SRC_PATH, 'resource'), path.join(OUTPUT_PATH, 'resource'));
+    fs.copySync(path.join(SRC_PATH, 'default_index.md'), path.join(OUTPUT_PATH, 'default_index.md'));
+    resolve();
+  });
 };
 
 const reset = () => {
-  fs.removeSync(outputPath);
-  fs.mkdirSync(outputPath);
+  fs.removeSync(OUTPUT_PATH);
+  fs.mkdirSync(OUTPUT_PATH);
 };
 
-// TODO 优化防抖策略
-const compile = () => {
-  const fn = () => {
-    if (lock) {
-      return;
-    }
+const doCompile = async () => {
+  if (compiling) {
+    // console.log('compiling, set requestWhileCompiling true');
+    requestWhileCompiling = true;
+  }
 
-    lock = true;
-    console.log('START COMPILE:', { isWatch });
+  const fn = async () => {
+    compiling = true;
+    const spinner = ora(`COMPILE START: isWatch - ${isWatch}`).start();
 
     if (!isWatch) {
       reset();
     }
 
-    if (!fs.existsSync(outputPath)) {
-      fs.mkdirSync(outputPath);
+    if (!fs.existsSync(OUTPUT_PATH)) {
+      fs.mkdirSync(OUTPUT_PATH);
     }
 
-    compileTs();
-    moveTpl();
-    compileLess();
-    compileScript();
-    console.log('COMPILE FINISH');
-    lock = false;
+    try {
+      await compileTs();
+      await moveTpl();
+      await compileLess();
+      await compileScript();
+
+      spinner.color = 'green';
+      spinner.succeed('COMPILE SUCCESS');
+    } catch (err) {
+      spinner.color = 'red';
+      spinner.fail(`COMPILE ERROR: ${err}`);
+      process.exit(1);
+    } finally {
+      compiling = false;
+
+      if (requestWhileCompiling) {
+        // console.log('requestWhileCompiling true, exec fn');
+        requestWhileCompiling = false;
+        await fn();
+      }
+    }
   };
 
-  if (timer) {
-    clearTimeout(timer);
+  if (!compiling) {
+    await fn();
   }
-
-  timer = setTimeout(() => {
-    try {
-      fn();
-    } catch (e) {
-      console.log('COMPILE FAIL:', e, '\n\r', e.output?.toString());
-      throw new Error(e);
-    }
-  }, 500);
 };
 
-compile();
+(async () => {
+  await doCompile();
+})();
 
 if (isWatch) {
-  chokidar.watch(srcPath, { depth: 10 }).on('change', async (filename) => {
-    console.log('src change:', filename);
+  chokidar.watch(SRC_PATH, { depth: 10 }).on('change', async (filename) => {
+    console.log('src file change:', filename);
 
-    compile();
+    await doCompile();
   });
 }

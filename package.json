@@ -36,6 +36,7 @@
     "@types/ejs": "^3.1.0",
     "@types/fs-extra": "^9.0.13",
     "@types/jquery": "^3.5.14",
+    "@types/less": "^3.0.3",
     "@types/live-server": "^1.2.1",
     "@types/markdown-it": "^12.2.3",
     "@types/node": "^17.0.21",
