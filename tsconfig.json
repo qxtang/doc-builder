@@ -3,7 +3,7 @@
     "rootDir": "src",
     "outDir": "./bin/",
     "noEmitOnError": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "esModuleInterop": true,
     "noUnusedParameters": false,
     "moduleResolution": "node",
@@ -13,7 +13,9 @@
     "target": "ES5",
     "sourceMap": false,
     "declaration": false,
-    "lib": ["es2017"],
+    "lib": [
+      "es2017"
+    ],
     "resolveJsonModule": true,
     "importHelpers": true
   },

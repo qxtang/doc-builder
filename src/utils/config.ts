@@ -1,18 +1,14 @@
 import path from 'path';
 import { IConfig, IOption } from '../types';
 
-interface IParams {
-  options: IOption;
-}
+export const CWD = process.cwd();
+export const APP_NAME = 'doc-builder';
 
-const cwd = process.cwd();
-
-export const getConfig = (params: IParams): IConfig => {
-  const { options } = params;
+export const getConfig = (options: IOption): IConfig => {
   let cfgByFile: Partial<IConfig> = {};
 
   if (options.config) {
-    const filepath = path.join(cwd, options.config);
+    const filepath = path.join(CWD, options.config);
     cfgByFile = require(filepath);
   }
 
@@ -27,7 +23,6 @@ export const getConfig = (params: IParams): IConfig => {
   const root = _root ? `/${_root}` : _root;
 
   const result = {
-    watch: cfgByFile.watch ?? options.watch,
     port,
     host: cfgByFile.host || options.host,
     output: cfgByFile.output || options.output,

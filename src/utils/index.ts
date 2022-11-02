@@ -5,6 +5,9 @@ import path from 'path';
 import mdInstance from './mdInstance';
 import ejs from 'ejs';
 import getTocHtmlByMd from './getTocHtmlByMd';
+import chalk from 'chalk';
+
+export const sleep = (t = 3000) => new Promise(resolve => setTimeout(resolve, t));
 
 // 获取文件树
 export const getDirTree = (params: { inputPath: string; outputPath: string; config: IConfig }): Array<IDirTree> => {
@@ -47,7 +50,7 @@ export const getDirTree = (params: { inputPath: string; outputPath: string; conf
           content: mdInstance
             .render(markdown)
             .replace(/<[^>]+>/g, '')
-            .replace(/[\r\n]/g, ''),
+            .replace(/[\r\n]/g, '')
         });
       } else if (isDirectory) {
         res.push({
@@ -58,7 +61,7 @@ export const getDirTree = (params: { inputPath: string; outputPath: string; conf
           path: dir,
           relative_path,
           output_path,
-          children: fn(path.join(dir, filename)),
+          children: fn(path.join(dir, filename))
         });
       }
     }
@@ -114,7 +117,7 @@ const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string
   return res;
 };
 
-// 根据文件树执行渲染
+// 根据文件树执行渲染 ejs 生成 html
 export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: IConfig; outputPath: string }) => {
   const { dirTree, config, outputPath } = params;
   const menuHtml = getMenuHtmlByDirTree(dirTree, config);
@@ -134,7 +137,7 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
           title: config.title,
           basename: basename === 'index' ? '' : basename,
           tocHtml,
-          menuHtml,
+          menuHtml
         };
 
         ejs.renderFile(path.resolve(__dirname, '../ejs/tpl.ejs'), ejsData, function (err: Error | null, str: string) {
@@ -162,7 +165,7 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
       basename: 'index',
       path: path.resolve(__dirname, '..'),
       relative_path: '',
-      output_path: outputPath,
+      output_path: outputPath
     });
   }
 
@@ -185,7 +188,7 @@ export const copyUserResource = async (params: { resourcePath: string; outputPat
 
   try {
     fs.copySync(resourcePath, path.join(outputPath, config.resource));
-  } catch (e) {
+  } catch (_) {
     //
   }
 };
@@ -215,26 +218,38 @@ export const genManifest = (params: { config: IConfig; outputPath: string }) => 
     icons: [
       {
         src: `${config.root}/resource/icons/128.png`,
-        sizes: '128x128',
+        sizes: '128x128'
       },
       {
         src: `${config.root}/resource/icons/144.png`,
-        sizes: '144x144',
+        sizes: '144x144'
       },
       {
         src: `${config.root}/resource/icons/192.png`,
-        sizes: '192x192',
+        sizes: '192x192'
       },
       {
         src: `${config.root}/resource/icons/256.png`,
-        sizes: '256x256',
+        sizes: '256x256'
       },
       {
         src: `${config.root}/resource/icons/512.png`,
-        sizes: '512x512',
-      },
-    ],
+        sizes: '512x512'
+      }
+    ]
   };
 
   fs.writeFileSync(path.join(outputPath, 'manifest.json'), JSON.stringify(res), { encoding: 'utf-8' });
+};
+
+export const printWelcomeInfo = (config: IConfig) => {
+  console.log(chalk.blueBright(`
+----------------- DOB BUILDER -----------------
+
+your config: 
+
+${JSON.stringify(config, null, 2)}
+
+-----------------------------------------------
+  `));
 };

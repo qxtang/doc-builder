@@ -19,6 +19,7 @@ const compileTs = () => {
   execSync(`npx tsc -p ${cwd}`);
 };
 
+// TODO api
 const compileLess = () => {
   execSync(
     `npx lessc ${path.join(srcPath, 'resource/style.less')} ${path.join(
@@ -28,6 +29,7 @@ const compileLess = () => {
   );
 };
 
+// TODO api
 const compileScript = () => {
   execSync(
     `npx babel --config-file ${path.join(cwd, 'babel.script.config.js')} ${path.join(

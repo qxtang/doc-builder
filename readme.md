@@ -20,7 +20,6 @@ $ npm install -g @qxtang/doc-builder
 ## 命令行参数
 
 ```txt
--w, --watch            本地服务模式 (default: false)
 --config <config>      声明配置文件 (default: "")
 --port <port>          本地服务模式端口号 (default: "8181")
 --host <host>          本地服务模式 host (default: "127.0.0.1")
@@ -42,7 +41,6 @@ $ npm install -g @qxtang/doc-builder
   // builder.config.js
 
   module.exports = {
-    watch: false,
     port: 8181,
     host: '127.0.0.1',
     output: 'your dist',

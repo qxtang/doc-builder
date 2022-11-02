@@ -1,5 +1,4 @@
 export interface IConfig {
-  watch: boolean;
   port: number;
   host: string;
   output: string;

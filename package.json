@@ -4,12 +4,14 @@
   "description": "将任意文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单，零配置",
   "scripts": {
     "prepublishOnly": "npm run compile",
-    "dev": "node ./bin/doc-builder.js --config=config.dev.js",
+    "dev": "node ./bin/index.js build --config=config.dev.js",
+    "compile:ts": "npx tsc",
+    "compile:ts:watch": "npx tsc -w",
     "compile": "node ./scripts/compile.js",
     "compile:watch": "node ./scripts/compile.js -w"
   },
   "bin": {
-    "doc-builder": "bin/doc-builder.js"
+    "doc-builder": "bin/index.js"
   },
   "repository": {
     "type": "git",
@@ -45,6 +47,7 @@
     "typescript": "^4.6.2"
   },
   "dependencies": {
+    "chalk": "^4.1.1",
     "chokidar": "^3.5.3",
     "commander": "^9.1.0",
     "ejs": "^3.1.6",
@@ -58,6 +61,7 @@
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
     "markdown-toc": "^1.2.0",
+    "ora": "^5.4.0",
     "tslib": "^2.3.1"
   }
 }

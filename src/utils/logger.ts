@@ -1,13 +1,15 @@
 /**
  * @description 打印客户日志封装
  */
+import chalk from 'chalk';
+
 const logger = {
   info: (...args: any) => {
-    console.log(`\x1B[1m[${new Date().toLocaleString()}] - DOC-BUILDER:\x1B[22m`, ...args);
+    console.log(`\n\r[${new Date().toLocaleString()}]`, chalk.blueBright(...args));
   },
   error: (...args: any) => {
-    console.log(`\x1B[1m[${new Date().toLocaleString()}] - DOC-BUILDER - ERROR:\x1B[22m`, ...args);
-  },
+    console.log(`\n\r[${new Date().toLocaleString()}] ERROR:`, chalk.redBright(...args));
+  }
 };
 
 export default logger;

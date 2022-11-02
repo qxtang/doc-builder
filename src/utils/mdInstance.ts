@@ -10,19 +10,19 @@ const mdInstance = markdownIt({
     if (lang && hljs.getLanguage(lang)) {
       try {
         return hljs.highlight(str, { language: lang }).value;
-      } catch (__) {
+      } catch (_) {
         //
       }
     }
 
     return '';
-  },
+  }
 });
 
 mdInstance
   .use(markdownItAnchor, {
     slugify: (s) => slugifyFn(s),
-    permalink: markdownItAnchor.permalink.headerLink(),
+    permalink: markdownItAnchor.permalink.headerLink()
   })
   .use(require('markdown-it-sub'))
   .use(require('markdown-it-sup'))
