@@ -15,6 +15,7 @@ const isWatch = options.watch;
 let timer = null;
 let lock = false;
 
+// TODO api
 const compileTs = () => {
   execSync(`npx tsc -p ${cwd}`);
 };
@@ -50,6 +51,7 @@ const reset = () => {
   fs.mkdirSync(outputPath);
 };
 
+// TODO 优化防抖策略
 const compile = () => {
   const fn = () => {
     if (lock) {

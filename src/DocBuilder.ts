@@ -11,6 +11,9 @@ import { copyTplResource, copyUserResource, genDirTreeJson, genManifest, getDirT
 import chalk from 'chalk';
 
 class DocBuilder {
+  building: boolean;
+  requestWhileBuilding: boolean;
+
   setCommonOptions(program: Command) {
     program
       .option('--config <config>', '声明配置文件', '')
@@ -30,54 +33,72 @@ class DocBuilder {
     return program;
   }
 
-  // TODO 防抖
   async doBuild(options: {
     inputPath: string;
     outputPath: string;
     resourcePath: string;
     config: IConfig;
   }) {
-    const { inputPath, outputPath, config, resourcePath } = options;
-
-    if (!fs.existsSync(inputPath)) {
-      logger.error('输入文件夹不存在:', inputPath);
-      return;
+    if (this.building) {
+      // logger.info('building, set requestWhileBuilding true');
+      this.requestWhileBuilding = true;
     }
 
-    const spinner = ora('building...').start();
+    const fn = async () => {
+      this.building = true;
+      const { inputPath, outputPath, config, resourcePath } = options;
 
-    try {
-      const dirTree = getDirTree({
-        inputPath: inputPath,
-        outputPath: outputPath,
-        config: config
-      });
+      if (!fs.existsSync(inputPath)) {
+        logger.error('输入文件夹不存在:', inputPath);
+        return;
+      }
 
-      await sleep();
+      if (!fs.existsSync(outputPath)) {
+        fs.mkdirSync(outputPath);
+      }
 
-      await genDirTreeJson(dirTree, outputPath);
-      await copyTplResource(outputPath);
-      await copyUserResource({
-        resourcePath: resourcePath,
-        outputPath: outputPath,
-        config: config
-      });
-      await genManifest({
-        config: config,
-        outputPath: outputPath
-      });
-      await renderDirTree({
-        dirTree,
-        config: config,
-        outputPath: outputPath
-      });
+      const spinner = ora('building...').start();
 
-      spinner.color = 'green';
-      spinner.succeed(chalk.blueBright('build success'));
-    } catch (err) {
-      spinner.fail(chalk.redBright('build fail:', err));
-      process.exit(1);
-    }
+      try {
+        const dirTree = getDirTree({
+          inputPath: inputPath,
+          outputPath: outputPath,
+          config: config
+        });
+        await genDirTreeJson(dirTree, outputPath);
+        await copyTplResource(outputPath);
+        await copyUserResource({
+          resourcePath: resourcePath,
+          outputPath: outputPath,
+          config: config
+        });
+        await genManifest({
+          config: config,
+          outputPath: outputPath
+        });
+        await renderDirTree({
+          dirTree,
+          config: config,
+          outputPath: outputPath
+        });
+
+        spinner.color = 'green';
+        spinner.succeed(chalk.blueBright('build success'));
+      } catch (err) {
+        spinner.fail(chalk.redBright('build fail:', err));
+        process.exit(1);
+      } finally {
+        this.building = false;
+
+        if (this.requestWhileBuilding) {
+          // logger.info('requestWhileBuilding true, exec fn');
+          this.requestWhileBuilding = false;
+          await fn();
+        }
+      }
+    };
+
+    await fn();
   }
 
   run(): void {
@@ -111,9 +132,17 @@ class DocBuilder {
 
   async start(options: IOption) {
     const config = getConfig(options);
+    printWelcomeInfo(config);
     const inputPath = path.join(CWD, config.input);
     const outputPath = path.join(__dirname, '../temp');
     const resourcePath = path.join(inputPath, config.resource);
+
+    await this.doBuild({
+      inputPath,
+      outputPath,
+      resourcePath,
+      config
+    });
 
     // watch input
     chokidar
