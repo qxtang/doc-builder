@@ -13,7 +13,7 @@ $ npm install -g @qxtang/doc-builder
 
 ## 使用
 
-- 任意文件夹中创建并编写你的 markdown 文件
+- 任意文件夹中创建并编写你的 markdown 文件：`mkdir somedir && cd somedir`
 - `doc-builder start` 启动本地服务
 - `doc-builder build` 打包
 - `doc-builder -h` 查看更多帮助

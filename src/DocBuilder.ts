@@ -13,6 +13,7 @@ import {
   copyUserResource,
   genDirTreeJson,
   genManifest,
+  genNojekyllFile,
   getDirTree,
   printWelcomeInfo,
   renderDirTree
@@ -73,6 +74,7 @@ class DocBuilder {
           config: config
         });
         await genDirTreeJson(dirTree, outputPath);
+        await genNojekyllFile(outputPath);
         await copyTplResource(outputPath);
         await copyUserResource({
           resourcePath: resourcePath,

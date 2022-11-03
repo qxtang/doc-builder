@@ -174,6 +174,15 @@ export const copyTplResource = async (outputPath: string) => {
   fs.copySync(path.resolve(__dirname, '../resource'), path.join(outputPath, 'resource'));
 };
 
+// 禁用 github 的 jekyll
+export const genNojekyllFile = async (outputPath: string) => {
+  fs.writeFileSync(
+    path.join(outputPath, '.nojekyll'),
+    '',
+    { encoding: 'utf-8' }
+  );
+};
+
 // 生成文件树 json
 export const genDirTreeJson = async (dirTree: Array<IDirTree>, outputPath: string) => {
   fs.writeFileSync(
