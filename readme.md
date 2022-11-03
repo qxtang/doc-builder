@@ -16,6 +16,7 @@ $ npm install -g @qxtang/doc-builder
 - 任意文件夹中创建并编写你的 markdown 文件
 - `doc-builder start` 启动本地服务
 - `doc-builder build` 打包
+- `doc-builder -h` 查看更多帮助
 
 ## 使用配置文件
 
@@ -37,7 +38,7 @@ $ npm install -g @qxtang/doc-builder
   };
   ```
 
-- 传入 `doc-builder --config=builder.config.js`
+- 传入 `doc-builder build --config=builder.config.js`
 
 ## 其他
 
@@ -68,7 +69,7 @@ $ npm install -g @qxtang/doc-builder
         - name: Install and Build
           run: |
             npm install @qxtang/doc-builder@latest
-            npx doc-builder --title="your title" --root="your path" --ignore=node_modules,dist
+            npx doc-builder build --title="your title" --root="your path" --ignore=node_modules,dist
 
         - name: Deploy
           uses: JamesIves/github-pages-deploy-action@v4.3.0

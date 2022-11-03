@@ -70,7 +70,6 @@ class DocBuilder {
       try {
         const dirTree = getDirTree({
           inputPath: inputPath,
-          outputPath: outputPath,
           config: config
         });
         await genDirTreeJson(dirTree, outputPath);

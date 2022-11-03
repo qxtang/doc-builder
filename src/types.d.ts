@@ -19,9 +19,16 @@ export interface IDirTree {
   filename: string;
   basename: string;
   path: string;
-  relative_path: string;
-  output_path: string;
   dirname?: string;
   children?: IDirTree[];
   content?: string;
+}
+
+export interface IEjsData {
+  root: string;
+  html: string;
+  title: string;
+  basename: string;
+  tocHtml: string;
+  menuHtml: string;
 }

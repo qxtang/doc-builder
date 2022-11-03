@@ -1,4 +1,4 @@
-import { IConfig } from '../types';
+import { IConfig, IEjsData } from '../types';
 import { IDirTree } from '../types';
 import fs from 'fs-extra';
 import path from 'path';
@@ -6,12 +6,13 @@ import mdInstance from './mdInstance';
 import ejs from 'ejs';
 import getTocHtmlByMd from './getTocHtmlByMd';
 import chalk from 'chalk';
+import md5 from 'md5';
 
 export const sleep = (t = 3000) => new Promise(resolve => setTimeout(resolve, t));
 
 // 获取文件树
-export const getDirTree = (params: { inputPath: string; outputPath: string; config: IConfig }): Array<IDirTree> => {
-  const { inputPath, outputPath, config } = params;
+export const getDirTree = (params: { inputPath: string; config: IConfig }): Array<IDirTree> => {
+  const { inputPath, config } = params;
 
   const fn = (dir: string) => {
     const res: Array<IDirTree> = [];
@@ -20,17 +21,15 @@ export const getDirTree = (params: { inputPath: string; outputPath: string; conf
     for (const filename of filenames) {
       const extname = path.extname(filename);
       const basename = filename.substring(0, filename.indexOf(extname));
-      const relative_path = path.relative(inputPath, dir);
-      const output_path = path.join(outputPath, relative_path);
-      const id = path.join(relative_path, filename);
-      const real_path = path.join(dir, filename);
-      const stat = fs.lstatSync(real_path);
+      const realPath = path.join(dir, filename);
+      const id = basename === 'index' ? 'index' : md5(realPath);
+      const stat = fs.lstatSync(realPath);
       const isDirectory = stat.isDirectory();
       const isFile = stat.isFile();
       const isStartsWithDot = filename.startsWith('.');
 
       const isIgnore = config.ignore.some((item) => {
-        return path.join(inputPath, item) === real_path;
+        return path.join(inputPath, item) === realPath;
       });
 
       if (isStartsWithDot || isIgnore) {
@@ -45,8 +44,6 @@ export const getDirTree = (params: { inputPath: string; outputPath: string; conf
           filename,
           basename,
           path: dir,
-          relative_path,
-          output_path,
           content: mdInstance
             .render(markdown)
             .replace(/<[^>]+>/g, '')
@@ -59,8 +56,6 @@ export const getDirTree = (params: { inputPath: string; outputPath: string; conf
           filename: '',
           basename,
           path: dir,
-          relative_path,
-          output_path,
           children: fn(path.join(dir, filename))
         });
       }
@@ -104,7 +99,7 @@ const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string
             </ul>
           `;
     } else {
-      const href = `${config.root}/${item.relative_path ? item.relative_path + '/' : ''}${item.basename}.html`;
+      const href = `${config.root}/${item.id}.html`;
 
       res += `
           <li id="${item.id}" class="children" title="${item.basename}">
@@ -131,7 +126,7 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
         const html = mdInstance.render(markdown);
         const tocHtml = getTocHtmlByMd(markdown);
         const basename = info.basename;
-        const ejsData = {
+        const ejsData: IEjsData = {
           root: config.root,
           html: html,
           title: config.title,
@@ -140,16 +135,20 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
           menuHtml
         };
 
-        ejs.renderFile(path.resolve(__dirname, '../ejs/tpl.ejs'), ejsData, function (err: Error | null, str: string) {
-          if (err) {
-            throw err;
-          }
-          const isPathExists = fs.pathExistsSync(info.output_path);
-          if (!isPathExists) {
-            fs.mkdirSync(info.output_path, { recursive: true });
-          }
-          fs.writeFileSync(path.join(info.output_path, `${basename}.html`), str, { encoding: 'utf-8' });
-        });
+        ejs.renderFile(
+          path.resolve(__dirname, '../ejs/tpl.ejs'),
+          ejsData,
+          function (err: Error | null, str: string) {
+            if (err) {
+              throw err;
+            }
+
+            fs.writeFileSync(
+              path.join(outputPath, `${info.id}.html`),
+              str,
+              { encoding: 'utf-8' }
+            );
+          });
       } else {
         renderByFileInfoArr(info.children);
       }
@@ -160,12 +159,10 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
 
   if (!hasUserIndex) {
     dirTree.push({
-      id: 'index.md',
+      id: 'index',
       filename: 'default_index.md',
       basename: 'index',
-      path: path.resolve(__dirname, '..'),
-      relative_path: '',
-      output_path: outputPath
+      path: path.resolve(__dirname, '..')
     });
   }
 
@@ -179,7 +176,11 @@ export const copyTplResource = async (outputPath: string) => {
 
 // 生成文件树 json
 export const genDirTreeJson = async (dirTree: Array<IDirTree>, outputPath: string) => {
-  fs.writeFileSync(path.join(outputPath, 'dir_tree.json'), JSON.stringify(dirTree), { encoding: 'utf-8' });
+  fs.writeFileSync(
+    path.join(outputPath, 'dir_tree.json'),
+    JSON.stringify(dirTree),
+    { encoding: 'utf-8' }
+  );
 };
 
 // 拷贝用户的资源

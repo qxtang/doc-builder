@@ -17,12 +17,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
       return false;
-    },
+    }
   };
 
-  const LAST_VISIT_STORAGE_KEY = '20220410091109_LAST_VISIT_KEY_FJHY3PHJ00';
-  const COLLAPSE_STORAGE_KEY = '20220414095652_COLLAPSE_KEY_IXIFMU64D7';
-  const isMobile = !!(document.body.clientWidth < 900);
+  const LAST_VISIT_STORAGE_KEY = 'LAST_VISIT_KEY_FJHY3PHJ00';
+  const COLLAPSE_STORAGE_KEY = 'COLLAPSE_KEY_IXIFMU64D7';
+  const isMobile = Boolean(document.body.clientWidth < 900);
 
   // menu
   (function () {
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         $menu.animate(
           {
-            width: _x,
+            width: _x
           },
           0
         );
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const getSearchResult = (str) => {
       str = str.toLowerCase();
-      const tree = window.__doc_builder_dirTree__ || [];
+      const tree = window.__doc_builder_dir_tree__ || [];
       const res = [];
 
       const fn = (arr) => {
@@ -250,9 +250,7 @@ document.addEventListener('DOMContentLoaded', function () {
           .map((info) => {
             const index = info.content.toLowerCase().indexOf(value);
             const summary = `...${info.content.substring(index, index + 50)}...`;
-            const href = `${window.root}/${info.relative_path ? info.relative_path + '/' : ''}${
-              info.basename
-            }.html?search=${value}`;
+            const href = `${window.root}/${info.id}.html?search=${value}`;
 
             return `
               <a class="item" href="${href}">
@@ -302,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('.markdown-body img').viewer({
       title: false,
       toolbar: false,
-      navbar: false,
+      navbar: false
     });
   })();
 
@@ -326,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $btt.on('click', function () {
       $content.animate(
         {
-          scrollTop: 0,
+          scrollTop: 0
         },
         200
       );

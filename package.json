@@ -39,6 +39,7 @@
     "@types/less": "^3.0.3",
     "@types/live-server": "^1.2.1",
     "@types/markdown-it": "^12.2.3",
+    "@types/md5": "^2.3.2",
     "@types/node": "^17.0.21",
     "@typescript-eslint/eslint-plugin": "^5.15.0",
     "@typescript-eslint/parser": "^5.15.0",
@@ -62,6 +63,7 @@
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
     "markdown-toc": "^1.2.0",
+    "md5": "^2.3.0",
     "ora": "^5.4.0",
     "tslib": "^2.3.1"
   }

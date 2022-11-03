@@ -3,6 +3,7 @@ const chokidar = require('chokidar');
 const fs = require('fs-extra');
 const less = require('less');
 const ora = require('ora');
+const chalk = require('chalk');
 const LessPluginAutoPrefix = require('less-plugin-autoprefix');
 const path = require('path');
 const babel = require('@babel/core');
@@ -21,6 +22,15 @@ const isWatch = options.watch;
 
 let compiling = false;
 let requestWhileCompiling = false;
+
+const logger = {
+  info: (...args) => {
+    console.log(`\n\r[${new Date().toLocaleString()}]`, chalk.blueBright(...args));
+  },
+  error: (...args) => {
+    console.log(`\n\r[${new Date().toLocaleString()}] ERROR:`, chalk.redBright(...args));
+  }
+};
 
 const compileTs = async () => {
   return new Promise((resolve, reject) => {
@@ -113,7 +123,7 @@ const doCompile = async () => {
 
   const fn = async () => {
     compiling = true;
-    const spinner = ora(`COMPILE START: isWatch - ${isWatch}`).start();
+    const spinner = ora('COMPILING').start();
 
     if (!isWatch) {
       reset();
@@ -152,12 +162,13 @@ const doCompile = async () => {
 };
 
 (async () => {
+  logger.info(`COMPILE START: isWatch - ${isWatch}`);
   await doCompile();
 })();
 
 if (isWatch) {
   chokidar.watch(SRC_PATH, { depth: 10 }).on('change', async (filename) => {
-    console.log('src file change:', filename);
+    logger.info('src file change:', filename);
 
     await doCompile();
   });

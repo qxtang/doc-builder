@@ -26,11 +26,11 @@
 
     // 提前把搜索数据库载入内存
     fetch(`${window.root}/dir_tree.json`)
-      .then(function (res) {
-        return res.json();
-      })
-      .then(function (res) {
-        window.__doc_builder_dirTree__ = res;
-      });
+            .then(function (res) {
+              return res.json();
+            })
+            .then(function (res) {
+              window.__doc_builder_dir_tree__ = res;
+            });
   </script>
 </head>
