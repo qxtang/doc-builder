@@ -1,7 +1,7 @@
 # DOC-BUILDER
 
 - 极速零配置，将文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单
-- 全站搜索、toc 菜单
+- 全站搜索、toc 目录
 - 非单页，利于 SEO
 - [Preview 示例预览](https://qxtang.github.io/my-book/)
 
