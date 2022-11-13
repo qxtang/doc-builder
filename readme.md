@@ -2,7 +2,6 @@
 
 - 极速零配置，将文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单
 - 全站搜索、toc 目录
-- 非单页，利于 SEO
 - [Preview 示例预览](https://qxtang.github.io/my-book/)
 
 ## 安装
@@ -20,7 +19,6 @@ $ npm install -g @qxtang/doc-builder
 
 ## 使用配置文件
 
-- 配置文件中的配置优先级高于命令行配置
 - 创建文件 builder.config.js
 
   ```javascript
@@ -47,8 +45,7 @@ $ npm install -g @qxtang/doc-builder
 
 ## 与 GitHub Actions 结合食用更佳！❤
 
-- [示例仓库](https://github.com/qxtang/my-book)
-- 给你的仓库添加一个权限点足够的 secrets，创建并编辑 actions 配置文件 `.github\workflows\CI.yml`
+- 给你的 github 仓库添加一个权限点足够的 secrets，创建并编辑 actions 配置文件 `.github\workflows\CI.yml`
 
   ```yml
   name: CI
@@ -82,4 +79,4 @@ $ npm install -g @qxtang/doc-builder
               .nojekyll
   ```
 
-- 只需要在仓库编辑你的文档，保存推送，啥也不用干，自动部署
+- 只需要在仓库编辑你的文档，保存推送，自动构建部署
