@@ -1,6 +1,6 @@
 {
   "name": "@qxtang/doc-builder",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "将文件夹中的 markdown 文档翻译成 html 站点，根据文件结构自动生成菜单",
   "scripts": {
     "prepublishOnly": "npm run compile",

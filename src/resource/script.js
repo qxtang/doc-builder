@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
       return false;
-    }
+    },
   };
 
   const LAST_VISIT_STORAGE_KEY = 'LAST_VISIT_KEY_FJHY3PHJ00';
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         $menu.animate(
           {
-            width: _x
+            width: _x,
           },
           0
         );
@@ -284,6 +284,13 @@ document.addEventListener('DOMContentLoaded', function () {
       $input.val('');
       handleInputChange('');
     });
+
+    // add search input hotkey
+    document.addEventListener('keyup', (e) => {
+      if (e.key === 's') {
+        $input.trigger('focus');
+      }
+    });
   })();
 
   // keyword highlight
@@ -295,16 +302,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   })();
 
-  // viewer
+  // image viewer
   (function () {
     $('.markdown-body img').viewer({
       title: false,
       toolbar: false,
-      navbar: false
+      navbar: false,
     });
   })();
 
-  // btt
+  // back to top
   (function () {
     if (isMobile) {
       return;
@@ -324,7 +331,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $btt.on('click', function () {
       $content.animate(
         {
-          scrollTop: 0
+          scrollTop: 0,
         },
         200
       );
