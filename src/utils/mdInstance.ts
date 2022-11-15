@@ -27,7 +27,12 @@ mdInstance
   .use(require('markdown-it-sub'))
   .use(require('markdown-it-sup'))
   .use(require('markdown-it-mark'))
-  .use(require('markdown-it-attrs'));
+  .use(require('markdown-it-attrs'))
+  .use(require('markdown-it-container'), 'info')
+  .use(require('markdown-it-container'), 'note')
+  .use(require('markdown-it-container'), 'tip')
+  .use(require('markdown-it-container'), 'warning')
+  .use(require('markdown-it-container'), 'danger');
 
 const defaultRender =
   mdInstance.renderer.rules.link_open ||
