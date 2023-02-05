@@ -17,6 +17,8 @@ export interface IOption extends Omit<IConfig, "ignore"> {
 export interface IDirTree {
   id: string;
   filename: string;
+  isRootIndexFile?: boolean;
+  isIndexFile?: boolean;
   basename: string;
   path: string;
   dirname?: string;

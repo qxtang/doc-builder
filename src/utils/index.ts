@@ -7,6 +7,7 @@ import ejs from 'ejs';
 import getTocHtmlByMd from './getTocHtmlByMd';
 import chalk from 'chalk';
 import md5 from 'md5';
+import { INDEX_FILE_BASE_NAME, INDEX_FILE_NAME } from '../constants';
 
 export const sleep = (t = 3000) => new Promise(resolve => setTimeout(resolve, t));
 
@@ -20,9 +21,24 @@ export const getDirTree = (params: { inputPath: string; config: IConfig }): Arra
 
     for (const filename of filenames) {
       const extname = path.extname(filename);
-      const basename = filename.substring(0, filename.indexOf(extname));
       const realPath = path.join(dir, filename);
-      const id = basename === 'index' ? 'index' : md5(realPath);
+
+      const isIndexFile = (function () {
+        return filename === INDEX_FILE_NAME;
+      })();
+
+      const isRootIndexFile = (function () {
+        return isIndexFile && (path.relative(inputPath, realPath) === 'index.md');
+      })();
+
+      const basename = (function () {
+        if (isIndexFile && !isRootIndexFile) {
+          return INDEX_FILE_BASE_NAME;
+        }
+        return filename.substring(0, filename.indexOf(extname));
+      })();
+
+      const id = isRootIndexFile ? 'index' : md5(realPath);
       const stat = fs.lstatSync(realPath);
       const isDirectory = stat.isDirectory();
       const isFile = stat.isFile();
@@ -41,6 +57,8 @@ export const getDirTree = (params: { inputPath: string; config: IConfig }): Arra
 
         res.push({
           id,
+          isRootIndexFile,
+          isIndexFile,
           filename,
           basename,
           path: dir,
@@ -62,6 +80,9 @@ export const getDirTree = (params: { inputPath: string; config: IConfig }): Arra
     }
 
     res.sort((a) => {
+      if (a.isIndexFile && !a.isRootIndexFile) {
+        return -1;
+      }
       if (a.children) {
         return -1;
       } else {
@@ -83,7 +104,7 @@ const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string
   let res = '';
 
   for (const item of dirTree) {
-    if (item.basename === 'index') {
+    if (item.isRootIndexFile) {
       continue;
     }
 
@@ -130,7 +151,7 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
           root: config.root,
           html: html,
           title: config.title,
-          basename: basename === 'index' ? '' : basename,
+          basename: info.isRootIndexFile ? '' : basename,
           tocHtml,
           menuHtml
         };
@@ -155,7 +176,7 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
     });
   };
 
-  const hasUserIndex: boolean = dirTree.some((i) => i.basename === 'index');
+  const hasUserIndex: boolean = dirTree.some((i) => i.isRootIndexFile);
 
   if (!hasUserIndex) {
     dirTree.push({
