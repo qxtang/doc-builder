@@ -8,6 +8,7 @@ import getTocHtmlByMd from './getTocHtmlByMd';
 import chalk from 'chalk';
 import md5 from 'md5';
 import { INDEX_FILE_BASE_NAME, INDEX_FILE_NAME } from '../constants';
+const  { version } = require('../../package.json');
 
 export const sleep = (t = 3000) => new Promise(resolve => setTimeout(resolve, t));
 
@@ -275,12 +276,12 @@ export const genManifest = (params: { config: IConfig; outputPath: string }) => 
 
 export const printInfo = (config: IConfig) => {
   console.log(chalk.blueBright(`
------------------ DOC BUILDER -----------------
+----------------- DOC BUILDER ${version} -----------------
 
 your config: 
 
 ${JSON.stringify(config, null, 2)}
 
------------------------------------------------
+-----------------------------------------------------
   `));
 };
