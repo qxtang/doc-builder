@@ -17,12 +17,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
       return false;
-    },
+    }
   };
 
   const LAST_VISIT_STORAGE_KEY = 'LAST_VISIT_KEY_FJHY3PHJ00';
   const COLLAPSE_STORAGE_KEY = 'COLLAPSE_KEY_IXIFMU64D7';
+
   const isMobile = Boolean(document.body.clientWidth < 900);
+  const currPath = decodeURIComponent(window.location.pathname);
+  const isIndex = ([`${window.root}/`, `${window.root}/index.html`, '/', '/index.html'].includes(currPath));
+  const lastVisitPathInStore = window.localStorage.getItem(LAST_VISIT_STORAGE_KEY);
+
+  // navigate to last visit
+  (function () {
+    if (isIndex && lastVisitPathInStore) {
+      window.location.href = lastVisitPathInStore;
+    }
+  })();
 
   // menu
   (function () {
@@ -60,14 +71,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // 设置上次看到状态
     const $links = $('#menu .children > a');
     const host = window.location.protocol + '//' + window.location.host;
-    const path = decodeURIComponent(window.location.pathname);
 
     $links.each(function () {
       const url = decodeURIComponent($(this).prop('href'));
       const _path = url.replace(host, '');
-      const isActive = path === _path;
-      const lastVisit = window.localStorage.getItem(LAST_VISIT_STORAGE_KEY);
-      const isLastVisit = lastVisit === _path;
+      const isActive = currPath === _path;
+      const isLastVisit = lastVisitPathInStore === _path;
 
       if (isActive) {
         $(this).parent('.children').addClass('active');
@@ -150,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         $menu.animate(
           {
-            width: _x,
+            width: _x
           },
           0
         );
@@ -185,10 +194,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // mobile_menu
   (function () {
-    const $mobile_menu = $('#mobile_menu');
+    if (!isMobile) {
+      return;
+    }
+
+    const $mobileMenu = $('#mobile_menu');
     const $menu = $('#menu');
-    $mobile_menu.on('click', function () {
+    const $content = $('body > .content.markdown-body');
+    $mobileMenu.on('click', function () {
       $menu.toggleClass('show');
+    });
+
+    $content.on('click', function () {
+      $menu.removeClass('show');
     });
   })();
 
@@ -307,7 +325,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('.markdown-body img').viewer({
       title: false,
       toolbar: false,
-      navbar: false,
+      navbar: false
     });
   })();
 
@@ -331,14 +349,14 @@ document.addEventListener('DOMContentLoaded', function () {
     $btt.on('click', function () {
       $content.animate(
         {
-          scrollTop: 0,
+          scrollTop: 0
         },
         200
       );
     });
   })();
 
-  // jump hash
+  // navigate to hash
   (function () {
     const hash = window.location.hash.slice(1);
     const $content = $('body > .content.markdown-body');
@@ -351,10 +369,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // set last visit
   (function () {
-    const path = decodeURIComponent(window.location.pathname);
-    if ([`${window.root}/`, `${window.root}/index.html`, '/', '/index.html'].includes(path)) {
-      return;
-    }
-    window.localStorage.setItem(LAST_VISIT_STORAGE_KEY, path);
+    if (isIndex) { return; }
+    window.localStorage.setItem(LAST_VISIT_STORAGE_KEY, currPath);
   })();
 });

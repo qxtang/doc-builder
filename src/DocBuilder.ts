@@ -15,7 +15,7 @@ import {
   genManifest,
   genNojekyllFile,
   getDirTree,
-  printWelcomeInfo,
+  printInfo,
   renderDirTree
 } from './utils';
 
@@ -49,7 +49,6 @@ class DocBuilder {
     config: IConfig;
   }) {
     if (this.building) {
-      // logger.info('building, set requestWhileBuilding true');
       this.requestWhileBuilding = true;
     }
 
@@ -100,7 +99,6 @@ class DocBuilder {
         this.building = false;
 
         if (this.requestWhileBuilding) {
-          // logger.info('requestWhileBuilding true, exec fn');
           this.requestWhileBuilding = false;
           await fn();
         }
@@ -143,7 +141,7 @@ class DocBuilder {
 
   async start(options: IOption) {
     const config = getConfig(options);
-    printWelcomeInfo(config);
+    printInfo(config);
     const inputPath = path.join(CWD, config.input);
     const outputPath = path.join(__dirname, '../temp');
     const resourcePath = path.join(inputPath, config.resource);
@@ -185,7 +183,7 @@ class DocBuilder {
 
   async build(options: IOption) {
     const config = getConfig(options);
-    printWelcomeInfo(config);
+    printInfo(config);
     const inputPath = path.join(CWD, config.input);
     const outputPath = path.join(CWD, config.output);
     const resourcePath = path.join(inputPath, config.resource);

@@ -273,9 +273,9 @@ export const genManifest = (params: { config: IConfig; outputPath: string }) => 
   fs.writeFileSync(path.join(outputPath, 'manifest.json'), JSON.stringify(res), { encoding: 'utf-8' });
 };
 
-export const printWelcomeInfo = (config: IConfig) => {
+export const printInfo = (config: IConfig) => {
   console.log(chalk.blueBright(`
------------------ DOB BUILDER -----------------
+----------------- DOC BUILDER -----------------
 
 your config: 
 

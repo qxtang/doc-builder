@@ -117,7 +117,6 @@ const reset = () => {
 
 const doCompile = async () => {
   if (compiling) {
-    // console.log('compiling, set requestWhileCompiling true');
     requestWhileCompiling = true;
   }
 
@@ -149,7 +148,6 @@ const doCompile = async () => {
       compiling = false;
 
       if (requestWhileCompiling) {
-        // console.log('requestWhileCompiling true, exec fn');
         requestWhileCompiling = false;
         await fn();
       }
@@ -162,7 +160,7 @@ const doCompile = async () => {
 };
 
 (async () => {
-  logger.info(`COMPILE START: isWatch - ${isWatch}`);
+  logger.info(`COMPILE START: ${isWatch ? 'dev' : 'build'}`);
   await doCompile();
 })();
 
