@@ -31,7 +31,12 @@ document.addEventListener('DOMContentLoaded', function () {
   // navigate to last visit
   (function () {
     if (isIndex && lastVisitPathInStore) {
-      window.location.href = lastVisitPathInStore;
+      fetch(lastVisitPathInStore)
+        .then(res => {
+          if (res.status === 200) {
+            window.location.href = lastVisitPathInStore;
+          }
+        });
     }
   })();
 
