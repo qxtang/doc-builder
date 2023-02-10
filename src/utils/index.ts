@@ -82,8 +82,12 @@ export const getDirTree = (params: { inputPath: string; config: IConfig }): Arra
     }
 
     res.sort((a, b) => {
-      if (a.isIndexFile && !a.isRootIndexFile) {
-        return -1;
+      if (a.children && b.children) {
+        if (!a.dirname < !b.dirname) {
+          return -1;
+        } else {
+          return 1;
+        }
       }
       if (a.children) {
         return -1;

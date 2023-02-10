@@ -45,32 +45,35 @@ document.addEventListener('DOMContentLoaded', function () {
   // menu
   (function () {
     const $dirs = $('#menu .dir');
-    const $triangles = $('#menu .dir > .triangle');
     const $loading = $('#menu .loading');
+    const $links = $('#menu .children > a');
+    const host = window.location.protocol + '//' + window.location.host;
+    const currCollapseArr = JSON.parse(window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]');
 
-    const toggleMenu = function (pEle, id) {
-      pEle.toggleClass('expand');
+    const toggleMenu = function (id) {
+      const $parent = $(`#${id}`).parent('.parent');
+      $parent.toggleClass('expand');
+      const currCollapseArr = JSON.parse(window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]');
 
-      const hasExpand = pEle.hasClass('expand');
-      const curr = JSON.parse(window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]');
+      const hasExpand = $parent.hasClass('expand');
 
       if (hasExpand) {
-        curr.remove(id);
+        currCollapseArr.remove(id);
       } else {
-        curr.push(id);
+        currCollapseArr.push(id);
       }
-      window.localStorage.setItem(COLLAPSE_STORAGE_KEY, JSON.stringify(curr));
+      window.localStorage.setItem(COLLAPSE_STORAGE_KEY, JSON.stringify(currCollapseArr));
     };
 
     // 设置 dir
     $dirs.each(function () {
-      const curr = JSON.parse(window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]');
       const id = $(this).attr('id');
-      const $p = $(this).parent('.parent');
+      const $parent = $(this).parent('.parent');
+      const $triangle = $(this).children('.triangle');
       const href = decodeURIComponent($(this).data('href'));
 
-      if (curr.includes(id)) {
-        $p.removeClass('expand');
+      if (currCollapseArr.includes(id)) {
+        $parent.removeClass('expand');
       }
 
       if (href) {
@@ -81,40 +84,24 @@ document.addEventListener('DOMContentLoaded', function () {
           $(this).addClass('active');
         }
       }
-    });
 
-    // 跳转指引
-    $dirs.on('click', function () {
-      const href = $(this).data('href');
-      const $parent = $(this).parent('ul.parent');
-      const id = $(this).attr('id');
-
-      if (href) {
-        const hasExpand = $parent.hasClass('expand');
-        if (!hasExpand) {
-          toggleMenu($parent.first(), id);
+      // 跳转指引
+      $(this).on('click', function () {
+        if (href) {
+          window.location.href = href;
+        } else {
+          toggleMenu(id);
         }
+      });
 
-        window.location.href = href;
-      } else {
-        toggleMenu($parent.first(), id);
-      }
-    });
-
-    // 点击事件
-    $triangles.on('click', function (event) {
-      event.stopPropagation();
-      const $currDir = $(this).parent('li.dir');
-      const $parent = $(this).parents('ul.parent');
-      const id = $currDir.attr('id');
-
-      toggleMenu($parent.first(), id);
+      // 三角点击事件
+      $triangle.on('click', function (event) {
+        event.stopPropagation();
+        toggleMenu(id);
+      });
     });
 
     // 设置 links
-    const $links = $('#menu .children > a');
-    const host = window.location.protocol + '//' + window.location.host;
-
     $links.each(function () {
       const href = decodeURIComponent($(this).prop('href'));
       const _path = href.replace(host, '');
@@ -130,9 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    setTimeout(function () {
-      $loading.remove();
-    }, 300);
+    $loading.remove();
   })();
 
   // expand-all
