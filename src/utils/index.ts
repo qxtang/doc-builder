@@ -8,7 +8,8 @@ import getTocHtmlByMd from './getTocHtmlByMd';
 import chalk from 'chalk';
 import md5 from 'md5';
 import { INDEX_FILE_BASE_NAME, INDEX_FILE_NAME } from '../constants';
-const  { version } = require('../../package.json');
+
+const { version } = require('../../package.json');
 
 export const sleep = (t = 3000) => new Promise(resolve => setTimeout(resolve, t));
 
@@ -80,7 +81,7 @@ export const getDirTree = (params: { inputPath: string; config: IConfig }): Arra
       }
     }
 
-    res.sort((a) => {
+    res.sort((a, b) => {
       if (a.isIndexFile && !a.isRootIndexFile) {
         return -1;
       }
@@ -105,15 +106,18 @@ const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string
   let res = '';
 
   for (const item of dirTree) {
-    if (item.isRootIndexFile) {
+    if (item.isIndexFile) {
       continue;
     }
 
     const isDir = !!item.dirname;
     if (isDir) {
+      const indexChildren = item.children?.find(i => i.isIndexFile);
+      const href = indexChildren ? `${config.root}/${indexChildren.id}.html` : '';
+
       res += `
             <ul class="parent expand">
-              <li id="${item.id}" class="dir" title="${item.dirname}">
+              <li id="${item.id}" data-href="${href}" class="dir" title="${item.dirname}">
                 <span>${item.dirname}</span>
                 <div class="triangle"></div>
               </li>
@@ -154,7 +158,8 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
           title: config.title,
           basename: info.isRootIndexFile ? '' : basename,
           tocHtml,
-          menuHtml
+          menuHtml,
+          version
         };
 
         ejs.renderFile(

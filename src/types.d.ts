@@ -33,4 +33,5 @@ export interface IEjsData {
   basename: string;
   tocHtml: string;
   menuHtml: string;
+  version: string;
 }

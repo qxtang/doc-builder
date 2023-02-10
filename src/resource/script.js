@@ -35,6 +35,8 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(res => {
           if (res.status === 200) {
             window.location.href = lastVisitPathInStore;
+          } else {
+            window.localStorage.removeItem(LAST_VISIT_STORAGE_KEY);
           }
         });
     }
@@ -43,26 +45,13 @@ document.addEventListener('DOMContentLoaded', function () {
   // menu
   (function () {
     const $dirs = $('#menu .dir');
+    const $triangles = $('#menu .dir > .triangle');
     const $loading = $('#menu .loading');
 
-    // 设置展开状态
-    $dirs.each(function () {
-      const curr = JSON.parse(window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]');
-      const id = $(this).attr('id');
-      const $p = $(this).parent('.parent');
+    const toggleMenu = function (pEle, id) {
+      pEle.toggleClass('expand');
 
-      if (curr.includes(id)) {
-        $p.removeClass('expand');
-      }
-    });
-
-    // 点击事件
-    $dirs.on('click', function () {
-      const $p = $(this).parent('.parent');
-      $p.toggleClass('expand');
-
-      const id = $(this).attr('id');
-      const hasExpand = $p.hasClass('expand');
+      const hasExpand = pEle.hasClass('expand');
       const curr = JSON.parse(window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]');
 
       if (hasExpand) {
@@ -71,15 +60,64 @@ document.addEventListener('DOMContentLoaded', function () {
         curr.push(id);
       }
       window.localStorage.setItem(COLLAPSE_STORAGE_KEY, JSON.stringify(curr));
+    };
+
+    // 设置 dir
+    $dirs.each(function () {
+      const curr = JSON.parse(window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]');
+      const id = $(this).attr('id');
+      const $p = $(this).parent('.parent');
+      const href = decodeURIComponent($(this).data('href'));
+
+      if (curr.includes(id)) {
+        $p.removeClass('expand');
+      }
+
+      if (href) {
+        const _path = href.replace(host, '');
+        const isActive = currPath === _path;
+
+        if (isActive) {
+          $(this).addClass('active');
+        }
+      }
     });
 
-    // 设置上次看到状态
+    // 跳转指引
+    $dirs.on('click', function () {
+      const href = $(this).data('href');
+      const $parent = $(this).parent('ul.parent');
+      const id = $(this).attr('id');
+
+      if (href) {
+        const hasExpand = $parent.hasClass('expand');
+        if (!hasExpand) {
+          toggleMenu($parent.first(), id);
+        }
+
+        window.location.href = href;
+      } else {
+        toggleMenu($parent.first(), id);
+      }
+    });
+
+    // 点击事件
+    $triangles.on('click', function (event) {
+      event.stopPropagation();
+      const $currDir = $(this).parent('li.dir');
+      const $parent = $(this).parents('ul.parent');
+      const id = $currDir.attr('id');
+
+      toggleMenu($parent.first(), id);
+    });
+
+    // 设置 links
     const $links = $('#menu .children > a');
     const host = window.location.protocol + '//' + window.location.host;
 
     $links.each(function () {
-      const url = decodeURIComponent($(this).prop('href'));
-      const _path = url.replace(host, '');
+      const href = decodeURIComponent($(this).prop('href'));
+      const _path = href.replace(host, '');
       const isActive = currPath === _path;
       const isLastVisit = lastVisitPathInStore === _path;
 
