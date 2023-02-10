@@ -65,6 +65,13 @@ document.addEventListener('DOMContentLoaded', function () {
       window.localStorage.setItem(COLLAPSE_STORAGE_KEY, JSON.stringify(currCollapseArr));
     };
 
+    const expandMenuById = function (id) {
+      const $parents = $(`#${id}`).parents('.parent');
+      $parents.each(function () {
+        $(this).addClass('expand');
+      });
+    };
+
     // 设置 dir
     $dirs.each(function () {
       const id = $(this).attr('id');
@@ -81,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const isActive = currPath === _path;
 
         if (isActive) {
+          expandMenuById(id);
           $(this).addClass('active');
         }
       }
@@ -107,9 +115,11 @@ document.addEventListener('DOMContentLoaded', function () {
       const _path = href.replace(host, '');
       const isActive = currPath === _path;
       const isLastVisit = lastVisitPathInStore === _path;
+      const $children = $(this).parent('.children');
 
       if (isActive) {
-        $(this).parent('.children').addClass('active');
+        expandMenuById($children.attr('id'));
+        $children.addClass('active');
       }
 
       if (isLastVisit) {
