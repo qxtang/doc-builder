@@ -15,7 +15,7 @@ $ npm install -g @qxtang/doc-builder
 - 任意文件夹中创建并编写你的 markdown 文件：`mkdir somedir && cd somedir`
 - `doc-builder start` 启动本地服务
 - `doc-builder build` 打包
-- `doc-builder -h` 查看更多帮助
+- `doc-builder -h` 查看帮助
 
 ## 使用配置文件
 
@@ -43,7 +43,7 @@ $ npm install -g @qxtang/doc-builder
 - 自定义站点首页（关于页），创建并编辑 index.md 即可
 - 会自动忽略以小数点 `.` 开头的文件或文件夹
 - 触发搜索快捷键 s
-- 链接加上类名 current 在当前页打开
+- 链接加上类名 current 则在当前页打开
 
 ## 与 GitHub Actions 结合食用更佳！❤
 

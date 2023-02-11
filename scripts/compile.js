@@ -122,7 +122,7 @@ const doCompile = async () => {
 
   const fn = async () => {
     compiling = true;
-    const spinner = ora('COMPILING').start();
+    const spinner = ora('COMPILING\n\r').start();
 
     if (!isWatch) {
       reset();
@@ -139,10 +139,10 @@ const doCompile = async () => {
       await compileScript();
 
       spinner.color = 'green';
-      spinner.succeed('COMPILE SUCCESS');
+      spinner.succeed('COMPILE SUCCESS\n\r');
     } catch (err) {
       spinner.color = 'red';
-      spinner.fail(`COMPILE ERROR: ${err}`);
+      spinner.fail(`COMPILE ERROR: ${err}\n\r`);
       process.exit(1);
     } finally {
       compiling = false;

@@ -72,6 +72,10 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     };
 
+    const scrollToId = function (id) {
+      $('#menu').scrollTop($(`#${id}`).offset().top - 100);
+    };
+
     // 设置 dir
     $dirs.each(function () {
       const id = $(this).attr('id');
@@ -89,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (isActive) {
           expandMenuById(id);
+          scrollToId(id);
           $(this).addClass('active');
         }
       }
@@ -116,9 +121,11 @@ document.addEventListener('DOMContentLoaded', function () {
       const isActive = currPath === _path;
       const isLastVisit = lastVisitPathInStore === _path;
       const $children = $(this).parent('.children');
+      const id = $children.attr('id');
 
       if (isActive) {
-        expandMenuById($children.attr('id'));
+        expandMenuById(id);
+        scrollToId(id);
         $children.addClass('active');
       }
 
