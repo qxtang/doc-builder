@@ -4,7 +4,7 @@
   "description": "将文件夹中的 markdown 文档翻译成 html 站点，根据文件结构自动生成菜单",
   "scripts": {
     "prepublishOnly": "npm run compile",
-    "dev": "node ./bin/index.js start --config=config.dev.js",
+    "dev": "node ./bin/index.js build --config=config.dev.js && cd dist && http-server",
     "compile:ts": "npx tsc",
     "compile:ts:watch": "npx tsc -w",
     "compile": "node ./scripts/compile.js",
