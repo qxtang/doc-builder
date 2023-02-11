@@ -492,6 +492,18 @@ body {
 
       img {
         .img(zoom-in);
+        display: block;
+        margin: 0 auto;
+
+        + figcaption {
+          margin: 6px auto;
+          font-size: 0.8rem;
+          text-align: center;
+
+          &:only-child {
+            display: none;
+          }
+        }
       }
 
       h1,
@@ -545,6 +557,10 @@ body {
       .danger {
         border-color: var(--danger-border-color);
         background: var(--danger-bg-color);
+      }
+
+      hr.footnotes-sep {
+        display: none;
       }
     }
 

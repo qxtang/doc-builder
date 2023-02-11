@@ -6,6 +6,7 @@ import hljs from 'highlight.js';
 const mdInstance = markdownIt({
   html: true,
   linkify: true,
+  // 代码高亮
   highlight: function (str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
@@ -28,19 +29,23 @@ mdInstance
   .use(require('markdown-it-sup'))
   .use(require('markdown-it-mark'))
   .use(require('markdown-it-attrs'))
+  .use(require('markdown-it-task-lists'))
+  .use(require('markdown-it-footnote'))
+  .use(require('markdown-it-imsize'))
+  .use(require('markdown-it-image-figures'), { figcaption: true })
   .use(require('markdown-it-container'), 'info')
   .use(require('markdown-it-container'), 'note')
   .use(require('markdown-it-container'), 'tip')
   .use(require('markdown-it-container'), 'warning')
   .use(require('markdown-it-container'), 'danger');
 
+// a 标签新窗口打开
 const defaultRender =
   mdInstance.renderer.rules.link_open ||
   function (tokens, idx, options, env, self) {
     return self.renderToken(tokens, idx, options);
   };
 
-// a 标签新窗口打开
 mdInstance.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   const targetIndex = tokens[idx].attrIndex('target');
 
