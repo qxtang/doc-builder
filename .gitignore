@@ -4,5 +4,5 @@ bin
 dist
 temp
 yarn-error.log
-markdown
+markdown/*
 !markdown/demo.md

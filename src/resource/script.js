@@ -48,12 +48,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const $loading = $('#menu .loading');
     const $links = $('#menu .children > a');
     const host = window.location.protocol + '//' + window.location.host;
-    const currCollapseArr = JSON.parse(window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]');
+
+    const getCurrCollapseArr = function () {
+      return JSON.parse(window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]');
+    };
+    const currCollapseArr = getCurrCollapseArr();
 
     const toggleMenu = function (id) {
       const $parent = $(`#${id}`).parent('.parent');
       $parent.toggleClass('expand');
-      const currCollapseArr = JSON.parse(window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]');
+      const currCollapseArr = getCurrCollapseArr();
 
       const hasExpand = $parent.hasClass('expand');
 
@@ -73,7 +77,11 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const scrollToId = function (id) {
-      $('#menu').scrollTop($(`#${id}`).offset().top - 100);
+      if (!id) { return; }
+      const ele = $(`#${id}`);
+      if (ele.length > 0) {
+        $('#menu').scrollTop(ele.offset().top - 100);
+      }
     };
 
     // 设置 dir
@@ -408,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (hash) {
       const ele = document.getElementById(hash);
-      $content.animate({ scrollTop: $(ele)?.offset()?.top || 0 }, 0);
+      $content.scrollTop($(ele)?.offset()?.top || 0);
     }
   })();
 
