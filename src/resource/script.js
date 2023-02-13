@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const lastVisitPathInStore = window.localStorage.getItem(LAST_VISIT_STORAGE_KEY);
 
   // navigate to last visit
-  (function () {
+  /*(function () {
     if (isIndex && lastVisitPathInStore) {
       fetch(lastVisitPathInStore)
         .then(res => {
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         });
     }
-  })();
+  })();*/
 
   // menu
   (function () {

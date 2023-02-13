@@ -54,7 +54,12 @@ class DocBuilder {
 
     const fn = async () => {
       this.building = true;
-      const { inputPath, outputPath, config, resourcePath } = options;
+      const {
+        inputPath,
+        outputPath,
+        config,
+        resourcePath
+      } = options;
 
       if (!fs.existsSync(inputPath)) {
         logger.error('输入文件夹不存在:', inputPath);
@@ -146,6 +151,9 @@ class DocBuilder {
     const outputPath = path.join(__dirname, '../temp');
     const resourcePath = path.join(inputPath, config.resource);
 
+    fs.removeSync(outputPath);
+    fs.mkdirSync(outputPath);
+
     await this.doBuild({
       inputPath,
       outputPath,
@@ -157,10 +165,14 @@ class DocBuilder {
     chokidar
       .watch([inputPath, __dirname], {
         depth: 10,
-        ignored: [/(^|[\/\\])\../, ...config.ignore.map((i) => path.join(inputPath, i))]
-      }) // ignore dotfiles
-      .on('change', async (filename: string) => {
-        logger.info('file change:', filename);
+        ignoreInitial: true,
+        ignored: [
+          /(^|[\/\\])\../, // ignore dotfiles
+          ...config.ignore.map((i) => path.join(inputPath, i))
+        ]
+      })
+      .on('all', async (eventName, path) => {
+        logger.info(`watch: ${eventName} ${path}`);
 
         await this.doBuild({
           inputPath,
@@ -177,7 +189,6 @@ class DocBuilder {
       open: false,
       logLevel: 0
     });
-
     logger.info(`run at http://${config.host}:${config.port}`);
   }
 

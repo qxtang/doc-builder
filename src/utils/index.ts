@@ -7,7 +7,7 @@ import ejs from 'ejs';
 import getTocHtmlByMd from './getTocHtmlByMd';
 import chalk from 'chalk';
 import md5 from 'md5';
-import { INDEX_FILE_BASE_NAME, INDEX_FILE_NAME } from '../constants';
+import { INDEX_FILE_NAME } from '../constants';
 
 const { version } = require('../../package.json');
 
@@ -35,7 +35,7 @@ export const getDirTree = (params: { inputPath: string; config: IConfig }): Arra
 
       const basename = (function () {
         if (isIndexFile && !isRootIndexFile) {
-          return INDEX_FILE_BASE_NAME;
+          return dir.split(path.sep).slice(-1)[0];
         }
         return filename.substring(0, filename.indexOf(extname));
       })();
