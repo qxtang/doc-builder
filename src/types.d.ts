@@ -9,7 +9,7 @@ export interface IConfig {
   ignore: Array<string>;
 }
 
-export interface IOption extends Omit<IConfig, "ignore"> {
+export interface IOption extends Omit<IConfig, 'ignore'> {
   config: string;
   ignore: string;
 }
@@ -34,4 +34,5 @@ export interface IEjsData {
   tocHtml: string;
   menuHtml: string;
   version: string;
+  timeString: string;
 }

@@ -146,6 +146,7 @@ const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string
 export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: IConfig; outputPath: string }) => {
   const { dirTree, config, outputPath } = params;
   const menuHtml = getMenuHtmlByDirTree(dirTree, config);
+  const chinaTimeString = getChinaTimeString();
 
   const renderByFileInfoArr = (fileInfoArr: Array<IDirTree> = []) => {
     fileInfoArr.forEach((info: IDirTree) => {
@@ -163,7 +164,8 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
           basename: info.isRootIndexFile ? '' : basename,
           tocHtml,
           menuHtml,
-          version
+          version,
+          timeString: chinaTimeString
         };
 
         ejs.renderFile(
@@ -203,6 +205,15 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
 // 拷贝模板资源
 export const copyTplResource = async (outputPath: string) => {
   fs.copySync(path.resolve(__dirname, '../resource'), path.join(outputPath, 'resource'));
+};
+
+// 获取墙国时间
+export const getChinaTimeString = () => {
+  const timezone = 8;
+  const offsetGmt = new Date().getTimezoneOffset();
+  const nowDate = new Date().getTime();
+  const targetDate = new Date(nowDate + offsetGmt * 60 * 1000 + timezone * 60 * 60 * 1000);
+  return targetDate.toLocaleString();
 };
 
 // 禁用 github 的 jekyll

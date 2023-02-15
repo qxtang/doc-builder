@@ -15,6 +15,10 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-var-requires': 0,
     'no-useless-escape': 0,
+    indent: ['error', 2],
+    'linebreak-style': ['error', 'windows'],
+    quotes: ['error', 'single'],
+    semi: ['error', 'always'],
   },
   globals: {},
 };

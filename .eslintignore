@@ -1,0 +1,5 @@
+src/resource/lib
+*.ejs
+*.ico
+*.png
+*.md
