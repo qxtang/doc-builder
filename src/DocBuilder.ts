@@ -16,6 +16,7 @@ import {
   genNojekyllFile,
   getDirTree,
   printInfo,
+  printIpAddrs,
   renderDirTree
 } from './utils';
 
@@ -27,7 +28,7 @@ class DocBuilder {
     program
       .option('--config <config>', '声明配置文件', '')
       .option('--port <port>', '本地服务模式端口号', '8181')
-      .option('--host <host>', '本地服务模式 host', '127.0.0.1')
+      .option('--host <host>', '本地服务模式 host', '0.0.0.0')
       .option('--output <output>', '输出文件夹', 'dist')
       .option('--input <input>', '输入文件夹', '.')
       .option(
@@ -189,7 +190,7 @@ class DocBuilder {
       open: false,
       logLevel: 0
     });
-    logger.info(`run at http://${config.host}:${config.port}`);
+    printIpAddrs({ host: config.host, port: config.port });
   }
 
   async build(options: IOption) {

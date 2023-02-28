@@ -8,6 +8,8 @@ import getTocHtmlByMd from './getTocHtmlByMd';
 import chalk from 'chalk';
 import md5 from 'md5';
 import { INDEX_FILE_NAME } from '../constants';
+import { networkInterfaces } from 'os';
+import logger from './logger';
 
 const { version } = require('../../package.json');
 
@@ -304,4 +306,30 @@ ${JSON.stringify(config, null, 2)}
 
 -----------------------------------------------------
   `));
+};
+
+export const printIpAddrs = (options: {
+  host: string | number;
+  port: string | number;
+}) => {
+  const { host, port } = options;
+  const nets: any = networkInterfaces();
+  const results = [];
+
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+      // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+      // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
+      const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4;
+      if (net.family === familyV4Value && !net.internal) {
+        results.push(net.address);
+      }
+    }
+  }
+
+  if (host === '0.0.0.0') {
+    logger.info(`\nserver run at:\n${results.map(i=>`http://${i}:${port}`).join('\n')}\n`);
+  } else {
+    logger.info(`run at http://${host}:${port}`);
+  }
 };
