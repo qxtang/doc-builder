@@ -6,3 +6,4 @@ src/resource/lib
 *.png
 *.svg
 .eslintrc.js
+bin
