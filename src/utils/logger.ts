@@ -5,11 +5,17 @@ import chalk from 'chalk';
 
 const logger = {
   info: (...args: any) => {
-    console.log(`\n\r[${new Date().toLocaleString()}]`, chalk.blueBright(...args));
+    console.log(
+      `\n\r[${new Date().toLocaleString()}]`,
+      chalk.blueBright(...args),
+    );
   },
   error: (...args: any) => {
-    console.log(`\n\r[${new Date().toLocaleString()}] ERROR:`, chalk.redBright(...args));
-  }
+    console.log(
+      `\n\r[${new Date().toLocaleString()}] ERROR:`,
+      chalk.redBright(...args),
+    );
+  },
 };
 
 export default logger;

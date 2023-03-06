@@ -13,10 +13,14 @@ import logger from './logger';
 
 const { version } = require('../../package.json');
 
-export const sleep = (t = 3000) => new Promise(resolve => setTimeout(resolve, t));
+export const sleep = (t = 3000) =>
+  new Promise((resolve) => setTimeout(resolve, t));
 
 // 获取文件树
-export const getDirTree = (params: { inputPath: string; config: IConfig }): Array<IDirTree> => {
+export const getDirTree = (params: {
+  inputPath: string;
+  config: IConfig;
+}): Array<IDirTree> => {
   const { inputPath, config } = params;
 
   const fn = (dir: string) => {
@@ -32,7 +36,7 @@ export const getDirTree = (params: { inputPath: string; config: IConfig }): Arra
       })();
 
       const isRootIndexFile = (function () {
-        return isIndexFile && (path.relative(inputPath, realPath) === 'index.md');
+        return isIndexFile && path.relative(inputPath, realPath) === 'index.md';
       })();
 
       const basename = (function () {
@@ -57,7 +61,9 @@ export const getDirTree = (params: { inputPath: string; config: IConfig }): Arra
       }
 
       if (['.md', '.markdown'].includes(extname) && isFile) {
-        const markdown = fs.readFileSync(path.join(dir, filename), { encoding: 'utf-8' });
+        const markdown = fs.readFileSync(path.join(dir, filename), {
+          encoding: 'utf-8',
+        });
 
         res.push({
           id,
@@ -69,7 +75,7 @@ export const getDirTree = (params: { inputPath: string; config: IConfig }): Arra
           content: mdInstance
             .render(markdown)
             .replace(/<[^>]+>/g, '')
-            .replace(/[\r\n]/g, '')
+            .replace(/[\r\n]/g, ''),
         });
       } else if (isDirectory) {
         res.push({
@@ -78,7 +84,7 @@ export const getDirTree = (params: { inputPath: string; config: IConfig }): Arra
           filename: '',
           basename,
           path: dir,
-          children: fn(path.join(dir, filename))
+          children: fn(path.join(dir, filename)),
         });
       }
     }
@@ -108,7 +114,10 @@ export const getDirTree = (params: { inputPath: string; config: IConfig }): Arra
 };
 
 // 根据文件树生成菜单 html
-const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string => {
+const getMenuHtmlByDirTree = (
+  dirTree: Array<IDirTree>,
+  config: IConfig,
+): string => {
   let res = '';
 
   for (const item of dirTree) {
@@ -118,12 +127,16 @@ const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string
 
     const isDir = !!item.dirname;
     if (isDir) {
-      const indexChildren = item.children?.find(i => i.isIndexFile);
-      const href = indexChildren ? `${config.root}/${indexChildren.id}.html` : '';
+      const indexChildren = item.children?.find((i) => i.isIndexFile);
+      const href = indexChildren
+        ? `${config.root}/${indexChildren.id}.html`
+        : '';
 
       res += `
             <ul class="parent expand">
-              <li id="${item.id}" data-href="${href}" class="dir" title="${item.dirname}">
+              <li id="${item.id}" data-href="${href}" class="dir" title="${
+        item.dirname
+      }">
                 <span>${item.dirname}</span>
                 <div class="triangle"></div>
               </li>
@@ -145,7 +158,11 @@ const getMenuHtmlByDirTree = (dirTree: Array<IDirTree>, config: IConfig): string
 };
 
 // 根据文件树执行渲染 ejs 生成 html
-export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: IConfig; outputPath: string }) => {
+export const renderDirTree = async (params: {
+  dirTree: Array<IDirTree>;
+  config: IConfig;
+  outputPath: string;
+}) => {
   const { dirTree, config, outputPath } = params;
   const menuHtml = getMenuHtmlByDirTree(dirTree, config);
   const chinaTimeString = getChinaTimeString();
@@ -155,7 +172,9 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
       const isDir = !!info.dirname;
 
       if (!isDir) {
-        const markdown = fs.readFileSync(path.join(info.path, info.filename), { encoding: 'utf-8' });
+        const markdown = fs.readFileSync(path.join(info.path, info.filename), {
+          encoding: 'utf-8',
+        });
         const html = mdInstance.render(markdown);
         const tocHtml = getTocHtmlByMd(markdown);
         const basename = info.basename;
@@ -167,7 +186,7 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
           tocHtml,
           menuHtml,
           version,
-          timeString: chinaTimeString
+          timeString: chinaTimeString,
         };
 
         ejs.renderFile(
@@ -178,12 +197,11 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
               throw err;
             }
 
-            fs.writeFileSync(
-              path.join(outputPath, `${info.id}.html`),
-              str,
-              { encoding: 'utf-8' }
-            );
-          });
+            fs.writeFileSync(path.join(outputPath, `${info.id}.html`), str, {
+              encoding: 'utf-8',
+            });
+          },
+        );
       } else {
         renderByFileInfoArr(info.children);
       }
@@ -197,7 +215,7 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
       id: 'index',
       filename: 'default_index.md',
       basename: 'index',
-      path: path.resolve(__dirname, '..')
+      path: path.resolve(__dirname, '..'),
     });
   }
 
@@ -206,7 +224,10 @@ export const renderDirTree = async (params: { dirTree: Array<IDirTree>; config: 
 
 // 拷贝模板资源
 export const copyTplResource = async (outputPath: string) => {
-  fs.copySync(path.resolve(__dirname, '../resource'), path.join(outputPath, 'resource'));
+  fs.copySync(
+    path.resolve(__dirname, '../resource'),
+    path.join(outputPath, 'resource'),
+  );
 };
 
 // 获取墙国时间
@@ -214,30 +235,37 @@ export const getChinaTimeString = () => {
   const timezone = 8;
   const offsetGmt = new Date().getTimezoneOffset();
   const nowDate = new Date().getTime();
-  const targetDate = new Date(nowDate + offsetGmt * 60 * 1000 + timezone * 60 * 60 * 1000);
+  const targetDate = new Date(
+    nowDate + offsetGmt * 60 * 1000 + timezone * 60 * 60 * 1000,
+  );
   return targetDate.toLocaleString();
 };
 
 // 禁用 github 的 jekyll
 export const genNojekyllFile = async (outputPath: string) => {
-  fs.writeFileSync(
-    path.join(outputPath, '.nojekyll'),
-    '',
-    { encoding: 'utf-8' }
-  );
+  fs.writeFileSync(path.join(outputPath, '.nojekyll'), '', {
+    encoding: 'utf-8',
+  });
 };
 
 // 生成文件树 json
-export const genDirTreeJson = async (dirTree: Array<IDirTree>, outputPath: string) => {
+export const genDirTreeJson = async (
+  dirTree: Array<IDirTree>,
+  outputPath: string,
+) => {
   fs.writeFileSync(
     path.join(outputPath, 'dir_tree.json'),
     JSON.stringify(dirTree),
-    { encoding: 'utf-8' }
+    { encoding: 'utf-8' },
   );
 };
 
 // 拷贝用户的资源
-export const copyUserResource = async (params: { resourcePath: string; outputPath: string; config: IConfig }) => {
+export const copyUserResource = async (params: {
+  resourcePath: string;
+  outputPath: string;
+  config: IConfig;
+}) => {
   const { resourcePath, outputPath, config } = params;
 
   try {
@@ -249,7 +277,9 @@ export const copyUserResource = async (params: { resourcePath: string; outputPat
 
 // 通用 slugification function
 export const slugifyFn = (str: string, opt?: any) => {
-  const r = encodeURIComponent(String(str).trim().toLowerCase().replace(/\s+/g, '-'));
+  const r = encodeURIComponent(
+    String(str).trim().toLowerCase().replace(/\s+/g, '-'),
+  );
   if (opt) {
     if (opt.num === 0) {
       return r;
@@ -260,7 +290,10 @@ export const slugifyFn = (str: string, opt?: any) => {
 };
 
 // 生成 manifest.json
-export const genManifest = (params: { config: IConfig; outputPath: string }) => {
+export const genManifest = (params: {
+  config: IConfig;
+  outputPath: string;
+}) => {
   const { config, outputPath } = params;
 
   const res = {
@@ -272,32 +305,37 @@ export const genManifest = (params: { config: IConfig; outputPath: string }) => 
     icons: [
       {
         src: `${config.root}/resource/icons/128.png`,
-        sizes: '128x128'
+        sizes: '128x128',
       },
       {
         src: `${config.root}/resource/icons/144.png`,
-        sizes: '144x144'
+        sizes: '144x144',
       },
       {
         src: `${config.root}/resource/icons/192.png`,
-        sizes: '192x192'
+        sizes: '192x192',
       },
       {
         src: `${config.root}/resource/icons/256.png`,
-        sizes: '256x256'
+        sizes: '256x256',
       },
       {
         src: `${config.root}/resource/icons/512.png`,
-        sizes: '512x512'
-      }
-    ]
+        sizes: '512x512',
+      },
+    ],
   };
 
-  fs.writeFileSync(path.join(outputPath, 'manifest.json'), JSON.stringify(res), { encoding: 'utf-8' });
+  fs.writeFileSync(
+    path.join(outputPath, 'manifest.json'),
+    JSON.stringify(res),
+    { encoding: 'utf-8' },
+  );
 };
 
 export const printInfo = (config: IConfig) => {
-  console.log(chalk.blueBright(`
+  console.log(
+    chalk.blueBright(`
 ----------------- DOC BUILDER ${version} -----------------
 
 your config: 
@@ -305,7 +343,8 @@ your config:
 ${JSON.stringify(config, null, 2)}
 
 -----------------------------------------------------
-  `));
+  `),
+  );
 };
 
 export const printIpAddrs = (options: {
@@ -328,7 +367,11 @@ export const printIpAddrs = (options: {
   }
 
   if (host === '0.0.0.0') {
-    logger.info(`\nserver run at:\n${results.map(i=>`http://${i}:${port}`).join('\n')}\n`);
+    logger.info(
+      `\nserver run at:\n${results
+        .map((i) => `http://${i}:${port}`)
+        .join('\n')}\n`,
+    );
   } else {
     logger.info(`run at http://${host}:${port}`);
   }

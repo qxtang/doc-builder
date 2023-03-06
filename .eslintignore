@@ -1,5 +1,8 @@
 src/resource/lib
+*.md
+*.less
 *.ejs
 *.ico
 *.png
-*.md
+*.svg
+.eslintrc.js

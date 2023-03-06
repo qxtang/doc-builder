@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
       return false;
-    }
+    },
   };
 
   const LAST_VISIT_STORAGE_KEY = 'LAST_VISIT_KEY_FJHY3PHJ00';
@@ -25,8 +25,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const isMobile = Boolean(document.body.clientWidth < 900);
   const currPath = decodeURIComponent(window.location.pathname);
-  const isIndex = ([`${window.root}/`, `${window.root}/index.html`, '/', '/index.html'].includes(currPath));
-  const lastVisitPathInStore = window.localStorage.getItem(LAST_VISIT_STORAGE_KEY);
+  const isIndex = [
+    `${window.root}/`,
+    `${window.root}/index.html`,
+    '/',
+    '/index.html',
+  ].includes(currPath);
+  const lastVisitPathInStore = window.localStorage.getItem(
+    LAST_VISIT_STORAGE_KEY,
+  );
 
   // navigate to last visit
   /*(function () {
@@ -50,7 +57,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const host = window.location.protocol + '//' + window.location.host;
 
     const getCurrCollapseArr = function () {
-      return JSON.parse(window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]');
+      return JSON.parse(
+        window.localStorage.getItem(COLLAPSE_STORAGE_KEY) || '[]',
+      );
     };
     const currCollapseArr = getCurrCollapseArr();
 
@@ -66,7 +75,10 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         currCollapseArr.push(id);
       }
-      window.localStorage.setItem(COLLAPSE_STORAGE_KEY, JSON.stringify(currCollapseArr));
+      window.localStorage.setItem(
+        COLLAPSE_STORAGE_KEY,
+        JSON.stringify(currCollapseArr),
+      );
     };
 
     const expandMenuById = function (id) {
@@ -77,7 +89,9 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const scrollToId = function (id) {
-      if (!id) { return; }
+      if (!id) {
+        return;
+      }
       const ele = $(`#${id}`);
       if (ele.length > 0) {
         $('#menu').scrollTop(ele.offset().top - 100);
@@ -212,9 +226,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         $menu.animate(
           {
-            width: _x
+            width: _x,
           },
-          0
+          0,
         );
       });
     });
@@ -281,7 +295,8 @@ document.addEventListener('DOMContentLoaded', function () {
             fn(info.children);
           } else {
             const findInTitle = info.basename.toLowerCase().indexOf(str) !== -1;
-            const findInContent = info.content.toLowerCase().indexOf(str) !== -1;
+            const findInContent =
+              info.content.toLowerCase().indexOf(str) !== -1;
 
             if (findInTitle || findInContent) {
               res.push(info);
@@ -297,7 +312,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const addHighlight = (str, keyword) => {
       const regExp = new RegExp(keyword, 'gi');
       const text = regExp.exec(str);
-      return str.replace(regExp, '<mark class="keyword">' + (text?.[0] || keyword) + '</mark>');
+      return str.replace(
+        regExp,
+        '<mark class="keyword">' + (text?.[0] || keyword) + '</mark>',
+      );
     };
 
     const handleInputChange = (value) => {
@@ -320,7 +338,10 @@ document.addEventListener('DOMContentLoaded', function () {
         html = res
           .map((info) => {
             const index = info.content.toLowerCase().indexOf(value);
-            const summary = `...${info.content.substring(index, index + 50)}...`;
+            const summary = `...${info.content.substring(
+              index,
+              index + 50,
+            )}...`;
             const href = `${window.root}/${info.id}.html?search=${value}`;
 
             return `
@@ -378,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('.markdown-body img').viewer({
       title: false,
       toolbar: false,
-      navbar: false
+      navbar: false,
     });
   })();
 
@@ -402,9 +423,9 @@ document.addEventListener('DOMContentLoaded', function () {
     $btt.on('click', function () {
       $content.animate(
         {
-          scrollTop: 0
+          scrollTop: 0,
         },
-        200
+        200,
       );
     });
   })();
@@ -422,7 +443,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // set last visit
   (function () {
-    if (isIndex) { return; }
+    if (isIndex) {
+      return;
+    }
     window.localStorage.setItem(LAST_VISIT_STORAGE_KEY, currPath);
   })();
 });

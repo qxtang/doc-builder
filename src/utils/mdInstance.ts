@@ -17,13 +17,13 @@ const mdInstance = markdownIt({
     }
 
     return '';
-  }
+  },
 });
 
 mdInstance
   .use(markdownItAnchor, {
     slugify: (s) => slugifyFn(s),
-    permalink: markdownItAnchor.permalink.headerLink()
+    permalink: markdownItAnchor.permalink.headerLink(),
   })
   .use(require('markdown-it-sub'))
   .use(require('markdown-it-sup'))
@@ -46,10 +46,19 @@ const defaultRender =
     return self.renderToken(tokens, idx, options);
   };
 
-mdInstance.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+mdInstance.renderer.rules.link_open = function (
+  tokens,
+  idx,
+  options,
+  env,
+  self,
+) {
   const targetIndex = tokens[idx].attrIndex('target');
 
-  if (targetIndex < 0 && !['header-anchor', 'current'].includes(String(tokens[idx].attrGet('class')))) {
+  if (
+    targetIndex < 0 &&
+    !['header-anchor', 'current'].includes(String(tokens[idx].attrGet('class')))
+  ) {
     tokens[idx].attrPush(['target', '_blank']);
   }
 

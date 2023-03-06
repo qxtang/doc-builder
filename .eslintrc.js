@@ -6,19 +6,19 @@ module.exports = {
     node: true,
     jquery: true,
   },
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'prettier'],
   rules: {
     '@typescript-eslint/no-var-requires': 0,
-    'no-useless-escape': 0,
-    indent: ['error', 2],
-    'linebreak-style': ['error', 'windows'],
-    quotes: ['error', 'single'],
-    semi: ['error', 'always'],
+    'prettier/prettier': ['error'],
   },
   globals: {},
 };

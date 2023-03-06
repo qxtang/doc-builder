@@ -9,8 +9,8 @@
     "compile:ts:watch": "npx tsc -w",
     "compile": "node ./scripts/compile.js",
     "compile:watch": "node ./scripts/compile.js -w",
-    "eslint": "npx eslint src/**/*.ts",
-    "eslint:fix": "npx eslint src/**/*.ts --fix"
+    "eslint": "npx eslint src/**/*",
+    "eslint:fix": "npx eslint src/**/* --fix"
   },
   "bin": {
     "doc-builder": "bin/index.js"
@@ -46,8 +46,11 @@
     "@typescript-eslint/eslint-plugin": "^5.15.0",
     "@typescript-eslint/parser": "^5.15.0",
     "eslint": "7.14.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "less": "^4.1.2",
     "less-plugin-autoprefix": "^2.0.0",
+    "prettier": "^2.8.4",
     "typescript": "^4.6.2"
   },
   "dependencies": {
