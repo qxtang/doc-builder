@@ -1,18 +1,13 @@
 # DOC-BUILDER
 
-- 极速零配置，将文件夹中的 markdown 文档翻译成 html 站点，根据文件夹结构自动生成菜单
+- 极速零配置，将 markdown 文档翻译成站点，根据文件结构生成菜单
 - 全站搜索、toc 目录
 - [Preview 示例预览](https://qxtang.github.io)
 
-## 安装
-
-```sh
-$ npm install -g @qxtang/doc-builder
-```
-
 ## 使用
 
-- 任意文件夹中创建并编写你的 markdown 文件：`mkdir somedir && cd somedir`
+- `npm install -g @qxtang/doc-builder`
+- `mkdir somedir && cd somedir && echo "# hello" > hello.md`
 - `doc-builder start` 启动本地服务
 - `doc-builder build` 打包
 - `doc-builder -h` 查看帮助
@@ -22,8 +17,6 @@ $ npm install -g @qxtang/doc-builder
 - 创建文件 builder.config.js
 
   ```javascript
-  // builder.config.js
-
   module.exports = {
     port: 8181,
     host: '127.0.0.1',
@@ -38,47 +31,39 @@ $ npm install -g @qxtang/doc-builder
 
 - 传入 `doc-builder build --config=builder.config.js`
 
-## 其他
+## 与 GitHub Actions 结合
 
-- 自定义站点首页（关于页），创建并编辑 index.md 即可
-- 会自动忽略以小数点 `.` 开头的文件或文件夹
-- 触发搜索快捷键 s
-- 链接加上类名 current 则在当前页打开
+给仓库添加一个权限点足够的 secrets，创建 `.github\workflows\CI.yml`
 
-## 与 GitHub Actions 结合食用更佳！❤
+```yml
+name: CI
+on:
+  push:
+    branches:
+      - main # 分支名
 
-- 给你的 github 仓库添加一个权限点足够的 secrets，创建并编辑 actions 配置文件 `.github\workflows\CI.yml`
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
 
-  ```yml
-  name: CI
-  on:
-    push:
-      branches:
-        - main # 你的分支
+      - name: Install and Build
+        run: |
+          npm install @qxtang/doc-builder@latest
+          npx doc-builder build --title="your title" --root="your path" --ignore=node_modules,dist
 
-  jobs:
-    main:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
-          with:
-            persist-credentials: false
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.3.0
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }} # 仓库 secrets 名称
+          branch: gh-pages # 发布站点的分支
+          folder: dist # 输出文件夹
+          clean: true
+          clean-exclude: |
+            .nojekyll
+```
 
-        - name: Install and Build
-          run: |
-            npm install @qxtang/doc-builder@latest
-            npx doc-builder build --title="your title" --root="your path" --ignore=node_modules,dist
-
-        - name: Deploy
-          uses: JamesIves/github-pages-deploy-action@v4.3.0
-          with:
-            token: ${{ secrets.ACCESS_TOKEN }} # 仓库 secrets 名称
-            branch: gh-pages # 发布站点的分支
-            folder: dist # 输出文件夹
-            clean: true
-            clean-exclude: |
-              .nojekyll
-  ```
-
-- 只需要在仓库编辑你的文档，保存推送，自动构建部署
